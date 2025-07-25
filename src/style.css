@@ -99,3 +99,34 @@ button:focus-visible {
     object-fit: cover; 
     display: block;
 }
+
+.parent-category-scroll {
+    overflow-x: auto;
+}
+.category-scroll{
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+}
+
+.category-scroll:active {
+    cursor: grabbing;
+}
+
+.slide-y-transition-enter-active,
+.slide-y-transition-leave-active {
+    transition: all 0.4s ease;
+}
+
+.card-images { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-images .v-img{
+    max-height: 9rem;
+    max-width: 9rem;
+
+}
