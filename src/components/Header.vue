@@ -16,7 +16,7 @@
                         text
                         class="py-0"
                         :class="$route.name === 'Home.view' ? 'active-navbar-item' : ''"
-                        color="secondary"
+                        color="secondary text-none"
                     >
                         Home
                     </v-btn>
@@ -27,7 +27,7 @@
                         text 
                         class="py-0"
                         :class="$route.name === 'Library.view' ? 'active-navbar-item' : ''"
-                        color="secondary"
+                        color="secondary text-none"
                     >
                         Library
                     </v-btn>
@@ -38,7 +38,7 @@
                         text 
                         class="py-0"
                         :class="['MyDocument.list.view','MyDocument.create.view'].includes($route.name) ? 'active-navbar-item' : ''"
-                        color="secondary"
+                        color="secondary text-none"
                     >
                         My Document
                     </v-btn>
@@ -49,7 +49,7 @@
                         text 
                         class="py-0"
                         :class="$route.name === 'ManageView.view' ? 'active-navbar-item' : ''"
-                        color="secondary"
+                        color="secondary text-none"
                     >
                         Manage
                     </v-btn>
