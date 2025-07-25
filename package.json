@@ -1,0 +1,39 @@
+{
+  "name": "new-library",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve:dist": "node serverdev.js",
+    "start": "node server.js",
+    "dev": "concurrently \"vite\" \"node serverdev.js\"",
+    "build": "vite build --mode production",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.2.6",
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@mdi/font": "^7.4.47",
+    "axios": "^1.10.0",
+    "connect-history-api-fallback": "^2.0.0",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "http-proxy-middleware": "^3.0.5",
+    "mobile-detect": "^1.4.5",
+    "moment": "^2.30.1",
+    "url-search-params-polyfill": "^8.2.5",
+    "vue": "^3.5.17",
+    "vue-cookies": "^1.8.6",
+    "vue-router": "^4.5.1",
+    "vuetify": "^3.9.0",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10",
+    "vite": "^7.0.4"
+  }
+}
