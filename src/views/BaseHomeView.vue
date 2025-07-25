@@ -1,6 +1,6 @@
 <template>
-    <v-container class="h-100">
-        <v-row justify="center" class="h-100">
+    <v-container class="h-100" fluid>
+        <v-row justify="center" class="h-100 w-100">
             <v-col cols="12" md="4">
                 <div class="images h-100 d-flex justify-center align-center">
                     <img alt="lib-pict.png" :src="$appInfo.ftpURL+'/elibrary/Foto/home-lib-pict.png'" />
@@ -23,7 +23,7 @@
                                 hide-details
                                 single-line
                                 clearable
-                                @keyup.enter=ahbacod(searchField)
+                                @keyup.enter=ahbacodFindTxt(searchField)
                             ></v-text-field>
                         </div>
                     </div>
@@ -126,22 +126,22 @@
                                 </v-list>
                             </v-menu>
                         </div>
-                        <div class="d-flex parent-category-scroll">
+                        <div class="d-flex parent-category-scroll ml-2">
                             <v-btn variant="tonal">
-                                <v-icon>
-                                    mdi mdi-arrow-left-thick
+                                <v-icon @click="$scrollLeftOnce($refs.scrollContainer,100,'left')" @mousedown="$startScroll($refs.scrollContainer, 'left')" @mouseup="$stopScroll" @mouseleave="$stopScroll">
+                                    mdi mdi-chevron-left
                                 </v-icon>
                             </v-btn>
-                            <div class="d-flex category-scroll" >
-                            <div v-for="(i, idx) in getLIBRARY_GET_CATEGORY.data" :key="idx">
-                                    <v-btn variant="tonal" class="mx-1 text-none" @click="findCategory(i.id)">
+                            <div class="d-flex category-scroll" ref="scrollContainer" @mousedown="$startDrag($event, $refs.scrollContainer)" @mousemove="$onDrag($event, $refs.scrollContainer)" @mouseup="$stopDrag" @mouseleave="$stopDrag">
+                                <div v-for="(i, idx) in getLIBRARY_GET_CATEGORY.data" :key="idx">
+                                    <v-btn variant="tonal" class="mx-1 text-none" @click="$handleClick($event, i.id)">
                                         {{ i.name }}
                                     </v-btn>
                                 </div>
                             </div>
-                            <v-btn variant="tonal">
+                            <v-btn variant="tonal" @click="$scrollLeftOnce($refs.scrollContainer,100,'right')" @mousedown="$startScroll($refs.scrollContainer, 'right')" @mouseup="$stopScroll" @mouseleave="$stopScroll">
                                 <v-icon>
-                                    mdi mdi-arrow-right-thick
+                                    mdi mdi-chevron-right
                                 </v-icon>
                             </v-btn>
                         </div>
@@ -153,15 +153,6 @@
 </template>
 
 <style scoped>
-
-.parent-category-scroll {
-    overflow-x: auto;
-}
-.category-scroll{
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
 
 .v-list-item {
     padding-left: 0 !important;
@@ -217,7 +208,7 @@ export default {
         }
     },
     methods: {
-        ahbacod(val) { 
+        ahbacodFindTxt(val) { 
             this.filters.searchField = val;
             this.pushWithParam();
         },
