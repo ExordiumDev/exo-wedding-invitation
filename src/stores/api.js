@@ -19,7 +19,7 @@ const $axPdf = axios.create({
     headers: {
         'X-Client': import.meta.env.VITE_APP_CLIENT_ID,
         'X-Requested-With': 'XMLHttpRequest',
-    }
+    },
 })
 
 const $axios = axios.create({
@@ -48,16 +48,33 @@ let akses = undefined;
 let curdapi2 = undefined;
 
 // ax config
-$axInstance.interceptors.request.use(
-    async function (config) {
-        config.baseURL = import.meta.env.VITE_APP_API_URL;
-        config.headers['Authorization'] = `${akses?.token_type} ${akses?.access_token}`;
-        return config;
-    },
-    function (error) {
-        return Promise.reject (error);
-    }
-);
+// $axInstance.interceptors.request.use(
+//     async function (config) {
+//         config.baseURL = import.meta.env.VITE_APP_API_URL;
+//         config.headers['Authorization'] = `${akses?.token_type} ${akses?.access_token}`;
+//         return config;
+//     },
+//     function (error) {
+//         return Promise.reject (error);
+//     }
+// );
+
+function setupInterceptor(instance) {
+    instance.interceptors.request.use(
+        async function (config) {
+            config.headers['Authorization'] = `${akses?.token_type} ${akses?.access_token}`;
+            return config;
+        },
+        function (error) {
+            return Promise.reject(error);
+        }
+    );
+}
+
+setupInterceptor($axAcrticle);
+setupInterceptor($axInstance);
+setupInterceptor($axPdf);
+setupInterceptor($axios);
 
 
 $axInstance.interceptors.request.use (

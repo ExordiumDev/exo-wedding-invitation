@@ -12,3 +12,5 @@ self.onmessage = function (e) {
         total: sorted.length,
     });
 };
+
+

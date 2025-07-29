@@ -1,5 +1,8 @@
 <template>
     <v-container fluid>
+        <v-snackbar v-model="snackbar" :timeout="3000" color="error">
+            {{ snackbarMessage }}
+        </v-snackbar>
         <v-row justify="center" class="h-100">
             <v-col cols="12" md="4">
                 <div class="images h-100 d-flex justify-center align-center">
@@ -13,15 +16,15 @@
                 <div>
                     <div id="search-bar" class="my-5">
                         <v-text-field
-                            v-model="searchField"
+                            v-model="searchQuery"
                             append-inner-icon="mdi-magnify"
                             density="compact"
                             label="Search name or document code"
-                            variant="solo"
+                            variant="outlined"
                             hide-details
                             single-line
                             clearable
-                            @keyup.enter=ahbacod(searchField)
+                            @keyup.enter="onSearch"
                         ></v-text-field>
                     </div>
                 </div>
@@ -146,7 +149,7 @@
                 </div>
             </v-col>
         </v-row>
-        <articleList />
+        <articleList :open-snackbar="errMess" :search-trigger="searchKey" :search="searchQuery" />
     </v-container>
 </template>
 <script>
@@ -177,6 +180,10 @@ export default {
                 findDateUpload: '',
                 findCategory: null,
             },
+            snackbar: false,
+            snackbarMessage: '',
+            searchQuery:'',
+            searchKey: 0,
         }
     },
     computed: {
@@ -195,6 +202,9 @@ export default {
         }
     },
     methods: {
+        onSearch() {
+            this.searchKey = Date.now();
+        },
         ...mapActions({
             act_LIBRARY_ARTICLES_ANALYZE:'library/'+LIBRARY_ARTICLES_ANALYZE,
             act_LIBRARY_GET_ARTICLES:'library/'+LIBRARY_GET_ARTICLES,
@@ -226,6 +236,10 @@ export default {
                 query: this.filters
             });
         },
+        errMess() { 
+            this.snackbar = true;
+            this.snackbarMessage = 'An error occurred while processing your request.';
+        }
     },
     mounted() {
         this.$nextTick(async() => {

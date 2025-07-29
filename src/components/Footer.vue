@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column bg-ligthCustom elevation-18" >
+    <div class="main-footer d-flex flex-column bg-ligthCustom elevation-18" >
         <div class="px-4 py-5 text-left w-100">
             <div class="d-flex justify-space-between">
                 <div>

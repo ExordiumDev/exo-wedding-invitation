@@ -130,3 +130,7 @@ button:focus-visible {
     max-width: 9rem;
 
 }
+
+.no-resize textarea { 
+    resize: none;
+}
