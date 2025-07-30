@@ -134,7 +134,7 @@
                             </v-btn>
                             <div class="d-flex category-scroll" ref="scrollContainer" @mousedown="$startDrag($event, $refs.scrollContainer)" @mousemove="$onDrag($event, $refs.scrollContainer)" @mouseup="$stopDrag" @mouseleave="$stopDrag">
                                 <div v-for="(i, idx) in getLIBRARY_GET_CATEGORY.data" :key="idx">
-                                    <v-btn variant="tonal" class="mx-1 text-none" @click="$handleClick($event, i.id)">
+                                    <v-btn variant="tonal" class="mx-1 text-none" @click="findCategory(i.id)">
                                         {{ i.name }}
                                     </v-btn>
                                 </div>

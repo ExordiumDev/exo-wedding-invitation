@@ -135,7 +135,7 @@
                         </v-btn>
                         <div class="d-flex category-scroll" ref="scrollContainer" @mousedown="$startDrag($event, $refs.scrollContainer)" @mousemove="$onDrag($event, $refs.scrollContainer)" @mouseup="$stopDrag" @mouseleave="$stopDrag">
                             <div v-for="(i, idx) in getLIBRARY_GET_CATEGORY.data" :key="idx">
-                                <v-btn variant="tonal" class="mx-1 text-none" @click="$handleClick($event, i.id)">
+                                <v-btn variant="tonal" class="mx-1 text-none" @click="findCurrCategory($event, i.id)" :class="{ 'bg-primary' : findByCategory === i.id, '' : findByCategory !== i.id }">
                                     {{ i.name }}
                                 </v-btn>
                             </div>
@@ -149,7 +149,7 @@
                 </div>
             </v-col>
         </v-row>
-        <articleList :open-snackbar="errMess" :search-trigger="searchKey" :search="searchQuery" />
+        <articleList :open-snackbar="errMess" :search-trigger="searchKey" :search="searchQuery" :bycategory="findByCategory" :byPopular="sortPopular" />
     </v-container>
 </template>
 <script>
@@ -184,6 +184,8 @@ export default {
             snackbarMessage: '',
             searchQuery:'',
             searchKey: 0,
+            findByCategory: null,
+            sortPopular: false,
         }
     },
     computed: {
@@ -202,6 +204,10 @@ export default {
         }
     },
     methods: {
+        findCurrCategory(event = null, id) {
+            if(event) event.preventDefault();
+            this.findByCategory = this.findByCategory === id ? null : id;
+        },
         onSearch() {
             this.searchKey = Date.now();
         },
@@ -214,8 +220,7 @@ export default {
             this.pushWithParam();
         },
         togglePopular() { 
-            this.filters.togglePopular = !this.filters.togglePopular;
-            this.pushWithParam();
+            this.sortPopular = !this.sortPopular;
         },
         toggleBookmark() { 
             this.filters.findBookmark = !this.filters.findBookmark;
@@ -227,7 +232,6 @@ export default {
         },
         findAuthor(authorName){ 
             this.filters.findAuthor = authorName;
-            this.pushWithParam();
         },
         pushWithParam(params) {
             Object.assign(this.filters, params);
@@ -243,6 +247,10 @@ export default {
     },
     mounted() {
         this.$nextTick(async() => {
+            if ( this.$route.query ) {
+                this.findCurrCategory(null, parseInt(this.$route.query.findCategory));
+                this.searchQuery = this.$route.query.searchField;
+            }
         })
     }
 }

@@ -123,6 +123,14 @@ export default {
         searchTrigger: {
             type: [Number, String],
             default: 0
+        },
+        bycategory: {
+            type: Number,
+            default: null
+        },
+        byPopular: {
+            type: Boolean,
+            default: false
         }
     },
     data() { 
@@ -165,18 +173,38 @@ export default {
             return this.allArticles.map(a => a.files?.[0]?.file_path);
         },
         filterArticles() {
-            if (!this.search) return this.allArticles;
+            let result = this.allArticles;
 
-            const q = this.search.toLowerCase();
+            const keyword = this.search?.toLowerCase();
+            const cate_id = this.bycategory;
 
-            return this.allArticles.filter(art => {
-                return (
-                    art.title?.toLowerCase().includes(q) ||
-                    art.content?.toLowerCase().includes(q) ||
-                    art.code?.toLowerCase().includes(q)
-                );
-            });
+            if (keyword) { 
+                result = result.filter(art => {
+                    return (
+                        art.title?.toLowerCase().includes(keyword) ||
+                        art.content?.toLowerCase().includes(keyword) ||
+                        art.code?.toLowerCase().includes(keyword) ||
+                        art.categories?.name?.toLowerCase().includes(keyword) ||
+                        art.author?.name?.toLowerCase().includes(keyword)
+                    );
+                });
+            }
+
+            if (cate_id) { 
+                result = result.filter(art => art.categories.id === cate_id)
+            }
+
+            if (this.byPopular) { 
+                result = [...result].sort((a,b)=>{
+                    const vA = a.analytics?.views || 0;
+                    const vB = b.analytics?.views || 0;
+                    return vB - vA;
+                });
+            }
+
+            return result;
         },
+
     },
     methods: {
         formatDate(val, format){
@@ -226,17 +254,9 @@ export default {
 
             return this.$appInfo.ftpURL + '/elibrary/Files/word-svgrepo-com.svg';
         },
-        findQuery(query) {
-            this.currPage = 1;
-            const base = query
-                ? this.allArticles.filter(a =>
-                    a.title?.toLowerCase().includes(query.toLowerCase())
-                )
-                : this.allArticles;
-
-            this.isLoading = true;
+        updatePageData() {
             workerArticle.postMessage({
-                articles: JSON.parse(JSON.stringify(base)),
+                articles: JSON.parse(JSON.stringify(this.filterArticles)),
                 page: this.currPage,
                 perPage: this.itemsPerPage
             });
@@ -250,13 +270,6 @@ export default {
             const all = this.getLIBRARY_GET_ARTICLES?.data || [];
             this.allArticles = all;
             const itemsWithFile = this.allArticles.filter(item => item.files?.[0]?.file_path);
-            // for (const item of itemsWithFile) {
-            //     const filePath = item.files[0].file_path
-            //     if (filePath) { 
-            //         const storeName = 'LibraryCardCache';
-            //         this.globalLoadPdf(filePath, item, storeName)
-            //     }
-            // }
             Promise.all(
                 itemsWithFile.map(async (item) => {
                     const filePath = item.files?.[0]?.file_path;
@@ -284,20 +297,27 @@ export default {
     },
     watch: {
         currPage(newPage) {
-            // this.isLoading = true;
             workerArticle.postMessage({
                 articles: JSON.parse(JSON.stringify(this.filterArticles)),
                 page: newPage,
                 perPage: this.itemsPerPage
             });
             this.processPage(newPage);
-            // this.findQuery(this.searchQuery);
-            // this.findQuery(this.search);
         },
         searchTrigger() {
             this.currPage = 1;
             this.processPage(1); 
         },
+        bycategory() { 
+            this.currPage = 1;
+            this.processPage(1);
+            this.updatePageData();
+        },
+        byPopular() { 
+            this.currPage = 1;
+            this.processPage(1);
+            this.updatePageData();
+        }
     }
 }
 
