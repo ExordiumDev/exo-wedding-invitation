@@ -12,9 +12,10 @@ const $axInstance = axios.create({
 
 // files-api-v2
 const $axPdf = axios.create({
-    baseURL: isDev
-    ? '/files-api-v2'
-    : `${import.meta.env.VITE_APP_API_URL}/articles/files`,
+    // baseURL: isDev
+    // ? '/files-api-v2'
+    // : `${import.meta.env.VITE_APP_API_URL}/articles/files`,
+    baseURL : `${import.meta.env.VITE_APP_API_URL}/articles/files`,
     responseType: 'blob',
     headers: {
         'X-Client': import.meta.env.VITE_APP_CLIENT_ID,

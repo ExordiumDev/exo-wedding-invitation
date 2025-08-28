@@ -290,7 +290,7 @@ export default {
                 this.processPage(this.currPage);
             })
         } catch (error) {
-            console.log('Error fetching articles:', error);
+            console.error('Error fetching articles:', error);
             this.isLoading = false;
             this.showErr();
         }
