@@ -30,7 +30,7 @@
                 </div>
                 <div class="d-flex flex-row w-100">
                     <div class="filter-dropdown">
-                        <v-menu :location="location">
+                        <v-menu location="end">
                             <template v-slot:activator="{ props }">
                                 <v-btn
                                     color="primary"

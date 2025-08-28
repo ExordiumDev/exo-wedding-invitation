@@ -50,16 +50,17 @@ export default defineConfig({
 
     },
     host: process.env.VITE_APP_ALLOWED_HOSTS,
-    port: parseInt(process.env.VITE_APP_PORT) || 8015,
+    // port: parseInt(process.env.VITE_APP_PORT) || 8015,
+    port: 443,
     // https: true,
     https: {
-      key: fs.readFileSync('./crt/elibrarys.jalaera.com-key.pem'),
-      cert: fs.readFileSync('./crt/elibrarys.jalaera.com.pem'),
+      key: fs.readFileSync('./crt/elibrary-dev.jalaera.com-key.pem'),
+      cert: fs.readFileSync('./crt/elibrary-dev.jalaera.com.pem'),
     },
     hmr: {
       protocol: 'wss',
-      host: 'elibrarys.jalaera.com',
-      clientPort: 9015,
+      host: 'elibrary-dev.jalaera.com',
+      clientPort: 443,
     },
     cors: { 
       origin: '*'

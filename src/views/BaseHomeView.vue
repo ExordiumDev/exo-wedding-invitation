@@ -15,7 +15,7 @@
                         <p class="fw-900">{{ bodyTxt }}</p>
                         <div id="search-bar" class="my-5">
                              <v-text-field
-                                v-model="searchField"
+                                v-model="filters.searchField"
                                 append-inner-icon="mdi-magnify"
                                 density="compact"
                                 label="Search name or document code"
@@ -23,13 +23,13 @@
                                 hide-details
                                 single-line
                                 clearable
-                                @keyup.enter=ahbacodFindTxt(searchField)
+                                @keyup.enter=ahbacodFindTxt(filters.searchField)
                             ></v-text-field>
                         </div>
                     </div>
                     <div class="d-flex flex-row w-100">
                         <div class="filter-dropdown">
-                            <v-menu :location="location">
+                            <v-menu location="end">
                                 <template v-slot:activator="{ props }">
                                     <v-btn
                                         color="primary"
