@@ -1,26 +1,6 @@
 <template>
-     <v-main class="pa-0 h-100">
-        <v-container fluid class="h-100">
-            <v-row justify="center" class="h-100">
-                <v-col cols="12" md="10" class="">
-                    <v-breadcrumbs :items="breadcrumbs" divider=">">
-                        <template #item="{ item }">
-                            <router-link
-                                v-if="item.to"
-                                :to="item.to"
-                                class="text-disabled"
-                            >
-                            {{ item.text }}
-                            </router-link>
-                            <span v-else class="text-secondary">
-                                {{ item.text }}
-                            </span>
-                        </template>
-                    </v-breadcrumbs>
-                    <router-view />
-                </v-col>
-            </v-row>
-        </v-container>
+     <v-main class="pa-0">
+         <router-view />
     </v-main>
 </template>
 

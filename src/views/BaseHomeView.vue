@@ -1,152 +1,51 @@
 <template>
     <v-container class="h-100" fluid>
         <v-row justify="center" class="h-100 w-100">
-            <v-col cols="12" md="4">
-                <div class="images h-100 d-flex justify-center align-center">
-                    <img alt="lib-pict.png" :src="$appInfo.ftpURL+'/elibrary/Foto/home-lib-pict.png'" />
+            <v-col>
+                <div class="d-flex justify-center my-10">
+                    <div class="d-flex">
+                        <h1>Welcome to</h1>
+                    </div>
+                    <div class="d-flex text-danger mx-5">
+                        <h1 class="text-red">JALA</h1>
+                    </div>
+                    <div class="d-flex">
+                        <h1>Era</h1>
+                    </div>
+                </div>
+                <div class="_subtitle d-flex justify-center">
+                    <h3>Where all our system are Connected</h3>
                 </div>
             </v-col>
+        </v-row>
+        <v-row justify="center" justify-lg="center">
             <v-col cols="12" md="8">
-                <div class="px-10 d-flex flex-column justify-center h-100">
-                    <div id="header-title" class="">
-                        <h2 class="fw-900">{{ headerTitle }}</h2>
-                    </div>
-                    <div>
-                        <p class="fw-900">{{ bodyTxt }}</p>
-                        <div id="search-bar" class="my-5">
-                             <v-text-field
-                                v-model="filters.searchField"
-                                append-inner-icon="mdi-magnify"
-                                density="compact"
-                                label="Search name or document code"
-                                variant="outlined"
-                                hide-details
-                                single-line
-                                clearable
-                                @keyup.enter=ahbacodFindTxt(filters.searchField)
-                            ></v-text-field>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row w-100">
-                        <div class="filter-dropdown">
-                            <v-menu location="end">
-                                <template v-slot:activator="{ props }">
-                                    <v-btn
-                                        color="primary"
-                                        v-bind="props"
-                                        variant="outlined"
-                                    >
-                                        <v-icon>
-                                            mdi-menu-down
-                                        </v-icon>
-                                        Filter
-                                    </v-btn>
-                                </template>
-
-                                <v-list>
-                                    <v-list-item
-                                        v-for="(item, index) in items"
-                                        :key="index"
-                                        :value="index"
-                                    >
-                                        <template v-if="index === 1">
-                                            <v-menu open-on-click offset-x location="end">
-                                                <template v-slot:activator="{ props: subProps1 }">
-                                                    <v-list-item v-bind="subProps1">
-                                                        <v-list-item-title @click="togglePopular()">
-                                                            {{ item }}
-                                                        </v-list-item-title>
-                                                    </v-list-item>
-                                                </template>
-                                            </v-menu>
-                                        </template>
-                                        <template v-else-if="index === 2">
-                                            <v-menu open-on-click offset-x location="end">
-                                                <template v-slot:activator="{ props: subProps2 }">
-                                                    <v-list-item v-bind="subProps2">
-                                                        <v-list-item-title>
-                                                            {{ item }}
-                                                            <v-icon class="ml-auto">mdi-chevron-right</v-icon>
-                                                        </v-list-item-title>
-                                                    </v-list-item>
-                                                </template>
-                                                <v-list>
-                                                    <v-date-picker elevation="24" v-model="filters.findDateUpload" @update:model-value="onDatePicked" @click.stop></v-date-picker>
-                                                </v-list>
-                                            </v-menu>
-                                        </template>
-                                        <template v-else-if="index === 3">
-                                            <v-menu open-on-click offset-x location="end" origin="bottom left" transition="scale-transition">
-                                                <template v-slot:activator="{ props: subProps3 }">
-                                                    <v-list-item v-bind="subProps3">
-                                                        <v-list-item-title>
-                                                            {{ item }}
-                                                            <v-icon class="ml-auto">mdi-chevron-right</v-icon>
-                                                        </v-list-item-title>
-                                                    </v-list-item>
-                                                </template>
-                                                <v-card>
-                                                    <div style="position: sticky; top: 0; z-index: 10; background: white;">
-                                                        <v-text-field
-                                                            class="ma-2"
-                                                            @click.stop
-                                                            v-model="findUser"
-                                                            placeholder="Search item..."
-                                                            density="compact"
-                                                            hide-details
-                                                            append-inner-icon="mdi-magnify"
-                                                            clearable
-                                                        />
-                                                    </div>
-                                                    <div style="max-height: 20rem; min-width: 18rem;">
-                                                        <v-list>
-                                                            <template v-if="listUser.length">
-                                                                <v-list-item v-for="(i, idx) in listUser" :key="idx">
-                                                                    <v-list-item-title @click="findAuthor(idx)">
-                                                                        {{ i.name }}
-                                                                    </v-list-item-title>
-                                                                </v-list-item>
-                                                            </template>
-                                                            <template v-else>
-                                                                <v-list-item>
-                                                                    <v-list-item-title class="text-grey text-center">No data found</v-list-item-title>
-                                                                </v-list-item>
-                                                            </template>
-                                                        </v-list>
-                                                    </div>
-                                                </v-card>
-                                            </v-menu>
-                                        </template>
-                                        <template v-else>
-                                            <v-list-item>
-                                                <v-list-item-title @click="toggleBookmark()">{{ item }}</v-list-item-title>
-                                            </v-list-item>
-                                        </template>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
-                        </div>
-                        <div class="d-flex parent-category-scroll ml-2">
-                            <v-btn variant="tonal">
-                                <v-icon @click="$scrollLeftOnce($refs.scrollContainer,100,'left')" @mousedown="$startScroll($refs.scrollContainer, 'left')" @mouseup="$stopScroll" @mouseleave="$stopScroll">
-                                    mdi mdi-chevron-left
-                                </v-icon>
-                            </v-btn>
-                            <div class="d-flex category-scroll" ref="scrollContainer" @mousedown="$startDrag($event, $refs.scrollContainer)" @mousemove="$onDrag($event, $refs.scrollContainer)" @mouseup="$stopDrag" @mouseleave="$stopDrag">
-                                <div v-for="(i, idx) in getLIBRARY_GET_CATEGORY.data" :key="idx">
-                                    <v-btn variant="tonal" class="mx-1 text-none" @click="findCategory(i.id)">
-                                        {{ i.name }}
-                                    </v-btn>
-                                </div>
-                            </div>
-                            <v-btn variant="tonal" @click="$scrollLeftOnce($refs.scrollContainer,100,'right')" @mousedown="$startScroll($refs.scrollContainer, 'right')" @mouseup="$stopScroll" @mouseleave="$stopScroll">
-                                <v-icon>
-                                    mdi mdi-chevron-right
-                                </v-icon>
-                            </v-btn>
-                        </div>
-                    </div>
-                </div>
+                <v-carousel show-arrows="hover" cycle interval="3000" transition="fade-transition">
+                    <v-carousel-item v-for="(i,idx) in items" :key="idx">
+                        <v-row>
+                            <v-col cols="8">
+                                <v-img :src="i.image" cover></v-img>
+                            </v-col>
+                            <v-col cols="4">
+                                <p>{{ i.title }}</p>
+                            </v-col>
+                        </v-row>
+                    </v-carousel-item>
+                </v-carousel>
+            </v-col>
+        </v-row>
+        <v-row justify="center" class="my-10 bg-ligthCustom pa-10 align-center">
+            <v-col cols="12" md="4">
+                <v-img :src="logoByFTP"></v-img>
+            </v-col>
+            <v-col cols="12" md="8">
+                <p>
+                    Jalaniaga is more than just a shipping company. We go above and beyond just getting your package from point A to point B. Our team is dedicated to providing exceptional customer service, and we pride ourselves on delivering the highest level of satisfaction to our clients.
+                    With Jalaniaga, you can have peace of mind knowing that your package is being handled by experienced logistic professionals. Our state-of-the-art technology allows us to track every step of the delivery process, ensuring that your package arrives at its destination on time, every time.
+                    We offer a wide range of shipping services, including domestic and international shipping, air freight, warehousing, and last-mile delivery. Whatever your needs are, our team is ready to go above and beyond to make sure that your packages are delivered on time, every time.
+                    At Jalaniaga, we believe that every shipment tells a unique story. Let us help you tell yours. Contact us today to learn how we can help you with your logistics needs.
+                    Feel free to customize and expand on this draft, and let me know if you need any further assistance.
+                </p>
             </v-col>
         </v-row>
     </v-container>
@@ -167,82 +66,38 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
-import { LIBRARY_GET_CATEGORY, LIBRARY_GET_USER } from '../stores/actions/reqApi'
-
 export default { 
     name: 'BaseHomeView',
     data() { 
         return { 
-            headerTitle: 'Selamat Datang di eLibrary',
-            bodyTxt: `“ Satu Portal Untuk Semua. “`,
-            findUser: '',
-            filters: {
-                searchField: '',
-                findAuthor: '',
-                findBookmark: false,
-                findPopular: false,
-                findDateUpload: '',
-                findCategory: null,
-            },
-            items: [
-                'Bookmark',
-                'Popular',
-                'Date Upload',
-                'Release By',
-            ],
+            logoByFTP: import.meta.env.VITE_APP_URL_FTP + "/portal/portals/jala-logo-web.png",
+            items:[
+                {
+                    image: "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
+                    title: "bacod 1",
+                    text: "Gambar di kiri, teks di kanan."
+                },
+                {
+                    image: "https://cdn.vuetifyjs.com/images/cards/hotel.jpg",
+                    title: "bacod 2",
+                    text: "Gambar di kanan, teks di kiri."
+                },
+                {
+                    image: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+                    title: "bacod 3",
+                    text: "Atur layout sesuai kebutuhan."
+                }
+            ]
         }
     },
     computed: { 
-        ...mapGetters({
-            getLIBRARY_GET_CATEGORY: `library/${LIBRARY_GET_CATEGORY}`,
-            getLIBRARY_GET_USER: `user/${LIBRARY_GET_USER}`,
-        }),
-        listUser() {
-            if(!this.findUser ) return this.getLIBRARY_GET_USER.data || 'No data found';
-
-            const keyword = this.findUser.toLowerCase();
-            return this.getLIBRARY_GET_USER.data.filter(u => 
-                u.name.toLowerCase().includes(keyword)
-            );
-        }
+        
     },
     methods: {
-        ahbacodFindTxt(val) { 
-            this.filters.searchField = val;
-            this.pushWithParam();
-        },
-        onDatePicked(val) {
-            this.filters.findDateUpload = this.$date_format(val, 'YYYY-MM-DD');
-            this.pushWithParam();
-        },
-        togglePopular() { 
-            this.filters.togglePopular = !this.filters.togglePopular;
-            this.pushWithParam();
-        },
-        toggleBookmark() { 
-            this.filters.findBookmark = !this.filters.findBookmark;
-            this.pushWithParam();
-        },
-        findCategory(id) {
-            this.filters.findCategory = id;
-            this.pushWithParam();
-        },
-        findAuthor(authorName){ 
-            this.filters.findAuthor = authorName;
-            this.pushWithParam();
-        },
-        pushWithParam(params) {
-            Object.assign(this.filters, params);
-            this.$router.push({
-                name: 'Library.view',
-                query: this.filters
-            });
-        },
+        
     },
     mounted() {
         this.$nextTick(() => { 
-            // console.log('category ',this.getLIBRARY_GET_CATEGORY.data)
         })
     }
 }

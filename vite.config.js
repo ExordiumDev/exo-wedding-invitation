@@ -23,43 +23,43 @@ export default defineConfig({
         next();
       });
     },
-    proxy: {
-      '/getmaster-v2':{
-            target: `https://api.jalaera.com/`,
-            changeOrigin: true,
-            rewrite: (path) => path.replace(/^\/getmaster-v2/, '/elibrary/master'),
-            secure: false,
-        },
-        '/article-api-v2':{
-            target: `https://api.jalaera.com/`,
-            changeOrigin: true,
-            rewrite: (path) => path.replace(/^\/article-api-v2/, '/elibrary'),
-            secure: false,
-        },
-        '^/files-api-v2': {
-            target: 'https://api.jalaera.com/',
-            changeOrigin: true,
-            rewrite: (path) => path.replace(/^\/files-api-v2/, '/elibrary/articles/files'),
-        },
-        '/pdf-api-v2': {
-            target: 'https://jalaniagaelok.web.id',
-            changeOrigin: true,
-            secure: false,
-            rewrite: (path) => path.replace(/^\/pdf-api-v2/, '/files/elibrary/Files'),
-        },
+    // proxy: {
+    //   '/getmaster-v2':{
+    //         target: `https://api.jalaera.com/`,
+    //         changeOrigin: true,
+    //         rewrite: (path) => path.replace(/^\/getmaster-v2/, '/elibrary/master'),
+    //         secure: false,
+    //     },
+    //     '/article-api-v2':{
+    //         target: `https://api.jalaera.com/`,
+    //         changeOrigin: true,
+    //         rewrite: (path) => path.replace(/^\/article-api-v2/, '/elibrary'),
+    //         secure: false,
+    //     },
+    //     '^/files-api-v2': {
+    //         target: 'https://api.jalaera.com/',
+    //         changeOrigin: true,
+    //         rewrite: (path) => path.replace(/^\/files-api-v2/, '/elibrary/articles/files'),
+    //     },
+    //     '/pdf-api-v2': {
+    //         target: 'https://jalaniagaelok.web.id',
+    //         changeOrigin: true,
+    //         secure: false,
+    //         rewrite: (path) => path.replace(/^\/pdf-api-v2/, '/files/elibrary/Files'),
+    //     },
 
-    },
+    // },
     host: process.env.VITE_APP_ALLOWED_HOSTS,
     // port: parseInt(process.env.VITE_APP_PORT) || 8015,
     port: 443,
     // https: true,
     https: {
-      key: fs.readFileSync('./crt/elibrary-dev.jalaera.com-key.pem'),
-      cert: fs.readFileSync('./crt/elibrary-dev.jalaera.com.pem'),
+      key: fs.readFileSync('./crt/portal-dev.jalaera.com-key.pem'),
+      cert: fs.readFileSync('./crt/portal-dev.jalaera.com.pem'),
     },
     hmr: {
       protocol: 'wss',
-      host: 'elibrary-dev.jalaera.com',
+      host: 'portal-dev.jalaera.com',
       clientPort: 443,
     },
     cors: { 

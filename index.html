@@ -4,15 +4,9 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./public/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src='%VITE_APP_OAUTH_URL%/js/vendor/dapi/app/dapi2.js' defer></script>
+    <!-- <script src='%VITE_APP_OAUTH_URL%/js/vendor/dapi/app/dapi2.js' defer></script> -->
     <!-- <script src="%VITE_APP_URL_FTP%/cdn/js/jala-sidebar-apps.js" defer></script> -->
-     <script type="module">
-        const script = document.createElement("script");
-        script.src = `${import.meta.env.VITE_APP_URL_FTP}/cdn/js/jala-sidebar-apps.js`;
-        script.defer = true;
-        document.head.appendChild(script);
-    </script>
-    <!-- <script src="https://jalaniagaelok.web.id/files/cdn/js/jala-sidebar-apps.js" defer></script> -->
+    <script src="https://jalaniagaelok.web.id/files/cdn/js/jala-sidebar-apps.js" defer></script>
   </head>
   <body>
     <div id="dapi_signin2" data-login_uri="%VITE_APP_URL%" data-text-login="login with app" data-scope="" data-locale=""></div>

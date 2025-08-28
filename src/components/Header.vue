@@ -6,7 +6,7 @@
             </v-app-bar-nav-icon>
             <v-app-bar-title>
                 <router-link :to="{name : 'Home.view'}" style="color: #223">
-                    Liberty City
+                    <v-img :src="logoByFTP" width="40" height="40"></v-img>
                 </router-link>
             </v-app-bar-title>
             <v-spacer />
@@ -22,14 +22,14 @@
                     </v-btn>
                 </router-link>
 
-                <router-link :to="{ name: 'Library.view' }" class="nav-link">
+                <router-link :to="{ name: 'News.view' }" class="nav-link">
                     <v-btn 
                         text 
                         class="py-0"
-                        :class="$route.name === 'Library.view' ? 'active-navbar-item' : ''"
+                        :class="$route.name === 'News.view' ? 'active-navbar-item' : ''"
                         color="secondary text-none"
                     >
-                        Library
+                        News
                     </v-btn>
                 </router-link>
 
@@ -40,23 +40,11 @@
                         :class="['MyDocument.list.view','MyDocument.create.view'].includes($route.name) ? 'active-navbar-item' : ''"
                         color="secondary text-none"
                     >
-                        My Document
-                    </v-btn>
-                </router-link>
-
-                <router-link :to="{ name: 'ManageView.view' }" class="nav-link">
-                    <v-btn 
-                        text 
-                        class="py-0"
-                        :class="$route.name === 'ManageView.view' ? 'active-navbar-item' : ''"
-                        color="secondary text-none"
-                    >
-                        Manage
+                        Career
                     </v-btn>
                 </router-link>
             </div>
 
-            <v-spacer />
             <!-- user detail  -->
             <v-btn @click="toggleDrawer" color="primary">
                 <v-icon>
@@ -69,10 +57,10 @@
                 color="#2E2E2E"
                 class="control-sidebar"
             >
-                <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
+                <div class="nav-link" data-widget="control-sidebar" href="#" role="button"></div>
             </v-navigation-drawer>
 
-            <div class="d-none d-md-flex align-items-center">Hello, <span class="text-red mx-1 no-wrap">{{ AUTH_USER?.name }}</span></div>
+            <div class="d-none d-md-flex align-items-center">Hello, <span class="text-red mx-1 no-wrap"></span></div>
             <v-menu offset-y>
                 <template #activator="{ props }">
                     <v-btn icon v-bind="props">
@@ -108,7 +96,7 @@
                                     <v-btn @click="dialog = false">
                                         Disagree
                                     </v-btn>
-                                    <v-btn @click="logout_action">
+                                    <v-btn>
                                         Agree
                                     </v-btn>
                                     </template>
@@ -136,11 +124,11 @@
                 </v-list-item>
 
                 <v-list-item
-                    :to="{name : 'Library.view'}"
-                    :class="{ 'active-navbar-item': $route.name === 'Library.view' }"
+                    :to="{name : 'News.view'}"
+                    :class="{ 'active-navbar-item': $route.name === 'News.view' }"
                     @click="drawer = false"
                 >
-                    <v-list-item-title>Library</v-list-item-title>
+                    <v-list-item-title>News</v-list-item-title>
                 </v-list-item>
 
                 <v-list-item
@@ -224,6 +212,7 @@ export default {
     name: 'Header',
     data() { 
         return { 
+            logoByFTP: import.meta.env.VITE_APP_URL_FTP + "/portal/portals/portal-header-logo.png",
             drawer: false,
             drawer_app: false,
             dialog: false,
@@ -238,20 +227,13 @@ export default {
     },
     computed: { 
         ...mapGetters({
-            AUTH_USER:'auth/'+AUTH_USER,
+            
         })
     },
     methods: {
         toggleDrawer() {
             this.drawer_app = !this.drawer_app
         },
-        logout_action() { 
-            this.$nextTick(async () => {
-                await this.$curdapi2.authLogout().then(()=>{
-                    location.reload();
-                })
-            });
-        }
     }
 
 }

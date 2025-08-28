@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import HomeView from '../views/BaseHomeView.vue';
-import LibraryView from '../views/BaseLibraryAllView.vue';
+import NewsView from '../views/BaseNewsView.vue';
 import MyDocumentView from '../views/BaseMyDocument.vue';
 import ManageView from '../views/BaseManageView.vue';
 import CreateDocumentView from '../views/CreateDocument.vue';
@@ -23,13 +23,13 @@ const routes = [
                 },
             },
             {
-                path: 'library',
-                name: 'Library.view',
-                title: 'Library',
-                component: LibraryView,
+                path: 'News',
+                name: 'News.view',
+                title: 'News',
+                component: NewsView,
                 meta: {
-                    title: 'Library',
-                    breadcrumb: 'Library'
+                    title: 'News',
+                    breadcrumb: 'News'
                 }
             },
             {
@@ -74,7 +74,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const defTitle = 'Library';
+    const defTitle = 'Portal';
     document.title = `${defTitle} | ${to.meta.title}` || defTitle;
     next()
 })
