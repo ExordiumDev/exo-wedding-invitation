@@ -1,13 +1,14 @@
 {
-  "name": "new-library",
-  "version": "0.0.1",
+  "name": "new-portal",
+  "version": "1.2.1",
   "private": true,
   "type": "module",
   "scripts": {
     "serve:dist": "node serverdev.js",
     "start": "node server.js",
     "dev": "concurrently \"vite\" \"node serverdev.js\"",
-    "build": "vite build --mode production",
+    "build-stag": "vite build --mode staging",
+    "build-prod": "vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -3,7 +3,6 @@
         <!-- splash screen -->
         <v-overlay v-if="loading" :model-value="true" persistent absolute class="d-flex align-center justify-center bg-background">
             <div class="text-center">
-                <div class="mt-4 text-h3">Hellow bitches ...</div>
                 <DotLottieVue style="width: 500px; height: 500px;" autoplay loop src="https://lottie.host/50bdf139-3974-4b88-b2d3-99744fa72303/tmZaXgjovg.lottie" />
                 <!-- <v-progress-circular
                     indeterminate
