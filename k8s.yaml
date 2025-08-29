@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-portal-web-deployment
+  namespace: k8s-portal
+spec:
+  replicas: 1  # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: ms-portal-web
+  template:
+    metadata:
+      labels:
+        app: ms-portal-web
+    spec:
+      containers:
+      - name: ms-portal-web
+        image: docker-registry.jalaniagaelok.web.id/ms-portal-web:2.0.1 # Replace with your Vue.js Docker image and tag
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+      imagePullSecrets:
+      - name: registry-1
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-portal-web-service
+  namespace: k8s-portal
+spec:
+  selector:
+    app: ms-portal-web
+  ports:
+    - appProtocol: http
+      name: http-jalasignin
+      protocol: TCP
+      port: 8000  # Port on which the service will be exposed
+      targetPort: 8013  # Port on which the Vue.js app is running in the pod

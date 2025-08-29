@@ -1,0 +1,97 @@
+pipeline {
+    agent any
+    
+    environment {
+        // github 
+        gitCred = 'TGRITDEV'
+        gitRepo = 'git@github.com:DEVELOPERITJNE/ms-portal-web.git'
+        gitBranch = 'main'
+
+        // registry 
+        registryCredentials = '1bba979e-5f57-4c84-98f9-7e9eca3d7153' // id credentials
+        registryUrl = "${REGISTRY_HOST}" // url server registry
+
+        // k8s
+        k8sCloud = ""
+        k8sCluster = "kubernetes"
+        k8sCredential = '7fbacc96-028b-49ad-865c-9214ed93c5c9'
+        k8sURL = "https://10.26.11.28:6443"
+        k8sFile = "k8s.yaml"
+        k8sNamespace = "k8s-portal"
+        
+        // image
+        imageName = 'ms-portal-web' // image name
+        imageTag = '2.0.1' // image tag
+
+        // environment
+        envFILE=".env.staging"
+    }
+
+    stages { // stages
+        stage('Checkout') {
+            steps {
+                deleteDir()
+                script {
+                    git branch: "${gitBranch}", credentialsId: "${gitCred}", url: "${gitRepo}"
+                }
+            }
+        }
+
+        stage('Install & Build') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build-stag'
+            }
+        }
+        
+        stage('Build Docker Image') { // stage
+            steps{ // steps
+                script { // script
+                    sh "cp -r ${envFILE} .env"
+                    sh "docker build -f dockerfile -t ${imageName}:${imageTag} ."
+                }
+            }
+        }
+
+        stage('Push Docker Image') { // stage ci continues integration
+            steps { // steps
+                script{ // script
+                    // Log in to Docker registry
+                    docker.withRegistry("https://${registryUrl}", registryCredentials) {
+                        // Push the Docker image to the registry
+                        docker.image("${imageName}:${imageTag}").push()
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script{
+withKubeConfig(caCertificate: '''-----BEGIN CERTIFICATE-----
+MIIDBTCCAe2gAwIBAgIISNkFZUExBvcwDQYJKoZIhvcNAQELBQAwFTETMBEGA1UE
+AxMKa3ViZXJuZXRlczAeFw0yNTAzMDMwNDUwMjZaFw0zNTAzMDEwNDU1MjZaMBUx
+EzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQDQsuq5Q5cQmXwncxtqFH1bugcRKT6JM8EgRgkm34qcf32cagZkxjP/SM0C
+YaYvs2FlJ2yfVB065q2OpGo6OCfKHHLVZUEtfF0F8syElNkClzsLqcQKAQ/uatP0
+k4EAcObxEVj5aLSlqP4nGV6GMe6o39a/eEYyf6anXWW4QmMgfZl8pQ4DvZ8KmQsZ
+kJUJdPvtLBofn1kA49/0IYXImmEo2P3jePSBBgcIZ0Y+vhYy0dHi7nVkLx0zXHtu
+geSp97QjRPfhnpgiwm5IaHPA+Z00IohPzE9+iHKiPe/AsxUOQHBfSE0s8WWEfbmH
+uQKH6TYkZ6YcYdaTYXtGBDHQCgQzAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAP
+BgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRhUxf8/Qa4Tm10md+1Kv4qER0JJDAV
+BgNVHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQB8o2P3M2pf
+P2YtimcxAjdpkObJa4RSqVSosPNSTpUdYzgU19MLanLt/8O4PlnykhaFxxz2KH49
+w390xzT8fmxNwubAiBNYN58kvrrNPi6W0UZuySve6LDlpmWc+9a2zYykW+P80ER0
+jH7PNoyNXWTCG8+TVKSE6Q1XBkmkSwulEfGookbx3xfnOQ6z8AliMbiH7q+aFGhZ
+5jFhwAR3e/Ahdj0ymnps85/PYs1+M2BcTg6Bh/0LSpoZqlPUQSpIzF243rTj9VNI
+954T7c2kuJoLaOGJzuCBFX2T8wWQ6Ar+7vDsy3rxX9jOjDpoCn7L3x8YaNL1hgse
+7oZGtUI6cCr5
+-----END CERTIFICATE-----''', clusterName: "${k8sCluster}", contextName: '', credentialsId: "${k8sCredential}", namespace: "${k8sNamespace}", restrictKubeConfigAccess: true, serverUrl: "${k8sURL}") {
+    sh "kubectl apply -f ${k8sFile} -n ${k8sNamespace}"
+}
+                }
+            }
+        }
+    }
+
+}
