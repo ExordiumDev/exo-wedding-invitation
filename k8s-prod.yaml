@@ -4,7 +4,7 @@ metadata:
   name: ms-portal-web
   namespace: k8s-portal
 spec:
-  replicas: 3  # Adjust the number of replicas as needed
+  replicas: 1 # Adjust the number of replicas as needed
   selector:
     matchLabels:
       app: ms-portal-web
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ms-portal-web
-        image: docker-registry.jalaniagaelok.web.id/ms-portal-web-prod:2.2.1 # Replace with your Vue.js Docker image and tag
+        image: docker-registry.jalaniagaelok.web.id/ms-portal-web-prod:2.2.3 # Replace with your Vue.js Docker image and tag 
         imagePullPolicy: Always
         ports:
         - containerPort: 8001
