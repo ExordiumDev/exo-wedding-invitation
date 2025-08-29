@@ -1,14 +1,14 @@
 {
   "name": "new-portal",
-  "version": "1.2.1",
+  "version": "2.1.2",
   "private": true,
   "type": "module",
   "scripts": {
     "serve:dist": "node serverdev.js",
     "start": "node server.js",
     "dev": "concurrently \"vite\" \"node serverdev.js\"",
-    "build-stag": "vite build --mode staging",
-    "build-prod": "vite build --mode production",
+    "build-stag": "cross-env NODE_ENV=staging vite build --mode staging",
+    "build-prod": "cross-env NODE_ENV=production vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {
