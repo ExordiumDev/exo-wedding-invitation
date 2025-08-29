@@ -16,11 +16,11 @@ pipeline {
         k8sCluster = "kubernetes"
         k8sCredential = "e328a9e2-f1c8-4734-aca4-84261caebd7a"
         k8sURL = "https://10.26.11.70:6443"
-        k8sFile = "depler.yaml"
+        k8sFile = "k8s-prod.yaml"
         k8sNamespace = "k8s-portal"
         
         // image
-        imageName = 'portal-web-prod' // image name
+        imageName = 'ms-portal-web-prod' // image name
         imageTag = '2.2.1' // image tag
  
         // environment
@@ -37,14 +37,14 @@ pipeline {
             }
         }
 
-        stage('Install & Build') {
-            steps {
-                sh 'npm install'
-                sh 'npm run build-prod'
-            }
-        }
+        // stage('Install & Build') {
+        //     steps {
+        //         sh 'npm install'
+        //         sh 'npm run build-prod'
+        //     }
+        // }
         
-        stage('Build Docker Image') { // stage
+        stage('Build') { // stage
             steps{ // steps
                 script { // script
                     sh "cp -r ${envFILE} .env"

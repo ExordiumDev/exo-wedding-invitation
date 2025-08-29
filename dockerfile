@@ -1,19 +1,35 @@
-# Use minimal base image with Node.js runtime
-FROM node:20.14.0
+FROM node:20.14.0 AS build
 
-# Create app directory
 WORKDIR /app
 
-# Copy only built assets
-COPY dist /app/dist
+COPY . ./
+RUN npm install
+RUN npm run build-prod
+RUN rm -rf node_modules
 
-# Install Express for serving static files
-RUN npm install express connect-history-api-fallback cors
+FROM node:20.14.0
 
-# Add minimal server
-COPY server.js .
+WORKDIR /app
 
-# Expose port
-EXPOSE 8013
+COPY --from=build /app/dist .
 
-CMD ["node", "server.js"]
+RUN npm install --g http-server
+
+EXPOSE 8001
+
+CMD ["npx", "http-server", "-p", "8001","--fallback","index.html"]
+
+#  ====================================================================
+
+# FROM node:20.14.0
+
+# WORKDIR /app
+
+# COPY dist /app/dist
+
+# RUN npm install express connect-history-api-fallback cors
+# COPY server.js .
+
+# EXPOSE 8013
+
+# CMD ["node", "server.js"]
