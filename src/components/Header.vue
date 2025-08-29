@@ -1,6 +1,6 @@
 <template>
     <div class="main-header">
-        <v-app-bar color="ligthCustom" class="px-10">
+        <v-app-bar color="ligthCustom" class="px-10 d-flex justify-space-between">
             <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none">
                 <v-icon>mdi-menu</v-icon>
             </v-app-bar-nav-icon>
@@ -9,7 +9,7 @@
                     <v-img :src="logoByFTP" width="40" height="40"></v-img>
                 </router-link>
             </v-app-bar-title>
-            <!-- <v-spacer /> -->
+            
             <div class="d-none d-md-flex my-0 router-wrapper">
                 <router-link :to="{ name: 'Home.view' }" class="nav-link">
                     <v-btn 
@@ -32,17 +32,6 @@
                         News
                     </v-btn>
                 </router-link>
-
-                <!-- <router-link :to="{ name: 'MyDocument.list.view' }" class="nav-link">
-                    <v-btn 
-                        text 
-                        class="py-0"
-                        :class="['MyDocument.list.view','MyDocument.create.view'].includes($route.name) ? 'active-navbar-item' : ''"
-                        color="secondary text-none"
-                    >
-                        Career
-                    </v-btn>
-                </router-link> -->
             </div>
 
             <!-- user detail  -->
@@ -59,54 +48,7 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
-
-            <div class="d-none d-md-flex align-items-center"> <span class="text-red mx-1 no-wrap"></span></div>
-            <!-- <v-menu offset-y>
-                <template #activator="{ props }">
-                    <v-btn icon v-bind="props">
-                        <v-avatar size="36">
-                            <img src="https://i.pravatar.cc/150?img=8" alt="Avatar" />
-                        </v-avatar>
-                    </v-btn>
-                </template>
-
-                <v-card min-width="220" class="pa-2">
-                    <v-list>
-                        <v-list-item>
-                            <v-list-item-title>Profile</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item>
-                            <v-list-item-title>Settings</v-list-item-title>
-                        </v-list-item>
-                        <v-divider></v-divider>
-                        <v-list-item>
-                            <v-dialog v-model="dialog" max-width="400" persistent>
-                                <template v-slot:activator="{props: activatorProps}">
-                                    <v-btn v-bind="activatorProps" color="error" variant="tonal">
-                                        Log Out
-                                    </v-btn>
-                                </template>
-                                <v-card
-                                    prepend-icon="mdi-map-marker"
-                                    text="Are you sure to log out ? this action will logging out all application you've been login !"
-                                    title="Log Out"
-                                >
-                                    <template v-slot:actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn @click="dialog = false">
-                                        Disagree
-                                    </v-btn>
-                                    <v-btn>
-                                        Agree
-                                    </v-btn>
-                                    </template>
-                                </v-card>
-                            </v-dialog>
-                        </v-list-item>
-                    </v-list>
-                </v-card>
-            </v-menu> -->
-            
+            <!-- <div class="d-none d-md-flex align-items-center"><span class="text-red mx-1 no-wrap"></span></div> -->
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -139,6 +81,10 @@
 </template>
 
 <style scoped>
+
+.v-app-bar-title {
+    flex: 0 0 auto;
+}
 
 .v-navigation-drawer {
     position: fixed !important;
@@ -179,6 +125,7 @@
 }
 
 .router-wrapper { 
+    flex: 1;
     height: 100% !important;
     align-items: center;
     justify-content: center;
