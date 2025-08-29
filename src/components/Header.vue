@@ -2,15 +2,15 @@
     <div class="main-header">
         <v-app-bar color="ligthCustom" class="px-10">
             <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none">
-                <v-icon icon="fa-solid fa-bars" />
+                <v-icon>mdi-menu</v-icon>
             </v-app-bar-nav-icon>
             <v-app-bar-title>
                 <router-link :to="{name : 'Home.view'}" style="color: #223">
                     <v-img :src="logoByFTP" width="40" height="40"></v-img>
                 </router-link>
             </v-app-bar-title>
-            <v-spacer />
-            <div class="d-none d-md-flex my-0 router-wrapper ">
+            <!-- <v-spacer /> -->
+            <div class="d-none d-md-flex my-0 router-wrapper">
                 <router-link :to="{ name: 'Home.view' }" class="nav-link">
                     <v-btn 
                         text
@@ -33,7 +33,7 @@
                     </v-btn>
                 </router-link>
 
-                <router-link :to="{ name: 'MyDocument.list.view' }" class="nav-link">
+                <!-- <router-link :to="{ name: 'MyDocument.list.view' }" class="nav-link">
                     <v-btn 
                         text 
                         class="py-0"
@@ -42,7 +42,7 @@
                     >
                         Career
                     </v-btn>
-                </router-link>
+                </router-link> -->
             </div>
 
             <!-- user detail  -->
@@ -60,8 +60,8 @@
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
 
-            <div class="d-none d-md-flex align-items-center">Hello, <span class="text-red mx-1 no-wrap"></span></div>
-            <v-menu offset-y>
+            <div class="d-none d-md-flex align-items-center"> <span class="text-red mx-1 no-wrap"></span></div>
+            <!-- <v-menu offset-y>
                 <template #activator="{ props }">
                     <v-btn icon v-bind="props">
                         <v-avatar size="36">
@@ -105,7 +105,7 @@
                         </v-list-item>
                     </v-list>
                 </v-card>
-            </v-menu>
+            </v-menu> -->
             
         </v-app-bar>
         <v-navigation-drawer
@@ -129,14 +129,6 @@
                     @click="drawer = false"
                 >
                     <v-list-item-title>News</v-list-item-title>
-                </v-list-item>
-
-                <v-list-item
-                    :to="{name : 'MyDocument.list.view'}"
-                    :class="['MyDocument.list.view','MyDocument.create.view'].includes($route.name) ? 'active-navbar-item' : ''"
-                    @click="drawer = false"
-                >
-                    <v-list-item-title>My Document</v-list-item-title>
                 </v-list-item>
 
             </v-list>
@@ -202,6 +194,9 @@
 
 <script>
 
+import { AUTH_USER } from '../stores/actions/reqApi';
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'Header',
     data() { 
@@ -220,12 +215,16 @@ export default {
         }
     },
     computed: { 
-
+        ...mapGetters({
+            getAUTH_USER: 'auth/'+AUTH_USER
+        })
     },
     methods: {
         toggleDrawer() {
             this.drawer_app = !this.drawer_app
         },
+    },
+    mounted() {
     }
 
 }
