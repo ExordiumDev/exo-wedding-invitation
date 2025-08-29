@@ -1,11 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-
-import 'dotenv/config';
-import { config } from 'dotenv';
-config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
-
 import fs from 'fs';
 
 export default defineConfig({
