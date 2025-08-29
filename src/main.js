@@ -53,7 +53,13 @@ app.component('AppAlert', AppAlert );
 
 // ------ by pass -----------
 
-app.use(router);
-app.use(store);
-app.use(vuetify);
-app.mount('#app');
+window.addEventListener("DOMContentLoaded", async() =>{ 
+    try {
+        app.use(router);
+        app.use(store);
+        app.use(vuetify);
+        app.mount('#app');
+    } catch (error) {
+        console.error(error)
+    }
+});

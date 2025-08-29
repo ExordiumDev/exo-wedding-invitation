@@ -30,6 +30,8 @@ const vuetify = createVuetify({
                     success: '#4CAF50',
                     warning: '#FFC107',
                     ligthCustom: '#F2F9FF',
+                    customFooterLight: '#344450',
+                    customFooterDark: '#142129'
                 }
             }
         }
