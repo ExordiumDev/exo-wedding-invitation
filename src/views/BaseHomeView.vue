@@ -20,7 +20,7 @@
         </v-row>
         <v-row justify="center" justify-lg="center">
             <v-col cols="12" md="8">
-                <v-carousel show-arrows="hover" cycle interval="3000" transition="fade-transition">
+                <v-carousel show-arrows="hover" cycle interval="5000" transition="fade-transition">
                     <v-carousel-item v-for="(i,idx) in items" :key="idx">
                         <v-row>
                             <v-col cols="8">

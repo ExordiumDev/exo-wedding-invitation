@@ -57,7 +57,7 @@
                 color="#2E2E2E"
                 class="control-sidebar"
             >
-                <div class="nav-link" data-widget="control-sidebar" href="#" role="button"></div>
+                <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
 
             <div class="d-none d-md-flex align-items-center">Hello, <span class="text-red mx-1 no-wrap"></span></div>
@@ -150,10 +150,7 @@
 
 .v-navigation-drawer {
     position: fixed !important;
-    /* top: 0;
-    left: 0; */
     height: 100vh;
-    /* z-index: 300;  */
 }
 
 .nav-link {
@@ -205,9 +202,6 @@
 
 <script>
 
-import { AUTH_USER, SOCKET_CLIENT, LOGOUT } from '../stores/actions/reqApi';
-import { mapActions, mapMutations, mapGetters, mapState } from 'vuex';
-
 export default {
     name: 'Header',
     data() { 
@@ -226,9 +220,7 @@ export default {
         }
     },
     computed: { 
-        ...mapGetters({
-            
-        })
+
     },
     methods: {
         toggleDrawer() {
