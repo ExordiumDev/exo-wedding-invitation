@@ -3,7 +3,7 @@
         <!-- splash screen -->
         <v-overlay v-if="loading" :model-value="true" persistent absolute class="d-flex align-center justify-center bg-background">
             <div class="text-center">
-                <DotLottieVue style="width: 500px; height: 500px;" autoplay loop src="https://lottie.host/50bdf139-3974-4b88-b2d3-99744fa72303/tmZaXgjovg.lottie" />
+                <DotLottieVue style="width: 500px; height: 500px;" autoplay loop :src="overlayImage" />
                 <!-- <v-progress-circular
                     indeterminate
                     color="primary"
@@ -39,7 +39,7 @@ export default {
         return { 
             loading: true,
             // overlayImage: import.meta.env.VITE_APP_URL_FTP + "/portal/portals/news-1.png"
-            overlayImage: "https://lottie.host/embed/50bdf139-3974-4b88-b2d3-99744fa72303/tmZaXgjovg.lottie"
+            overlayImage: "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie"
         }
     },
     components: {
