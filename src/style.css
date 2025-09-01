@@ -73,8 +73,7 @@ button:focus-visible {
 }
 
 .main-wrapper {
-  flex: 1 0 auto;
-  /* background: #213547; */
+    flex: 1 0 auto;
 }
 
 @media (prefers-color-scheme: light) {
