@@ -2,7 +2,7 @@
     <v-container class="h-100" fluid>
         <v-row justify="center" class="h-100">
             <v-col>
-                <div class="d-flex justify-center my-10 flex-wrap">
+                <div class="d-flex justify-center my-10 flex-wrap w-100">
                     <div class="d-flex">
                         <h1>Welcome to</h1>
                     </div>
