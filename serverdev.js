@@ -73,7 +73,7 @@ server.on('upgrade', (req, socket, head) => {
   console.log('WS upgrade:', req.url);
 });
 
-server.listen(9015, () => {
+server.listen(443, () => {
   console.log('Express server proxying Vite now running at: https://portal-dev.jalaera.com');
 });
 
