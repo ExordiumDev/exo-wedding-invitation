@@ -2,14 +2,12 @@ import { createStore } from 'vuex'
 import CryptoJS from 'crypto-js';
 import 'vue-cookies'
 import auth from './auth'
-import librarys from './librarys';
 import user from './user';
 
 
 const store = createStore({
     modules: { 
         auth: auth,
-        library: librarys,
         user: user,
     },
     state: {
