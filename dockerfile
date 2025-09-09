@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . ./
 RUN npm install
-RUN npm run build-prod
+RUN npm run build-stag
 
 FROM node:20.14.0
 
