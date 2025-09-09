@@ -48,7 +48,7 @@ pipeline {
             steps{ // steps
                 script { // script
                     sh "cp -r ${envFILE} .env"
-                    sh "docker build --build-arg BUILD_MODE=production -f dockerfile -t ${imageName}:${imageTag} ."
+                    sh "docker build --build-arg BUILD_MODE=prod -f dockerfile -t ${imageName}:${imageTag} ."
                 }
             }
         }
