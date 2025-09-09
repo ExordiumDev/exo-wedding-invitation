@@ -1,6 +1,5 @@
 import moment from 'moment';
 import MobileDetect from 'mobile-detect';
-import { $axPdf } from '../stores/api';
 
 export default { 
     install(app) { 
