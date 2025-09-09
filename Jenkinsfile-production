@@ -21,7 +21,7 @@ pipeline {
         
         // image
         imageName = 'ms-portal-web-prod' // image name
-        imageTag = '2.2.4' // image tag
+        imageTag = '2.2.5' // image tag
  
         // environment
         envFILE=".env.production"
@@ -48,7 +48,7 @@ pipeline {
             steps{ // steps
                 script { // script
                     sh "cp -r ${envFILE} .env"
-                    sh "docker build -f dockerfile -t ${imageName}:${imageTag} ."
+                    sh "docker build --build-arg BUILD_MODE=production -f dockerfile -t ${imageName}:${imageTag} ."
                 }
             }
         }
