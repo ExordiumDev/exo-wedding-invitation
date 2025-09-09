@@ -21,7 +21,7 @@ pipeline {
         
         // image
         imageName = 'ms-portal-web-prod' // image name
-        imageTag = '2.2.5' // image tag
+        imageTag = '2.2.6' // image tag
  
         // environment
         envFILE=".env.production"
