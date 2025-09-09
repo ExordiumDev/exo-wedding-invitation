@@ -3,8 +3,11 @@ FROM node:20.14.0 AS build
 WORKDIR /app
 
 COPY . ./
+
+#build arg
+ARG BUILD_MODE=production
 RUN npm install
-RUN npm run build-stag
+RUN npm run build-${BUILD_MODE}
 
 FROM node:20.14.0
 
