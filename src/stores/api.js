@@ -37,10 +37,7 @@ function setupInterceptor(instance) {
     );
 }
 
-setupInterceptor($axAcrticle);
 setupInterceptor($axInstance);
-setupInterceptor($axPdf);
-setupInterceptor($axios);
 
 
 $axInstance.interceptors.request.use (
@@ -124,7 +121,6 @@ export const delCookie = (name=undefined) =>{
 
 export const setAuthToken = (payload) => {
     if (payload) {
-        // console.log({setAuthToken:payload});
         const {access_token,refresh_token,expires_in,token_type,thirdParty} = payload;
         akses = {access_token,refresh_token,expires_in,token_type};
         curdapi2 = thirdParty;
@@ -146,4 +142,4 @@ export const axDT = async (url,data,callback,settings,method='post')=>{
     }
 }
 
-export { $axios, $axInstance, $axAcrticle, $axPdf};
+export { $axInstance};
