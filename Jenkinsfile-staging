@@ -21,7 +21,7 @@ pipeline {
         
         // image
         imageName = 'ms-portal-web' // image name
-        imageTag = '2.1.3' // image tag
+        imageTag = '2.1.4' // image tag
 
         // environment
         envFILE=".env.staging"
@@ -37,12 +37,12 @@ pipeline {
             }
         }
 
-        stage('Install & Build') {
-            steps {
-                sh 'npm install'
-                sh 'npm run build-stag'
-            }
-        }
+        // stage('Install & Build') {
+        //     steps {
+        //         sh 'npm install'
+        //         sh 'npm run build-stag'
+        //     }
+        // }
         
         stage('Build Docker Image') { // stage
             steps{ // steps
