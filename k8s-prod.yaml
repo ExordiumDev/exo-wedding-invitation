@@ -18,7 +18,7 @@ spec:
         image: docker-registry.jalaniagaelok.web.id/ms-portal-web-prod:2.2.5 # Replace with your Vue.js Docker image and tag 
         imagePullPolicy: Always
         ports:
-        - containerPort: 8001
+        - containerPort: 8013
       imagePullSecrets:
       - name: registry-1
         
@@ -36,7 +36,7 @@ spec:
       name: http-jalasignin
       protocol: TCP
       port: 8000  # Port on which the service will be exposed
-      targetPort: 8001  # Port on which the Vue.js app is running in the pod        
+      targetPort: 8013  # Port on which the Vue.js app is running in the pod        
 
 ---
 apiVersion: networking.k8s.io/v1
