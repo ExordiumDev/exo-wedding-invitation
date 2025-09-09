@@ -48,7 +48,7 @@ pipeline {
             steps{ // steps
                 script { // script
                     sh "cp -r ${envFILE} .env"
-                    sh "docker build --build-arg BUILD_MODE=staging -f dockerfile -t ${imageName}:${imageTag} ."
+                    sh "docker build --build-arg BUILD_MODE=stag -f dockerfile -t ${imageName}:${imageTag} ."
                 }
             }
         }
