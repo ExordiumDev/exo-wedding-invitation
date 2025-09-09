@@ -15,6 +15,6 @@ COPY server.js .
 
 RUN npm install express connect-history-api-fallback cors
 
-EXPOSE 8001
+EXPOSE 8013
 
 CMD ["node", "server.js"]
