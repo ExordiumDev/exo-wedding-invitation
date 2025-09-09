@@ -23,11 +23,6 @@ app.component('AppAlert', AppAlert );
 
 window.addEventListener("DOMContentLoaded", async () => {
     try {
-        app.use(router);
-        app.use(store);
-        app.use(vuetify);
-        app.mount('#app');
-
         const curdapi2 = new dapi2();
         await curdapi2.init({
             APP_REDIRECT_SSO: import.meta.env.VITE_APP_REDIRECT_SSO,
@@ -35,10 +30,15 @@ window.addEventListener("DOMContentLoaded", async () => {
             redirect_sso: import.meta.env.VITE_APP_REDIRECT_SSO_URL
         });
 
-        // const authResult = await curdapi2.getAuth();
-        // await store.dispatch(`auth/${AUTH_TOKEN}`, { ...authResult, thirdParty: curdapi2 });
-        // const userProfile = await store.dispatch(`auth/${AUTH_GET_USER}`);
-        // await store.dispatch(`auth/${AUTH_USER}`, userProfile);
+        const authResult = await curdapi2.getAuth();
+        await store.dispatch(`auth/${AUTH_TOKEN}`, { ...authResult, thirdParty: curdapi2 });
+        const userProfile = await store.dispatch(`auth/${AUTH_GET_USER}`);
+        await store.dispatch(`auth/${AUTH_USER}`, userProfile);
+
+        app.use(router);
+        app.use(store);
+        app.use(vuetify);
+        app.mount('#app');
 
         // app.config.globalProperties.$curdapi2 = curdapi2;
     } catch (e) {

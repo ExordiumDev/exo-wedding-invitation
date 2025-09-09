@@ -10,41 +10,6 @@ const $axInstance = axios.create({
     }
 });
 
-// files-api-v2
-const $axPdf = axios.create({
-    // baseURL: isDev
-    // ? '/files-api-v2'
-    // : `${import.meta.env.VITE_APP_API_URL}/articles/files`,
-    baseURL : `${import.meta.env.VITE_APP_API_URL}/articles/files`,
-    responseType: 'blob',
-    headers: {
-        'X-Client': import.meta.env.VITE_APP_CLIENT_ID,
-        'X-Requested-With': 'XMLHttpRequest',
-    },
-})
-
-const $axios = axios.create({
-    baseURL: isDev
-    ? '/getmaster-v2'
-    : `${import.meta.env.VITE_APP_API_URL}/master`,
-    headers: {
-        'X-Client': import.meta.env.VITE_APP_CLIENT_ID,
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-    }
-});
-
-const $axAcrticle = axios.create({
-    baseURL: isDev ?
-    '/article-api-v2'
-    : `${import.meta.env.VITE_APP_API_URL}/`,
-    headers: {
-        'X-Client': import.meta.env.VITE_APP_CLIENT_ID,
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-    }
-});
-
 let akses = undefined;
 let curdapi2 = undefined;
 

@@ -11,8 +11,8 @@ const state = {
     AUTH_USER:{},
     SOCKET_CLIENT:{},
     AUTH_PROFILE:{},
-    // AUTH_STATUS: getCookie('dapi2') || false,
-    AUTH_STATUS: true,
+    AUTH_STATUS: getCookie('dapi2') || false,
+    // AUTH_STATUS: true,
 };
 
 const getters = {
