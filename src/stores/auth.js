@@ -72,10 +72,7 @@ const actions = {
             $axInstance.get(`${import.meta.env.VITE_APP_OAUTH_URL}/api/user`).then(async(response) => {
                 resolve(response?.data)
             }).catch(async (error) => {
-                if(error?.response?.status==401){
-                    await dispatch('logout');
-                }
-                reject(error?.response?.data)
+                console.log('error 401 ', error)
             });
         })
     },
