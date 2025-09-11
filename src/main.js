@@ -21,31 +21,33 @@ app.use(global);
 app.mixin(globalTest);
 app.component('AppAlert', AppAlert );
 
-app.use(router).use(store).use(vuetify).mount("#app");
-
 
 // ---------- dapi init ---------------
 
 window.addEventListener("DOMContentLoaded", async () => {
 
     try {
+        app.use(router).use(store).use(vuetify).mount("#app");
+
         const curdapi2 = new dapi2();
         await curdapi2.init({
             APP_REDIRECT_SSO: import.meta.env.VITE_APP_REDIRECT_SSO,
             APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
             redirect_sso: import.meta.env.VITE_APP_REDIRECT_SSO_URL
         });
-        
-        let authResult = null;
-        try {
-            authResult = await curdapi2.getAuth();
-        } catch (err) {
-            if (err?.status === 422) {
-                authResult = {};
-            } else {
-                throw err;
+
+         let authResult = {}
+            try {
+                authResult = await curdapi2.getAuth();
+                console.log('auth res ')
+            } catch (err) {
+                if (err?.status === 422) {
+                    console.log('auth res', authResult)
+                    authResult = {};
+                } else {
+                    throw err;
+                }
             }
-        }
 
         await store.dispatch(`auth/${AUTH_TOKEN}`, { ...authResult, thirdParty: curdapi2 });
         const userProfile = await store.dispatch(`auth/${AUTH_GET_USER}`);
