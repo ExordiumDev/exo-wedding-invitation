@@ -21,7 +21,7 @@ pipeline {
         
         // image
         imageName = 'ms-portal-web' // image name
-        imageTag = '2.1.17' // image tag
+        imageTag = '2.1.18' // image tag
 
         // environment
         envFILE=".env.staging"
