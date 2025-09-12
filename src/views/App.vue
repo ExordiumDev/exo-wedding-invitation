@@ -9,7 +9,7 @@
         <template v-else>
             <Header />
             <v-main class="main-wrapper">
-                <iframe src="/public/dapi-frame.html" frameborder="0" id="dapi-auth" style="display: block; height: 0; border:0;"></iframe>
+                <iframe src="/dapi-frame.html" frameborder="0" id="dapi-auth" style="display: block; height: 0; border:0;"></iframe>
                 <router-view></router-view>
             </v-main>
             <Footer />
