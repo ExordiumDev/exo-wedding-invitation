@@ -69,7 +69,7 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
-            <iframe v-show="!getAUTH_USER?.name" src="../../public/dapi-frame.html" frameborder="0" id="dapi-auth" style="height: 100%;"></iframe>
+            <iframe v-show="!getAUTH_USER?.name" :src="dFrame" frameborder="0" id="dapi-auth" style="height: 100%;"></iframe>
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -190,6 +190,9 @@ export default {
             if (!this.getAUTH_USER?.photos?.image_url) return null
             return import.meta.env.VITE_APP_URL_FTP + '/cdn/images/' + this.getAUTH_USER?.photos?.image_url || ''
         },
+        dFrame() {
+            return import.meta.env.VITE_APP_IFRAME_OAUTH;
+        }
     },
     methods: {
         toggleDrawer() {
