@@ -9,7 +9,6 @@ import VueCookies from 'vue-cookies';
 import global from './appcore/global.js';
 import globalTest from './appcore/globalTest.js';
 import AppAlert from './components/BaseAlert.vue';
-import LoadScript from 'vue-plugin-load-script'
 import '@mdi/font/css/materialdesignicons.css'
 import '@fontsource/dm-sans';
 import '@fontsource/dm-sans/400.css';
@@ -18,7 +17,6 @@ import '@fontsource/dm-sans/700.css';
 const app = createApp(App);
 app.use(VueCookies);
 app.use(global);
-app.use(LoadScript);
 app.mixin(globalTest);
 app.component('AppAlert', AppAlert );
 
