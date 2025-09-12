@@ -49,7 +49,7 @@ const actions = {
         } catch (error) {
             commit(AUTH_STATUS,false);
             commit(AUTH_TOKEN,{});
-            console.log(error);
+            console.error(error);
         }
     },
     
@@ -72,7 +72,7 @@ const actions = {
             $axInstance.get(`${import.meta.env.VITE_APP_OAUTH_URL}/api/user`).then(async(response) => {
                 resolve(response?.data)
             }).catch(async (error) => {
-                console.log('error 401 ', error)
+                reject(error)
             });
         })
     },
@@ -134,7 +134,6 @@ const actions = {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             }).then(async(response) => {
-                console.log(response)
                 resolve(true);
             }).catch(async (error) => {
                 // console.log({testauth:error.respo'nse.headers["set-cookie"]})

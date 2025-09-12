@@ -4,17 +4,12 @@
         <v-overlay v-if="loading" :model-value="true" persistent absolute class="d-flex align-center justify-center bg-background">
             <div class="text-center">
                 <DotLottieVue style="width: 500px; height: 500px;" autoplay loop :src="overlayImage" />
-                <!-- <v-progress-circular
-                    indeterminate
-                    color="primary"
-                    size="48"
-                    class="mt-4"
-                /> -->
             </div>
         </v-overlay>
         <template v-else>
             <Header />
             <v-main class="main-wrapper">
+                <iframe src="../../dapi-frame.html" frameborder="0" id="dapi-iframe" style="display: block; height: 0; border:0"></iframe>
                 <router-view></router-view>
             </v-main>
             <Footer />
@@ -32,13 +27,13 @@ import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 import BaseIndex from './BaseIndex.vue';
 import { DotLottieVue } from '@lottiefiles/dotlottie-vue'
+import { AUTH_TOKEN, AUTH_USER, AUTH_GET_USER } from '../stores/actions/reqApi.js'
 
 export default {
     name: 'App',
     data() {
         return { 
             loading: true,
-            // overlayImage: import.meta.env.VITE_APP_URL_FTP + "/portal/portals/news-1.png"
             overlayImage: "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie"
         }
     },
@@ -50,16 +45,29 @@ export default {
     },
     methods: {
         ...mapActions({
-
+            actAUTH_TOKEN: `auth/${AUTH_TOKEN}`,
+            actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
+            actAUTH_USER: `auth/${AUTH_USER}`
         }),
+
     },
     mounted() {
         setTimeout(() => {
             this.loading = false
-        }, 5000)
-    },
-    created() {
+        }, 3000);
 
+        window.addEventListener("message", async (event) => {
+            if (event.data?.type === "DAPI_AUTH") {
+                const { authResult } = event.data;
+
+                await this.actAUTH_TOKEN({
+                    ...authResult,
+                    thirdParty: { proxy: true } // placeholder
+                });
+                const userProfile = await this.actAUTH_GET_USER();
+                await this.actAUTH_USER(userProfile)
+            }
+        });
     },
 }
 

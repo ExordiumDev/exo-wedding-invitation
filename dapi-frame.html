@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>DAPI Frame</title>
+        <script src="https://jalaera.com/services/account/js/vendor/dapi/app/dapi2.js"></script>
+    </head>
+    <body>
+        <div
+            id="dapi_signin2"
+            data-login_uri="https://portal-dev.jalaera.com"
+            data-text-login="Login with App"
+            data-scope=""
+            data-locale="id"
+        ></div>
+
+        <script>
+            window.parent.postMessage({ type: "REQUEST_CONFIG" }, "*");
+
+            let curdapi2 = null;
+            let targetOrigin = "*";
+
+            window.addEventListener("message", async (event) => {
+                if (event.data?.type === "APP_CONFIG") {
+                    const config = event.data.payload;
+                    targetOrigin = config.APP_REDIRECT_SSO_URL || "*";
+
+                    try {
+                        curdapi2 = new dapi2();
+                        await curdapi2.init(config);
+
+                        const authResult = await curdapi2.getAuth();
+                        window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
+                    } catch (err) {
+                        console.warn("DAPI not logged in", err);
+                        window.parent.postMessage(
+                            { type: "DAPI_AUTH", authResult: { guest: true } },
+                            targetOrigin
+                        );
+                    }
+                }
+
+                if (event.data?.type === "GET_AUTH" && curdapi2) {
+                    try {
+                        const authResult = await curdapi2.getAuth();
+                        window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
+                    } catch (err) {
+                        window.parent.postMessage(
+                            { type: "DAPI_AUTH", authResult: { guest: true } },
+                            targetOrigin
+                        );
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
