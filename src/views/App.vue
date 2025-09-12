@@ -9,7 +9,7 @@
         <template v-else>
             <Header />
             <v-main class="main-wrapper">
-                <iframe src="/dapi-frame.html" frameborder="0" id="dapi-auth" style="display: block; height: 0; border:0;"></iframe>
+                <iframe :src="dFrame" frameborder="0" id="dapi-auth" style="display: block; height: 0; border:0;"></iframe>
                 <router-view></router-view>
             </v-main>
             <Footer />
@@ -49,7 +49,11 @@ export default {
             actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
             actAUTH_USER: `auth/${AUTH_USER}`
         }),
-
+    },
+    computed: {
+        dFrame() {
+            return import.meta.env.VITE_APP_IFRAME_OAUTH;
+        }
     },
     mounted() {
         setTimeout(() => {

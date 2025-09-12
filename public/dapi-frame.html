@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>DAPI Frame</title>
+        <script src="https://jalaniagaelok.web.id/files/cdn/js/jala-sidebar-apps.js"></script>
     </head>
     <body>
         <div
@@ -39,12 +40,14 @@
 
                             const authResult = await curdapi2.getAuth();
                             window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
+                            console.log('curdapi2 ', curdapi2)
                         } catch (err) {
                             console.warn("DAPI not logged in", err);
                             window.parent.postMessage(
                                 { type: "DAPI_AUTH", authResult: { guest: true } },
                                 targetOrigin
                             );
+                            console.log('err auth res', authResult)
                         }
                     };
                     document.head.appendChild(script);
