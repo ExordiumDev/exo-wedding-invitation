@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./public/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script src='%VITE_APP_OAUTH_URL%' defer></script>
+    <meta name="client_id" content='%VITE_APP_CLIENT_ID%'>
+    <!-- <script src='%VITE_APP_OAUTH_URL%' defer></script> -->
     <script src="%VITE_APP_URL_FTP%/cdn/js/jala-sidebar-apps.js" defer></script>
   </head>
   <body>
+    <!-- <div id="dapi_signin2" data-login_uri="%VITE_APP_URL%" data-text-login="login with app" data-scope="" data-locale=""></div> -->
     <div id="dapi_signin2" data-login_uri="%VITE_APP_URL%" data-text-login="login with app" data-scope="" data-locale=""></div>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>

@@ -14,7 +14,6 @@ import '@mdi/font/css/materialdesignicons.css'
 import '@fontsource/dm-sans';
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/700.css';
-import { AUTH_TOKEN, AUTH_USER, AUTH_GET_USER } from './stores/actions/reqApi.js'
 
 const app = createApp(App);
 app.use(VueCookies);
@@ -23,4 +22,20 @@ app.use(LoadScript);
 app.mixin(globalTest);
 app.component('AppAlert', AppAlert );
 
-app.use(router).use(store).use(vuetify).mount('#app');
+const APP_CONFIG = {
+    OAUTH_URL: import.meta.env.VITE_APP_OAUTH_URL,
+    APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
+    redirect_sso: import.meta.env.VITE_APP_REDIRECT_SSO,
+    APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL
+}
+
+app.use(router).use(store).use(vuetify).mount("#app");
+
+window.addEventListener("message", (event) => {
+    if (event.data?.type === "REQUEST_CONFIG") {
+        event.source.postMessage(
+            { type: "APP_CONFIG", payload: APP_CONFIG },
+            event.origin
+        );
+    }
+});

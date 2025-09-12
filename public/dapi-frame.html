@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>DAPI Frame</title>
+        <script src="https://jalaniagaelok.web.id/files/cdn/js/jala-sidebar-apps.js"></script>
+    </head>
+    <body>
+        <div
+            id="dapi_signin2"
+            data-text-login="Login with App"
+            data-scope=""
+            data-locale="id"
+        ></div>
+
+        <script>
+            window.parent.postMessage({ type: "REQUEST_CONFIG" }, "*");
+
+            let curdapi2 = null;
+            let targetOrigin = "*";
+
+            window.addEventListener("message", async (event) => {
+                if (event.data?.type === "APP_CONFIG") {
+                    console.log('event ', event)
+                    const config = event.data.payload;
+                    targetOrigin = config.APP_REDIRECT_SSO_URL || "*";
+
+                    const signinDiv = document.getElementById("dapi_signin2");
+                    signinDiv.setAttribute("data-login_uri", config.APP_REDIRECT_SSO_URL);
+
+                    const script = document.createElement("script");
+                    script.src = `${config.OAUTH_URL}`;
+                    script.async = true;
+                    script.onload = async () => {
+                        console.log("dapi2.js loaded from", script.src);
+
+                        try {
+                            curdapi2 = new dapi2();
+                            await curdapi2.init(config);
+
+                            const authResult = await curdapi2.getAuth();
+                            window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
+                            console.log('curdapi2 ', curdapi2)
+                        } catch (err) {
+                            console.warn("DAPI not logged in", err);
+                            window.parent.postMessage(
+                                { type: "DAPI_AUTH", authResult: { guest: true } },
+                                targetOrigin
+                            );
+                            console.log('err auth res', authResult)
+                        }
+                    };
+                    document.head.appendChild(script);
+                }
+
+                if (event.data?.type === "GET_AUTH" && curdapi2) {
+                    try {
+                        const authResult = await curdapi2.getAuth();
+                        window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
+                    } catch (err) {
+                        window.parent.postMessage(
+                            { type: "DAPI_AUTH", authResult: { guest: true } },
+                            targetOrigin
+                        );
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

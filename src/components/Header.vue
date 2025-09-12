@@ -40,6 +40,29 @@
                     mdi-dots-grid
                 </v-icon>
             </v-btn>
+            <div class="d-flex justify-space-around" v-if="getAUTH_USER">
+                <v-menu v-model="menu" :close-on-content-click="false" location="start">
+                    <template v-slot:activator="{ props }">
+                        <v-btn
+                            color="indigo"
+                            v-bind="props"
+                        >
+                        </v-btn>
+                    </template>
+
+                    <v-card min-width="300">
+                        <v-list>
+                            <!-- <v-list-item :prepend-avatar="usrPhotosProfile" :subtitle="getAUTH_USER.email" :title=getAUTH_USER.name></v-list-item> -->
+                            <!-- avatar sama nama user yg lg login -->
+                        </v-list>
+                        <v-divider />
+                        <v-card-actions class="d-flex justify-space-between pa-3">
+                            <!-- button setting sama logout -->
+                        </v-card-actions>
+                    </v-card>
+                </v-menu>
+            </div>
+            
             <v-navigation-drawer
                 v-model="drawer_app"
                 location="right"
@@ -48,14 +71,13 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
-            <!-- <div class="d-none d-md-flex align-items-center"><span class="text-red mx-1 no-wrap"></span></div> -->
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
             temporary
             class="d-md-none"
             location="left"
-            >
+        >
             <v-list nav>
                 <v-list-item
                     :to="{name: 'Home.view'}"
@@ -72,7 +94,6 @@
                 >
                     <v-list-item-title>News</v-list-item-title>
                 </v-list-item>
-
             </v-list>
         </v-navigation-drawer>
         <!-- <router-view /> -->
@@ -141,8 +162,8 @@
 
 <script>
 
-import { AUTH_USER } from '../stores/actions/reqApi';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import { AUTH_TOKEN, AUTH_USER, AUTH_GET_USER } from '../stores/actions/reqApi'
 
 export default {
     name: 'Header',
@@ -159,13 +180,17 @@ export default {
                 'Settings',
                 'Logout',
             ],
-            location: 'bottom'
+            menu: false,
         }
     },
     computed: { 
         ...mapGetters({
             getAUTH_USER: 'auth/'+AUTH_USER
-        })
+        }),
+        usrPhotosProfile() {
+            if (!this.getAUTH_USER?.photos?.image_url) return null
+            return import.meta.env.VITE_APP_URL_FTP + '/cdn/images/' + this.getAUTH_USER?.photos?.image_url || ''
+        },
     },
     methods: {
         toggleDrawer() {
