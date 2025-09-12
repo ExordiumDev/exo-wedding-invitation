@@ -30,16 +30,11 @@
 
                 if (event.data?.type === "APP_CONFIG") {
                     const config = event.data.payload;
-                    console.log("DAPI Frame received config", config);
 
                     targetOrigin = config.APP_REDIRECT_SSO_URL || "*";
                     try {
                         curdapi2 = new dapi2();
-                        // await curdapi2.init(config);
-                        await curdapi2.init({
-                            APP_REDIRECT_SSO_URL: "https://portal-dev.jalaera.com",
-                            APP_CLIENT_ID: "2845364",
-                        });
+                        await curdapi2.init(config);
 
                         const authResult = await curdapi2.getAuth();
                         window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
