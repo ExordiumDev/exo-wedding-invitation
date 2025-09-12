@@ -20,6 +20,7 @@
 
             window.addEventListener("message", async (event) => {
                 if (event.data?.type === "APP_CONFIG") {
+                    console.log('event ', event)
                     const config = event.data.payload;
                     targetOrigin = config.APP_REDIRECT_SSO_URL || "*";
 
@@ -33,19 +34,19 @@
                         console.log("dapi2.js loaded from", script.src);
 
                         try {
-                        curdapi2 = new dapi2();
-                        await curdapi2.init(config);
+                            curdapi2 = new dapi2();
+                            await curdapi2.init(config);
 
-                        const authResult = await curdapi2.getAuth();
-                        window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
+                            const authResult = await curdapi2.getAuth();
+                            window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
                         } catch (err) {
-                        console.warn("DAPI not logged in", err);
-                        window.parent.postMessage(
-                            { type: "DAPI_AUTH", authResult: { guest: true } },
-                            targetOrigin
-                        );
-                    }
-                };
+                            console.warn("DAPI not logged in", err);
+                            window.parent.postMessage(
+                                { type: "DAPI_AUTH", authResult: { guest: true } },
+                                targetOrigin
+                            );
+                        }
+                    };
                     document.head.appendChild(script);
                 }
 
