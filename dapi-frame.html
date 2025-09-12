@@ -3,6 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         <title>DAPI Frame</title>
+    </head>
+    <body>
+        <div
+            id="dapi_signin2"
+            data-text-login="Login with App"
+            data-scope=""
+            data-locale="id"
+        ></div>
+
         <script>
             window.parent.postMessage({ type: "REQUEST_CONFIG" }, "*");
 
@@ -14,6 +23,9 @@
                     const config = event.data.payload;
                     targetOrigin = config.APP_REDIRECT_SSO_URL || "*";
 
+                    const signinDiv = document.getElementById("dapi_signin2");
+                    signinDiv.setAttribute("data-login_uri", config.APP_REDIRECT_SSO_URL);
+
                     const script = document.createElement("script");
                     script.src = `${config.OAUTH_URL}`;
                     script.async = true;
@@ -21,18 +33,19 @@
                         console.log("dapi2.js loaded from", script.src);
 
                         try {
-                            curdapi2 = new dapi2();
-                            await curdapi2.init(config);
+                        curdapi2 = new dapi2();
+                        await curdapi2.init(config);
 
-                            const authResult = await curdapi2.getAuth();
-                            window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
+                        const authResult = await curdapi2.getAuth();
+                        window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
                         } catch (err) {
-                            console.warn("DAPI not logged in", err);
-                            window.parent.postMessage(
-                                { type: "DAPI_AUTH", authResult: { guest: true } },targetOrigin
-                            );
-                        }
-                    };
+                        console.warn("DAPI not logged in", err);
+                        window.parent.postMessage(
+                            { type: "DAPI_AUTH", authResult: { guest: true } },
+                            targetOrigin
+                        );
+                    }
+                };
                     document.head.appendChild(script);
                 }
 
@@ -41,19 +54,13 @@
                         const authResult = await curdapi2.getAuth();
                         window.parent.postMessage({ type: "DAPI_AUTH", authResult }, targetOrigin);
                     } catch (err) {
-                        window.parent.postMessage({ type: "DAPI_AUTH", authResult: { guest: true } }, targetOrigin);
+                        window.parent.postMessage(
+                            { type: "DAPI_AUTH", authResult: { guest: true } },
+                            targetOrigin
+                        );
                     }
                 }
             });
         </script>
-    </head>
-    <body>
-        <div
-        id="dapi_signin2"
-        data-login_uri="https://portal-dev.jalaera.com"
-        data-text-login="Login with App"
-        data-scope=""
-        data-locale="id"
-        ></div>
     </body>
 </html>
