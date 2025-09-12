@@ -40,7 +40,7 @@
                     mdi-dots-grid
                 </v-icon>
             </v-btn>
-            <div class="d-flex justify-space-around" v-if="getAUTH_USER">
+            <!-- <div class="d-flex justify-space-around" v-if="getAUTH_USER">
                 <v-menu v-model="menu" :close-on-content-click="false" location="start">
                     <template v-slot:activator="{ props }">
                         <v-btn
@@ -52,16 +52,14 @@
 
                     <v-card min-width="300">
                         <v-list>
-                            <!-- <v-list-item :prepend-avatar="usrPhotosProfile" :subtitle="getAUTH_USER.email" :title=getAUTH_USER.name></v-list-item> -->
-                            <!-- avatar sama nama user yg lg login -->
                         </v-list>
                         <v-divider />
                         <v-card-actions class="d-flex justify-space-between pa-3">
-                            <!-- button setting sama logout -->
+
                         </v-card-actions>
                     </v-card>
                 </v-menu>
-            </div>
+            </div> -->
             
             <v-navigation-drawer
                 v-model="drawer_app"
@@ -71,6 +69,7 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
+            <iframe v-show="!getAUTH_USER?.name" src="../../public/dapi-frame.html" frameborder="0" id="dapi-auth" style="height: 100%;"></iframe>
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"

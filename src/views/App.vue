@@ -9,7 +9,8 @@
         <template v-else>
             <Header />
             <v-main class="main-wrapper">
-                <iframe :src="dFrame" frameborder="0" id="dapi-auth" style="display: block; height: 0; border:0;"></iframe>
+                <!-- <iframe src="../../public/dapi-frame.html" frameborder="0" id="dapi-auth" style="display: flex; height: 200px; width:100%; background-color: aqua; justify-content: center;"></iframe> -->
+                 <!-- <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale=""></div> -->
                 <router-view></router-view>
             </v-main>
             <Footer />
@@ -50,13 +51,13 @@ export default {
             actAUTH_USER: `auth/${AUTH_USER}`
         }),
         async initDapi2() { 
-            window.addEventListener("DOMContentLoaded", async () => {
+            window.addEventListener("Load", async () => {
                 try {
                     const curdapi2 = new dapi2();
                     await curdapi2.init({
                         APP_REDIRECT_SSO: import.meta.env.VITE_APP_REDIRECT_SSO,
                         APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
-                        redirect_sso: 1//import.meta.env.VITE_APP_REDIRECT_SSO_URL
+                        redirect_sso: import.meta.env.VITE_APP_REDIRECT_SSO_URL
                     });
                 
                     const authResult = await curdapi2.getAuth();
@@ -79,6 +80,10 @@ export default {
         setTimeout(() => {
             this.loading = false
         }, 3000);
+
+        // this.$nextTick(() => {
+        //     this.initDapi2();
+        // });
 
         window.addEventListener("message", async (event) => {
             if (event.data?.type === "DAPI_AUTH") {

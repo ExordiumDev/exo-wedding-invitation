@@ -23,10 +23,9 @@ app.mixin(globalTest);
 app.component('AppAlert', AppAlert );
 
 const APP_CONFIG = {
-    OAUTH_URL: import.meta.env.VITE_APP_OAUTH_URL,
     APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
+    APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL,
     redirect_sso: import.meta.env.VITE_APP_REDIRECT_SSO,
-    APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL
 }
 
 app.use(router).use(store).use(vuetify).mount("#app");
