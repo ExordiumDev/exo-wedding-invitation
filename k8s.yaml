@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: ms-portal-web
-        image: docker-registry.jalaniagaelok.web.id/ms-portal-web:2.1.12 # Replace with your Vue.js Docker image and tag
+        image: docker-registry.jalaniagaelok.web.id/ms-portal-web:2.1.13 # Replace with your Vue.js Docker image and tag
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
