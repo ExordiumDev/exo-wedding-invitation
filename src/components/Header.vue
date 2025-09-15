@@ -69,7 +69,8 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
-            <iframe v-show="!getAUTH_USER?.name" :src="dFrame" frameborder="0" id="dapi-auth" style="height: 100%;"></iframe>
+            <!-- <iframe v-show="!getAUTH_USER?.name" :src="dFrame" frameborder="0" id="dapi-auth" style="height: 100%;"></iframe> -->
+            <!-- <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale=""></div> -->
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"

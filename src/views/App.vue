@@ -9,8 +9,8 @@
         <template v-else>
             <Header />
             <v-main class="main-wrapper">
-                <!-- <iframe src="../../public/dapi-frame.html" frameborder="0" id="dapi-auth" style="display: flex; height: 200px; width:100%; background-color: aqua; justify-content: center;"></iframe> -->
-                 <!-- <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale=""></div> -->
+                <!-- <iframe src="../../public/dapi-frame.html" frameborder="0" id="dapi-auth" style="display: flex; height: 200px; width:100%; justify-content: center;"></iframe> -->
+                <!-- <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale=""></div> -->
                 <router-view></router-view>
             </v-main>
             <Footer />
@@ -51,7 +51,7 @@ export default {
             actAUTH_USER: `auth/${AUTH_USER}`
         }),
         async initDapi2() { 
-            window.addEventListener("Load", async () => {
+            window.addEventListener("load", async () => {
                 try {
                     const curdapi2 = new dapi2();
                     await curdapi2.init({
@@ -61,9 +61,9 @@ export default {
                     });
                 
                     const authResult = await curdapi2.getAuth();
-                    await store.dispatch(`auth/${AUTH_TOKEN}`, { ...authResult, thirdParty: curdapi2 });
-                    const userProfile = await store.dispatch(`auth/${AUTH_GET_USER}`);
-                    await store.dispatch(`auth/${AUTH_USER}`, userProfile)
+                    await this.actAUTH_TOKEN({ ...authResult, thirdParty: curdapi2 });
+                    const userProfile = await this.actAUTH_GET_USER();
+                    await this.actAUTH_USER(userProfile);
 
                 } catch (e) {
                     console.error(e);
