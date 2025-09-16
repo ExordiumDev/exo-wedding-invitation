@@ -9,9 +9,9 @@
         <template v-else>
             <Header />
             <v-main class="main-wrapper">
-                <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale="">
+                <div id="dapi_signin2" :data-login_uri="dataLoginUri" data-text-login="login with app" data-scope="" data-locale="">
                 </div>
-                <div class="d-flex w-100 justify-end pa-5">
+                <div class="d-flex w-100 justify-center pa-5">
                     <v-btn v-if="authFailed" class="bg-primary" @click="btnLogin">Login</v-btn>
                 </div>
                 <router-view></router-view>
@@ -135,7 +135,10 @@ export default {
     computed: {
         ...mapGetters({
             getAUTH_USER: `auth/${AUTH_USER}`,
-        })
+        }),
+        dataLoginUri() {
+            return import.meta.env.VITE_APP_URL;
+        }
     },
     mounted() {
         this.$nextTick(() => {
