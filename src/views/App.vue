@@ -9,11 +9,8 @@
         <template v-else>
             <Header />
             <v-main class="main-wrapper">
-                <div id="dapi_signin2" :data-login_uri="dataLoginUri" data-text-login="login with app" data-scope="" data-locale="">
-                </div>
-                <div class="d-flex w-100 justify-center pa-5">
-                    <v-btn v-if="authFailed" class="bg-primary" @click="btnLogin">Login</v-btn>
-                </div>
+                <!-- <div id="dapi_signin2" :data-login_uri="dataLoginUri" data-text-login="login with app" data-scope="" data-locale="">
+                </div> -->
                 <router-view></router-view>
             </v-main>
             <Footer />
@@ -40,8 +37,6 @@ export default {
             // loading: false,
             dapiSrc: '',
             overlayImage: "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie",
-            iframeAuthUrl: null,
-            authFailed: false,
         }
     },
     components: {
@@ -56,62 +51,63 @@ export default {
             actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
             actAUTH_USER: `auth/${AUTH_USER}`
         }),
-        initDapiOld() {
-            const el = document.getElementById("dapi_signin2");
-            if (!el) {
-                console.error("#dapi_signin2 ga ada");
-                return;
-            }
+        // initDapiOld() {
+        //     const el = document.getElementById("dapi_signin2");
+        //     if (!el) {
+        //         console.error("#dapi_signin2 ga ada");
+        //         return;
+        //     }
 
-            const script = document.createElement("script");
-            script.src = import.meta.env.VITE_APP_OAUTH_URL;
-            script.async = true;
-            script.onload = async () => {
-                const curdapi2 = new window.dapi2();
-                await curdapi2.init({
-                    APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
-                    APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL,
-                    APP_REDIRECT_SSO: 0,
-                });
+        //     const script = document.createElement("script");
+        //     script.src = import.meta.env.VITE_APP_OAUTH_URL;
+        //     script.async = true;
+        //     script.onload = async () => {
+        //         const curdapi2 = new window.dapi2();
+        //         await curdapi2.init({
+        //             APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
+        //             APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL,
+        //             APP_REDIRECT_SSO: 0,
+        //         });
                 
-                try {
-                    const authResult = await curdapi2.getAuth();
-                    console.log('auth res' , authResult)
-                    await this.actAUTH_TOKEN({ ...authResult, thirdParty: curdapi2 });
-                    const userProfile = await this.actAUTH_GET_USER();
-                    await this.actAUTH_USER(userProfile);
-                } catch (error) {
-                    console.error('error ', error)
-                    if( error.status === 422 || error.status === 401 ) { 
-                        this.authFailed = true;
-                    }
-                    console.log('auth failed ?' , this.authFailed);
-                }
-            };
-            document.body.appendChild(script);
+        //         try {
+        //             const authResult = await curdapi2.getAuth();
+        //             console.log('auth res' , authResult)
+        //             await this.actAUTH_TOKEN({ ...authResult, thirdParty: curdapi2 });
+        //             const userProfile = await this.actAUTH_GET_USER();
+        //             await this.actAUTH_USER(userProfile);
+        //         } catch (error) {
+        //             console.error('error ', error)
+        //             if( error.status === 422 || error.status === 401 ) { 
+        //                 this.authFailed = true;
+        //             }
+        //             console.log('auth failed ?' , this.authFailed);
+        //         }
+        //     };
+        //     document.body.appendChild(script);
 
-            const checker = setInterval(() => {
-                const frameDapi2 = document.querySelector("iframe[src*='dapi/dist']");
-                if (frameDapi2) {
+        //     const checker = setInterval(() => {
+        //         const frameDapi2 = document.querySelector("iframe[src*='dapi/dist']");
+        //         if (frameDapi2) {
 
-                    frameDapi2.style.display = "none";
-                    frameDapi2.style.height = '0px';
+        //             frameDapi2.style.display = "none";
+        //             frameDapi2.style.height = '0px';
 
-                    console.log("iframe by gua:", frameDapi2);
-                    const q = frameDapi2.src.split("?")[1] || "";
-                    const newUri = import.meta.env.VITE_APP_IFRAME_OAUTH + q;
-                    this.iframeAuthUrl = newUri;
-                    clearInterval(checker)
+        //             // 
+        //             const q = frameDapi2.src.split("?")[1] || "";
+        //             const newUri = import.meta.env.VITE_APP_IFRAME_OAUTH + q;
+        //             this.iframeAuthUrl = newUri;
+        //             clearInterval(checker)
 
-                    setTimeout(() => {
-                        if(frameDapi2 && frameDapi2.parentNode) {
-                            frameDapi2.remove()
-                            console.log('iframe remove mampus gak tuh')
-                        }
-                    }, 10000);
-                }
-            }, 500);
-        },
+        //             setTimeout(() => {
+        //                 if(frameDapi2 && frameDapi2.parentNode) {
+        //                     frameDapi2.remove()
+        //                     // console.log('iframe remove mampus gak tuh')
+        //                     // remove iframe dapi buat manipulasi lifetime2 biar ilang
+        //                 }
+        //             }, 10000);
+        //         }
+        //     }, 500);
+        // },
         initDapi2() { 
             window.addEventListener("load", async () => {
                 try {
@@ -133,16 +129,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            getAUTH_USER: `auth/${AUTH_USER}`,
-        }),
-        dataLoginUri() {
-            return import.meta.env.VITE_APP_URL;
-        }
+
     },
     mounted() {
         this.$nextTick(() => {
-            this.initDapiOld();
         })
     },
 }

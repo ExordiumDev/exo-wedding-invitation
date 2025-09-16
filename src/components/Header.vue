@@ -69,8 +69,9 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
-            <!-- <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale="">
-            </div> -->
+            <div id="dapi_signin2" :data-login_uri="dataLoginUri" data-text-login="login with app" data-scope="" data-locale="">
+            </div>
+            <v-btn v-if="authFailed" class="bg-primary" @click="btnLogin">Login</v-btn>
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -184,7 +185,7 @@ export default {
             checkFrame: null,
             timeOutInterval: null,
             iframeAuthUrl: null,
-            authFail: false,
+            authFailed: false,
         }
     },
     computed: { 
@@ -195,6 +196,9 @@ export default {
             if (!this.getAUTH_USER?.photos?.image_url) return null
             return import.meta.env.VITE_APP_URL_FTP + '/cdn/images/' + this.getAUTH_USER?.photos?.image_url || ''
         },
+        dataLoginUri() {
+            return import.meta.env.VITE_APP_URL;
+        }
     },
     methods: {
         ...mapActions({
@@ -202,12 +206,76 @@ export default {
             actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
             actAUTH_USER: `auth/${AUTH_USER}`
         }),
+        btnLogin() {
+            if(this.iframeAuthUrl) {
+                window.location.href = this.iframeAuthUrl;
+            }
+        },
+        initDapiOld() {
+            const el = document.getElementById("dapi_signin2");
+            if (!el) {
+                console.error("#dapi_signin2 ga ada");
+                return;
+            }
+
+            const script = document.createElement("script");
+            script.src = import.meta.env.VITE_APP_OAUTH_URL;
+            script.async = true;
+            script.onload = async () => {
+                const curdapi2 = new window.dapi2();
+                await curdapi2.init({
+                    APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
+                    APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL,
+                    APP_REDIRECT_SSO: 0,
+                });
+                
+                try {
+                    const authResult = await curdapi2.getAuth();
+                    console.log('auth res' , authResult)
+                    await this.actAUTH_TOKEN({ ...authResult, thirdParty: curdapi2 });
+                    const userProfile = await this.actAUTH_GET_USER();
+                    await this.actAUTH_USER(userProfile);
+                } catch (error) {
+                    console.error('error ', error)
+                    if( error.status === 422 || error.status === 401 ) { 
+                        this.authFailed = true;
+                    }
+                    // console.log('auth failed ?' , this.authFailed);
+                }
+            };
+            document.body.appendChild(script);
+
+            const checker = setInterval(() => {
+                const frameDapi2 = document.querySelector("iframe[src*='dapi/dist']");
+                if (frameDapi2) {
+
+                    frameDapi2.style.display = "none";
+                    frameDapi2.style.height = '0px';
+
+                    // 
+                    const q = frameDapi2.src.split("?")[1] || "";
+                    const newUri = import.meta.env.VITE_APP_IFRAME_OAUTH + q;
+                    this.iframeAuthUrl = newUri;
+                    clearInterval(checker)
+
+                    setTimeout(() => {
+                        if(frameDapi2 && frameDapi2.parentNode) {
+                            frameDapi2.remove()
+                            // console.log('iframe remove mampus gak tuh')
+                            // remove iframe dapi buat manipulasi lifetime2 biar ilang
+                        }
+                    }, 10000);
+                }
+            }, 500);
+        },
         toggleDrawer() {
             this.drawer_app = !this.drawer_app
         },
     },
     mounted() {
-        
+        this.$nextTick(() => {
+            this.initDapiOld();
+        })
     }
 
 }
