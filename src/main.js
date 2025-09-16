@@ -13,26 +13,13 @@ import '@mdi/font/css/materialdesignicons.css'
 import '@fontsource/dm-sans';
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/700.css';
+import LoadScript  from "vue-plugin-load-script"
 
 const app = createApp(App);
 app.use(VueCookies);
 app.use(global);
 app.mixin(globalTest);
 app.component('AppAlert', AppAlert );
-
-const APP_CONFIG = {
-    APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
-    APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL,
-    redirect_sso: import.meta.env.VITE_APP_REDIRECT_SSO,
-}
+app.use(LoadScript );
 
 app.use(router).use(store).use(vuetify).mount("#app");
-
-window.addEventListener("message", (event) => {
-    if (event.data?.type === "REQUEST_CONFIG") {
-        event.source.postMessage(
-            { type: "APP_CONFIG", payload: APP_CONFIG },
-            event.origin
-        );
-    }
-});

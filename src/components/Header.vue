@@ -69,8 +69,8 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
-            <!-- <iframe v-show="!getAUTH_USER?.name" :src="dFrame" frameborder="0" id="dapi-auth" style="height: 100%;"></iframe> -->
-            <!-- <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale=""></div> -->
+            <!-- <div id="dapi_signin2" data-login_uri="https://portal-dev.jalaera.com" data-text-login="login with app" data-scope="" data-locale="">
+            </div> -->
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -181,6 +181,10 @@ export default {
                 'Logout',
             ],
             menu: false,
+            checkFrame: null,
+            timeOutInterval: null,
+            iframeAuthUrl: null,
+            authFail: false,
         }
     },
     computed: { 
@@ -191,16 +195,19 @@ export default {
             if (!this.getAUTH_USER?.photos?.image_url) return null
             return import.meta.env.VITE_APP_URL_FTP + '/cdn/images/' + this.getAUTH_USER?.photos?.image_url || ''
         },
-        dFrame() {
-            return import.meta.env.VITE_APP_IFRAME_OAUTH;
-        }
     },
     methods: {
+        ...mapActions({
+            actAUTH_TOKEN: `auth/${AUTH_TOKEN}`,
+            actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
+            actAUTH_USER: `auth/${AUTH_USER}`
+        }),
         toggleDrawer() {
             this.drawer_app = !this.drawer_app
         },
     },
     mounted() {
+        
     }
 
 }
