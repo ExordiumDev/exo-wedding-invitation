@@ -72,6 +72,7 @@
             <div id="dapi_signin2" :data-login_uri="dataLoginUri" data-text-login="login with app" data-scope="" data-locale="">
             </div>
             <v-btn v-if="authFailed" class="bg-primary" @click="btnLogin">Login</v-btn>
+            <!-- <div v-else>{{ getAUTH_USER.name }}</div> -->
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -233,18 +234,29 @@ export default {
                     const authResult = await curdapi2.getAuth();
                     console.log('auth res' , authResult)
                     await this.actAUTH_TOKEN({ ...authResult, thirdParty: curdapi2 });
+
                     const userProfile = await this.actAUTH_GET_USER();
                     await this.actAUTH_USER(userProfile);
+
                 } catch (error) {
                     console.error('error ', error)
-                    if( error.status === 422 || error.status === 401 ) { 
+                    if ( error.status === 422 ) { 
                         this.authFailed = true;
+                        let v = false;
+                        this.checkerInterval(v);
+                    } else if ( error.status === 401) { 
+                        this.authFailed = true;
+                        let v = true;
+                        this.checkerInterval(v);
                     }
-                    // console.log('auth failed ?' , this.authFailed);
                 }
             };
             document.body.appendChild(script);
-
+        },
+        toggleDrawer() {
+            this.drawer_app = !this.drawer_app
+        },
+        checkerInterval(v) {
             const checker = setInterval(() => {
                 const frameDapi2 = document.querySelector("iframe[src*='dapi/dist']");
                 if (frameDapi2) {
@@ -252,7 +264,6 @@ export default {
                     frameDapi2.style.display = "none";
                     frameDapi2.style.height = '0px';
 
-                    // 
                     const q = frameDapi2.src.split("?")[1] || "";
                     const newUri = import.meta.env.VITE_APP_IFRAME_OAUTH + q;
                     this.iframeAuthUrl = newUri;
@@ -260,21 +271,19 @@ export default {
 
                     setTimeout(() => {
                         if(frameDapi2 && frameDapi2.parentNode) {
-                            frameDapi2.remove()
-                            // console.log('iframe remove mampus gak tuh')
-                            // remove iframe dapi buat manipulasi lifetime2 biar ilang
+                            if(!v){
+                                frameDapi2.remove()
+                            }
                         }
                     }, 10000);
                 }
-            }, 500);
-        },
-        toggleDrawer() {
-            this.drawer_app = !this.drawer_app
+            }, 50);
         },
     },
     mounted() {
         this.$nextTick(() => {
             this.initDapiOld();
+            console.log('iframe ', this.iframeAuthUrl)
         })
     }
 
