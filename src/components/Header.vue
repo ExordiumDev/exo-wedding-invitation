@@ -232,7 +232,7 @@ export default {
                 
                 try {
                     const authResult = await curdapi2.getAuth();
-                    console.log('auth res' , authResult)
+                    // console.log('auth res' , authResult)
                     await this.actAUTH_TOKEN({ ...authResult, thirdParty: curdapi2 });
 
                     const userProfile = await this.actAUTH_GET_USER();
@@ -244,10 +244,12 @@ export default {
                         this.authFailed = true;
                         let v = false;
                         this.checkerInterval(v);
+                        // console.log('if status 422', this.authFailed);
                     } else if ( error.status === 401) { 
                         this.authFailed = true;
                         let v = true;
                         this.checkerInterval(v);
+                        // console.log('if status 401', this.authFailed);
                     }
                 }
             };
@@ -271,6 +273,7 @@ export default {
 
                     setTimeout(() => {
                         if(frameDapi2 && frameDapi2.parentNode) {
+                            console.log('frame dapi === >',frameDapi2);
                             if(!v){
                                 frameDapi2.remove()
                             }
@@ -283,7 +286,7 @@ export default {
     mounted() {
         this.$nextTick(() => {
             this.initDapiOld();
-            console.log('iframe ', this.iframeAuthUrl)
+            // console.log('iframe ', this.iframeAuthUrl)
         })
     }
 

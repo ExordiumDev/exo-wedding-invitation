@@ -1,20 +1,10 @@
 <template>
     <v-app>
-        <!-- splash screen -->
-        <v-overlay v-if="loading" :model-value="true" persistent absolute class="d-flex align-center justify-center bg-background">
-            <div class="text-center">
-                <DotLottieVue style="width: 500px; height: 500px;" autoplay loop :src="overlayImage" />
-            </div>
-        </v-overlay>
-        <template v-else>
-            <Header />
-            <v-main class="main-wrapper">
-                <!-- <div id="dapi_signin2" :data-login_uri="dataLoginUri" data-text-login="login with app" data-scope="" data-locale="">
-                </div> -->
-                <router-view></router-view>
-            </v-main>
-            <Footer />
-        </template>
+        <Header />
+        <v-main class="main-wrapper">
+            <router-view></router-view>
+        </v-main>
+        <Footer />
     </v-app>
 </template>
 
@@ -34,7 +24,6 @@ export default {
     name: 'App',
     data() {
         return { 
-            // loading: false,
             dapiSrc: '',
             overlayImage: "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie",
         }
@@ -68,7 +57,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            window.addEventListener("message", this.handleIframeMessage);
+            // window.addEventListener("message", this.handleIframeMessage);
         })
     },
 }
