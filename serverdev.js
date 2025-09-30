@@ -41,8 +41,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 const options = {
-  key: fs.readFileSync(path.join(__dirname, './crt/portal-dev.jalaera.com-key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './crt/portal-dev.jalaera.com.pem')),
+  key: fs.readFileSync(path.join(__dirname, './crt/exordium.id-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, './crt/exordium.id.pem')),
 };
 app.use(
   '/',
@@ -66,7 +66,7 @@ server.on('upgrade', (req, socket, head) => {
 
   // Tambahkan ini untuk WS Origin
   proxy.on('proxyReqWs', function (proxyReq) {
-    proxyReq.setHeader('Origin', 'https://portal-dev.jalaera.com');
+    proxyReq.setHeader('Origin', 'https://exordium.id');
   });
 
   proxy.ws(req, socket, head);
@@ -74,7 +74,7 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 server.listen(443, () => {
-  console.log('Express server proxying Vite now running at: https://portal-dev.jalaera.com');
+  console.log('Express server proxying Vite now running at: https://exordium.id');
 });
 
 // ------------------------------------------------------------------------------------------

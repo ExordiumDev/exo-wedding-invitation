@@ -29,12 +29,12 @@ export default defineConfig(({ mode }) => {
       host: env.VITE_APP_ALLOWED_HOSTS,
       port: 443,
       https: {
-        key: fs.readFileSync('./crt/portal-dev.jalaera.com-key.pem'),
-        cert: fs.readFileSync('./crt/portal-dev.jalaera.com.pem'),
+        key: fs.readFileSync('./crt/exordium.id-key.pem'),
+        cert: fs.readFileSync('./crt/exordium.id.pem'),
       },
       hmr: {
         protocol: 'wss',
-        host: 'portal-dev.jalaera.com',
+        host: 'exordium.id',
         clientPort: 443,
       },
       cors: { 
@@ -44,39 +44,3 @@ export default defineConfig(({ mode }) => {
     },
   }
 })
-
-
-
-// export default defineConfig({
-//   plugins: [vue()],
-//   resolve: {
-//     alias: {
-//       '@': path.resolve(__dirname, '/src'),
-//     }
-//   },
-//   server: {
-//     middlewareMode: false,
-//     configureServer(server) {
-//       server.middlewares.use((req, res, next) => {
-//         res.setHeader('Access-Control-Allow-Origin', '*');
-//         next();
-//       });
-//     },
-//     host: process.env.VITE_APP_ALLOWED_HOSTS,
-//     port: 443,
-//     // https: true,
-//     https: {
-//       key: fs.readFileSync('./crt/portal-dev.jalaera.com-key.pem'),
-//       cert: fs.readFileSync('./crt/portal-dev.jalaera.com.pem'),
-//     },
-//     hmr: {
-//       protocol: 'wss',
-//       host: 'portal-dev.jalaera.com',
-//       clientPort: 443,
-//     },
-//     cors: { 
-//       origin: '*'
-//     },
-//     strictPort: true,
-//   },
-// })

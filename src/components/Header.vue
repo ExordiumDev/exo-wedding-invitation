@@ -40,26 +40,6 @@
                     mdi-dots-grid
                 </v-icon>
             </v-btn>
-            <!-- <div class="d-flex justify-space-around" v-if="getAUTH_USER">
-                <v-menu v-model="menu" :close-on-content-click="false" location="start">
-                    <template v-slot:activator="{ props }">
-                        <v-btn
-                            color="indigo"
-                            v-bind="props"
-                        >
-                        </v-btn>
-                    </template>
-
-                    <v-card min-width="300">
-                        <v-list>
-                        </v-list>
-                        <v-divider />
-                        <v-card-actions class="d-flex justify-space-between pa-3">
-
-                        </v-card-actions>
-                    </v-card>
-                </v-menu>
-            </div> -->
             
             <v-navigation-drawer
                 v-model="drawer_app"
@@ -69,10 +49,9 @@
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
-            <div id="dapi_signin2" :data-login_uri="dataLoginUri" data-text-login="login with app" data-scope="" data-locale="">
-            </div>
-            <v-btn v-if="authFailed" class="bg-primary" @click="btnLogin">Login</v-btn>
-            <!-- <div v-else>{{ getAUTH_USER.name }}</div> -->
+            <!-- google sso buat iframe nya dia -->
+            <div id="googleBtn" ref="googleBtn"></div>
+            <v-btn @click="logoutMethod">Logout</v-btn>
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -165,7 +144,7 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex';
-import { AUTH_TOKEN, AUTH_USER, AUTH_GET_USER } from '../stores/actions/reqApi'
+import { GOOGLE_LOGOUT, SET_USER, AUTH_TOKEN, AUTH_USER, AUTH_GET_USER, AUTH_GET_GOOGLE_TOKEN, CHECK_AUTH } from '../stores/actions/reqApi'
 
 export default {
     name: 'Header',
@@ -191,7 +170,8 @@ export default {
     },
     computed: { 
         ...mapGetters({
-            getAUTH_USER: 'auth/'+AUTH_USER
+            getAUTH_USER: 'auth/'+AUTH_USER,
+            getSET_USER: 'auth/'+SET_USER
         }),
         usrPhotosProfile() {
             if (!this.getAUTH_USER?.photos?.image_url) return null
@@ -203,90 +183,38 @@ export default {
     },
     methods: {
         ...mapActions({
-            actAUTH_TOKEN: `auth/${AUTH_TOKEN}`,
             actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
-            actAUTH_USER: `auth/${AUTH_USER}`
+            actAUTH_USER: `auth/${AUTH_USER}`,
+            actAUTH_GET_GOOGLE_TOKEN: `auth/${AUTH_GET_GOOGLE_TOKEN}`,
+            actCHECK_AUTH: `auth/${CHECK_AUTH}`,
+            actGOOGLE_LOGOUT: `auth/${GOOGLE_LOGOUT}`
         }),
-        btnLogin() {
-            if(this.iframeAuthUrl) {
-                window.location.href = this.iframeAuthUrl;
-            }
+        async logoutMethod(){
+            await fetch(``)
         },
-        initDapiOld() {
-            const el = document.getElementById("dapi_signin2");
-            if (!el) {
-                console.error("#dapi_signin2 ga ada");
-                return;
-            }
-
-            const script = document.createElement("script");
-            script.src = import.meta.env.VITE_APP_OAUTH_URL;
-            script.async = true;
-            script.onload = async () => {
-                const curdapi2 = new window.dapi2();
-                await curdapi2.init({
-                    APP_CLIENT_ID: import.meta.env.VITE_APP_CLIENT_ID,
-                    APP_REDIRECT_SSO_URL: import.meta.env.VITE_APP_REDIRECT_SSO_URL,
-                    APP_REDIRECT_SSO: 0,
+        handleCredentialResponse(response) {
+            const gToken = response.credential;
+            this.actAUTH_GET_GOOGLE_TOKEN(gToken).then((v) => {
+                // commit user ke Vuex
+                this.actAUTH_USER(v).then(() => {
+                    this.actCHECK_AUTH();
+                }).catch(error => {
+                    console.error('error set user', error);
                 });
-                
-                try {
-                    const authResult = await curdapi2.getAuth();
-                    // console.log('auth res' , authResult)
-                    await this.actAUTH_TOKEN({ ...authResult, thirdParty: curdapi2 });
-
-                    const userProfile = await this.actAUTH_GET_USER();
-                    await this.actAUTH_USER(userProfile);
-
-                } catch (error) {
-                    console.error('error ', error)
-                    if ( error.status === 422 ) { 
-                        this.authFailed = true;
-                        let v = false;
-                        this.checkerInterval(v);
-                        // console.log('if status 422', this.authFailed);
-                    } else if ( error.status === 401) { 
-                        this.authFailed = true;
-                        let v = true;
-                        this.checkerInterval(v);
-                        // console.log('if status 401', this.authFailed);
-                    }
-                }
-            };
-            document.body.appendChild(script);
-        },
-        toggleDrawer() {
-            this.drawer_app = !this.drawer_app
-        },
-        checkerInterval(v) {
-            const checker = setInterval(() => {
-                const frameDapi2 = document.querySelector("iframe[src*='dapi/dist']");
-                if (frameDapi2) {
-
-                    frameDapi2.style.display = "none";
-                    frameDapi2.style.height = '0px';
-
-                    const q = frameDapi2.src.split("?")[1] || "";
-                    const newUri = import.meta.env.VITE_APP_IFRAME_OAUTH + q;
-                    this.iframeAuthUrl = newUri;
-                    clearInterval(checker)
-
-                    setTimeout(() => {
-                        if(frameDapi2 && frameDapi2.parentNode) {
-                            console.log('frame dapi === >',frameDapi2);
-                            if(!v){
-                                frameDapi2.remove()
-                            }
-                        }
-                    }, 10000);
-                }
-            }, 50);
+            });
         },
     },
     mounted() {
         this.$nextTick(() => {
-            this.initDapiOld();
-            // console.log('iframe ', this.iframeAuthUrl)
+            window.google.accounts.id.initialize({
+                client_id: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID,
+                callback: this.handleCredentialResponse,
+                auto_select: false
+            });
+            window.google.accounts.id.renderButton(
+                document.getElementById("googleBtn"),
+                { theme: "outline", size: "large" }
+            );
         })
     }
 

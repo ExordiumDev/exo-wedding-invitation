@@ -1,6 +1,15 @@
 import axios from 'axios';
 
-const isDev = import.meta.env.VITE_APP_NODE_ENV === "LOCAL";
+const $axios = axios.create({
+    withCredentials: true,
+    baseURL: import.meta.env.VITE_APP_API_URL,
+    headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+    }
+});
+
 const $axInstance = axios.create({
     headers:{
         'X-Client-Id': import.meta.env.VITE_APP_CLIENT_ID,
@@ -12,18 +21,6 @@ const $axInstance = axios.create({
 
 let akses = undefined;
 let curdapi2 = undefined;
-
-// ax config
-// $axInstance.interceptors.request.use(
-//     async function (config) {
-//         config.baseURL = import.meta.env.VITE_APP_API_URL;
-//         config.headers['Authorization'] = `${akses?.token_type} ${akses?.access_token}`;
-//         return config;
-//     },
-//     function (error) {
-//         return Promise.reject (error);
-//     }
-// );
 
 function setupInterceptor(instance) {
     instance.interceptors.request.use(
@@ -142,4 +139,4 @@ export const axDT = async (url,data,callback,settings,method='post')=>{
     }
 }
 
-export { $axInstance};
+export { $axInstance, $axios };

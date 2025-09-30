@@ -1,7 +1,7 @@
 import { setAuthToken,setCookie,getCookie,delCookie } from './api';
-import {$axInstance} from './api.js';
+import {$axInstance, $axios} from './api.js';
 import CryptoJS from 'crypto-js';
-import { AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS,AUTH_LOGOUT,AUTH_DESTROY_SESSION,AUTHENTICATOR,LOGOUT,DELETEALL_COOKIES } from './actions/reqApi.js';
+import { GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS,AUTH_LOGOUT,AUTH_DESTROY_SESSION,AUTHENTICATOR,LOGOUT,DELETEALL_COOKIES } from './actions/reqApi.js';
 const APP_JWT_SECRET = import.meta.env.VITE_APP_JWT_SECRET;
 import 'url-search-params-polyfill';
 
@@ -13,6 +13,8 @@ const state = {
     AUTH_PROFILE:{},
     // AUTH_STATUS: getCookie('dapi2') || false,
     AUTH_STATUS: true,
+    AUTH_GET_GOOGLE_TOKEN: null,
+    SET_USER: {}
 };
 
 const getters = {
@@ -21,6 +23,8 @@ const getters = {
     [SOCKET_CLIENT] : state => state.SOCKET_CLIENT,
     [AUTH_PROFILE] : state => state.AUTH_PROFILE,
     [AUTH_STATUS] : state => state.AUTH_STATUS,
+    [AUTH_GET_GOOGLE_TOKEN] : state => state.AUTH_GET_GOOGLE_TOKEN,
+    [SET_USER] : state => state.SET_USER,
 };
 
 const mutations = { 
@@ -36,10 +40,60 @@ const mutations = {
     [AUTH_STATUS](state, resp){
         state.AUTH_STATUS = resp;
     },
+    [AUTH_GET_GOOGLE_TOKEN](state, resp){
+        state.AUTH_GET_GOOGLE_TOKEN = resp;
+    },
+    SET_USER(state,user) {
+        state.SET_USER = user
+    }
 }
 
 
 const actions = {
+    [GOOGLE_LOGOUT]: async ({ commit }) => {
+        try {
+            const res = await $axios.post("/auth/logout");
+            commit('SET_USER', null);
+            return res
+        } catch (error) {
+            console.error("Not authenticated", error);
+        }
+    },
+    
+    [CHECK_AUTH]: async ({ commit }) => {
+        try {
+            const res = await $axios.get("/me");
+            commit('SET_USER', res.data);
+            console.log('res data ', res.data)
+        } catch (error) {
+            commit('SET_USER', null);
+            console.error("Not authenticated", error);
+        }
+    },
+
+    [AUTH_GET_GOOGLE_TOKEN]:async ({ commit },payload) => {
+        try {
+            const res = await $axios.post("/auth/google?token="+payload);
+            commit(AUTH_GET_GOOGLE_TOKEN, res.data)
+            return res.data;
+        } catch (error) {
+            commit(AUTH_GET_GOOGLE_TOKEN,{});
+            console.error(error);
+            return {}
+        }
+    },
+
+    [AUTH_USER]: async ({ commit }, payload) => {
+        try {
+            if (!(payload instanceof Object) || !payload.user) throw new Error('invalid user');
+            commit('SET_USER', payload.user);
+            console.log('User setted in Vuex:', payload.user);
+        } catch (error) {
+            commit('SET_USER', null);
+            console.error(error);
+        }
+    },
+
     [AUTH_TOKEN]:async ({ commit,dispatch},payload) => {
         try {
             if(!(payload instanceof Object)) throw 'invalid token';
@@ -52,20 +106,6 @@ const actions = {
             console.error(error);
         }
     },
-    
-    [AUTH_USER]: async ({ commit},payload) => {
-      return new Promise((resolve, reject) => {
-        try {
-            if(!(payload instanceof Object)) throw new Error('invalid user');
-            commit(AUTH_USER,payload?.data);
-            commit(AUTH_STATUS,payload?.status);
-            resolve()
-        } catch (error) {
-            commit(AUTH_USER,{});
-            reject(error);
-        }
-      })
-    },
 
     [AUTH_GET_USER]({ commit, dispatch, rootState }, payload) {
         return new Promise((resolve, reject) => {
@@ -77,23 +117,23 @@ const actions = {
         })
     },
 
-    [AUTH_LOGOUT]: ({commit,state,getters,dispatch}) => {
-      return new Promise(async (resolve, reject) => {
-        try {
-            // await $cookies.remove('dapi');
-            // commit(AUTH_STATUS,false);
-            // commit(AUTH_TOKEN,{});
-            // commit(AUTH_USER,{});
-            // resolve();
-            const curdapi2 = await new dapi2();
-            if (!curdapi2) { throw new Error(`curdapi2 : ${curdapi2}`); }
-            await curdapi2.authLogout()
-            window.location.href = `${import.meta.env.VITE_APP_OAUTH_URL}/login`;
-        } catch (error) {
-          reject(error);
-        }
-      })
-    },
+    // [AUTH_LOGOUT]: ({commit,state,getters,dispatch}) => {
+    //   return new Promise(async (resolve, reject) => {
+    //     try {
+    //         // await $cookies.remove('dapi');
+    //         // commit(AUTH_STATUS,false);
+    //         // commit(AUTH_TOKEN,{});
+    //         // commit(AUTH_USER,{});
+    //         // resolve();
+    //         const curdapi2 = await new dapi2();
+    //         if (!curdapi2) { throw new Error(`curdapi2 : ${curdapi2}`); }
+    //         await curdapi2.authLogout()
+    //         window.location.href = `${import.meta.env.VITE_APP_OAUTH_URL}/login`;
+    //     } catch (error) {
+    //       reject(error);
+    //     }
+    //   })
+    // },
 
     // [AUTH_LOGOUT]: ({commit,state,getters,dispatch}) => {
     //   return new Promise(async (resolve, reject) => {
