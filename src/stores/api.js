@@ -3,6 +3,7 @@ import axios from 'axios';
 const $axios = axios.create({
     withCredentials: true,
     baseURL: import.meta.env.VITE_APP_API_URL,
+    // baseURL: '/api',
     headers:{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -11,6 +12,7 @@ const $axios = axios.create({
 });
 
 const $axInstance = axios.create({
+    // baseURL: '/api',
     headers:{
         'X-Client-Id': import.meta.env.VITE_APP_CLIENT_ID,
         'Content-Type': 'application/json',

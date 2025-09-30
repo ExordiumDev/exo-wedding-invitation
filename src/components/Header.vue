@@ -50,7 +50,7 @@
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
             <!-- google sso buat iframe nya dia -->
-            <div id="googleBtn" ref="googleBtn"></div>
+            <div v-if="!getSET_USER" id="googleBtn" ref="googleBtn"></div>
             <v-btn @click="logoutMethod">Logout</v-btn>
         </v-app-bar>
         <v-navigation-drawer
@@ -190,7 +190,7 @@ export default {
             actGOOGLE_LOGOUT: `auth/${GOOGLE_LOGOUT}`
         }),
         async logoutMethod(){
-            await fetch(``)
+            await this.actGOOGLE_LOGOUT();
         },
         handleCredentialResponse(response) {
             const gToken = response.credential;
@@ -205,7 +205,7 @@ export default {
         },
     },
     mounted() {
-        this.$nextTick(() => {
+        this.$nextTick(async() => {
             window.google.accounts.id.initialize({
                 client_id: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID,
                 callback: this.handleCredentialResponse,
@@ -215,6 +215,10 @@ export default {
                 document.getElementById("googleBtn"),
                 { theme: "outline", size: "large" }
             );
+
+            await this.actCHECK_AUTH().then(() => {
+                console.log('auth cecked', this.getSET_USER);
+            });
         })
     }
 
