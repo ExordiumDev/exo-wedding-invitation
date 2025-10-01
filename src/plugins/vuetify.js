@@ -26,12 +26,14 @@ const vuetify = createVuetify({
                     secondary: '#424242',
                     accent: '#82B1FF',
                     error: '#FF5252',
+                    danger: '#FF5252',
                     info: '#2196F3',
                     success: '#4CAF50',
                     warning: '#FFC107',
-                    ligthCustom: '#F2F9FF',
+                    lightCustom: '#F2F9FF',
                     customFooterLight: '#344450',
-                    customFooterDark: '#142129'
+                    customFooterDark: '#142129',
+                    exr_accent_orange: '#ea580c',
                 }
             }
         }

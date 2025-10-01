@@ -1,12 +1,14 @@
 <template>
     <div class="main-header">
-        <v-app-bar color="ligthCustom" class="px-10 d-flex justify-space-between">
+        <v-app-bar color="lightCustom" density="comfortable" elevante-on-scroll class="_floating-header px-5" height="80">
             <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none">
                 <v-icon>mdi-menu</v-icon>
             </v-app-bar-nav-icon>
             <v-app-bar-title>
                 <router-link :to="{name : 'Home.view'}" style="color: #223">
-                    <v-img :src="logoByFTP" width="40" height="40"></v-img>
+                    <v-avatar size="40">
+                        <v-img src="../../public/exr-logo.png" max-height="40" max-width="40"></v-img>
+                    </v-avatar>
                 </router-link>
             </v-app-bar-title>
             
@@ -16,7 +18,7 @@
                         text
                         class="py-0"
                         :class="$route.name === 'Home.view' ? 'active-navbar-item' : ''"
-                        color="secondary text-none"
+                        color="secondary"
                     >
                         Home
                     </v-btn>
@@ -27,30 +29,14 @@
                         text 
                         class="py-0"
                         :class="$route.name === 'News.view' ? 'active-navbar-item' : ''"
-                        color="secondary text-none"
+                        color="secondary"
                     >
                         News
                     </v-btn>
                 </router-link>
             </div>
-
-            <!-- user detail  -->
-            <!-- <v-btn @click="toggleDrawer" color="primary">
-                <v-icon>
-                    mdi-dots-grid
-                </v-icon>
-            </v-btn> -->
             
-            <!-- <v-navigation-drawer
-                v-model="drawer_app"
-                location="right"
-                color="#2E2E2E"
-                class="control-sidebar"
-            >
-                <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
-            </v-navigation-drawer> -->
             <!-- google sso buat iframe nya dia -->
-
             <div v-if="gfbtn" class="d-flex justify-space-around">
                 <v-menu transition="scale-transition">
                     <template v-slot:activator="{ props }">
@@ -111,13 +97,22 @@
 
 <style scoped>
 
-.v-app-bar-title {
-    flex: 0 0 auto;
+._floating-header {
+    position: fixed !important;
+    top: 16px !important;
+    left: 50% !important;
+    right: auto !important;
+    width: auto !important;
+    transform: translateX(-50%) !important;
+    min-width: 90%;
+    max-width: 1400px;
+    border-radius: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+    z-index: 1000 !important;
 }
 
-.v-navigation-drawer {
-    position: fixed !important;
-    height: 100vh;
+.v-app-bar-title {
+    flex: 0 0 auto;
 }
 
 .nav-link {
@@ -143,10 +138,10 @@
     color: #1976d2 !important;
 }
 
-.v-app-bar {
+/* .v-app-bar {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
-}
+} */
 
 .v-toolbar__content {
     padding-top: 0 !important;

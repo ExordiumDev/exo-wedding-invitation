@@ -2,51 +2,22 @@
     <v-container class="h-100" fluid>
         <v-row justify="center" class="h-100">
             <v-col>
-                <div class="d-flex justify-center my-10 flex-wrap w-100">
-                    <div class="d-flex">
-                        <h1>Welcome to</h1>
+                <div class="d-flex align-center my-10 flex-column w-100">
+                    <p class="text-h1">Experience the</p>
+                    <div class="d-flex flex-row ga-3">
+                        <p class="text-h1 text-exr_accent_orange">Exordium</p>
+                        <p class="text-h1">Services</p>
                     </div>
-                    <div class="d-flex text-danger mx-5">
-                        <h1 class="text-red">JALA</h1>
+                    <div class="d-flex flex-column align-center my-5">
+                        <p class="text-disabled text-h4">Then moment when ideas turn into reality</p>
+                        <p class="text-disabled text-h4">When nothingness begins to take shape</p>
                     </div>
-                    <div class="d-flex">
-                        <h1>Era</h1>
-                    </div>
-                </div>
-                <div class="_subtitle d-flex justify-center">
-                    <h3>Where all our system are Connected</h3>
                 </div>
             </v-col>
         </v-row>
-        <v-row justify="center" justify-lg="center" class="my-10">
-            <v-col cols="12" md="8">
-                <v-carousel show-arrows="hover" cycle interval="5000" transition="fade-transition">
-                    <v-carousel-item v-for="(i,idx) in items" :key="idx">
-                        <v-row>
-                            <v-col cols="12" md="8">
-                                <v-img :src="i.image" cover></v-img>
-                            </v-col>
-                            <v-col cols="12" md="4">
-                                <div class="_carouse-content-header">
-                                    <h3 class="font-weight-light">{{ i.title }}</h3>
-                                </div>
-                                <div class="_carousel-content py-5">
-                                    <p>{{ i.content }}</p>
-                                </div>
-                                <div class="_carousel-content-footer py-5">
-                                    <a :href=i.url>
-                                        <p>{{ i.url }}</p>
-                                    </a>
-                                </div>
-                            </v-col>
-                        </v-row>
-                    </v-carousel-item>
-                </v-carousel>
-            </v-col>
-        </v-row>
-        <v-row justify="center" class="my-10 bg-ligthCustom pa-10 align-center">
-            <v-col cols="12" md="4">
-                <v-img :src="logoByFTP"></v-img>
+        <v-row justify="center" class="my-10 bg-ligthCustom pa-10 align-center glow-shadow">
+            <v-col cols="12" md="4" class="justify-center d-flex">
+                <v-img src="../../public/exr-logo.png" class="rounded-xl" width="400" height="400" cover></v-img>
             </v-col>
             <v-col cols="12" md="8">
                 <p>
@@ -70,6 +41,20 @@
 .v-list-item-title {
     margin: 0.5rem !important;
     padding: 0 !important;
+}
+
+.glow-shadow {
+    box-shadow: 0 0 20px rgba(234, 88, 12, 0.6);
+    animation: pulseShadow 2s infinite alternate;
+}
+
+@keyframes pulseShadow {
+    0% {
+        box-shadow: 0 0 10px rgba(234, 88, 12, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 110px rgba(234, 88, 12, 1);
+    }
 }
 
 </style>
