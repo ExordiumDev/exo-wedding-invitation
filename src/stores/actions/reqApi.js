@@ -25,5 +25,6 @@ export const GOOGLE_LOGOUT = "GOOGLE_LOGOUT";
 export const AUTH_GET_GOOGLE_TOKEN = "AUTH_GET_GOOGLE_TOKEN";
 export const SET_USER = "SET_USER";
 export const CHECK_AUTH = "CHECK_AUTH";
+export const GET_DATA = "GET_DATA";
 
 

@@ -62,7 +62,7 @@ const actions = {
     
     [CHECK_AUTH]: async ({ commit }) => {
         try {
-            const res = await $axios.get("/me");
+            const res = await $axios.get("/auth/me");
             commit('SET_USER', res.data);
             console.log('res data ', res.data)
         } catch (error) {
@@ -73,7 +73,7 @@ const actions = {
 
     [AUTH_GET_GOOGLE_TOKEN]:async ({ commit },payload) => {
         try {
-            const res = await $axios.post("/auth/google?token="+payload);
+            const res = await $axios.post("/auth/login?token="+payload);
             commit(AUTH_GET_GOOGLE_TOKEN, res.data)
             return res.data;
         } catch (error) {
@@ -117,36 +117,6 @@ const actions = {
         })
     },
 
-    // [AUTH_LOGOUT]: ({commit,state,getters,dispatch}) => {
-    //   return new Promise(async (resolve, reject) => {
-    //     try {
-    //         // await $cookies.remove('dapi');
-    //         // commit(AUTH_STATUS,false);
-    //         // commit(AUTH_TOKEN,{});
-    //         // commit(AUTH_USER,{});
-    //         // resolve();
-    //         const curdapi2 = await new dapi2();
-    //         if (!curdapi2) { throw new Error(`curdapi2 : ${curdapi2}`); }
-    //         await curdapi2.authLogout()
-    //         window.location.href = `${import.meta.env.VITE_APP_OAUTH_URL}/login`;
-    //     } catch (error) {
-    //       reject(error);
-    //     }
-    //   })
-    // },
-
-    // [AUTH_LOGOUT]: ({commit,state,getters,dispatch}) => {
-    //   return new Promise(async (resolve, reject) => {
-    //     try {
-    //       commit(AUTH_STATUS,false);
-    //       commit(AUTH_TOKEN,{});
-    //       commit(AUTH_USER,{});
-    //       resolve();
-    //     } catch (error) {
-    //       reject(error);
-    //     }
-    //   })
-    // },
 
     [AUTH_DESTROY_SESSION]:({commit, dispatch},param)=>{
         return new Promise((resolve,reject)=>{

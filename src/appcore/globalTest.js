@@ -13,5 +13,8 @@ export default {
             const ext = filePath.split('.').pop().toLowerCase();
             return ['pdf'].includes(ext);
         },
+        pushRoute(route) {
+            this.$router.push(route)
+        }
     }
 }

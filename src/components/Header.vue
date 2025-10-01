@@ -35,23 +35,50 @@
             </div>
 
             <!-- user detail  -->
-            <v-btn @click="toggleDrawer" color="primary">
+            <!-- <v-btn @click="toggleDrawer" color="primary">
                 <v-icon>
                     mdi-dots-grid
                 </v-icon>
-            </v-btn>
+            </v-btn> -->
             
-            <v-navigation-drawer
+            <!-- <v-navigation-drawer
                 v-model="drawer_app"
                 location="right"
                 color="#2E2E2E"
                 class="control-sidebar"
             >
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
-            </v-navigation-drawer>
+            </v-navigation-drawer> -->
             <!-- google sso buat iframe nya dia -->
-            <div v-if="!gfbtn" id="googleBtn" ref="googleBtn"></div>
-            <v-btn v-else @click="logoutMethod">Logout</v-btn>
+
+            <div v-if="gfbtn" class="d-flex justify-space-around">
+                <v-menu transition="scale-transition">
+                    <template v-slot:activator="{ props }">
+                        <v-btn
+                            color="dark"
+                            v-bind="props"
+                        >
+                            {{ getSET_USER.name }}
+                        </v-btn>
+                    </template>
+
+                    <v-list>
+                        <v-list-item>
+                            <v-card hover>
+                                <v-card-item>
+                                    <v-card-title>
+                                        {{ getSET_USER.email }}
+                                    </v-card-title>
+                                </v-card-item>
+                                <v-card-text>
+                                    <v-btn @click="logoutMethod">Logout</v-btn>
+                                </v-card-text>
+                            </v-card>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </div>
+            <div v-else id="googleBtn" ref="googleBtn"></div>
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
