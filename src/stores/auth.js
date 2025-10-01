@@ -67,7 +67,7 @@ const actions = {
             console.log('res data ', res.data)
         } catch (error) {
             commit('SET_USER', null);
-            console.error("Not authenticated", error);
+            throw error;
         }
     },
 
