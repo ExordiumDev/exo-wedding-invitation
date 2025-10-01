@@ -50,8 +50,8 @@
                 <div class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button"></div>
             </v-navigation-drawer>
             <!-- google sso buat iframe nya dia -->
-            <div v-if="!getSET_USER" id="googleBtn" ref="googleBtn"></div>
-            <v-btn @click="logoutMethod">Logout</v-btn>
+            <div v-if="!gfbtn" id="googleBtn" ref="googleBtn"></div>
+            <v-btn v-else @click="logoutMethod">Logout</v-btn>
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -166,6 +166,7 @@ export default {
             timeOutInterval: null,
             iframeAuthUrl: null,
             authFailed: false,
+            gfbtn: false,
         }
     },
     computed: { 
@@ -190,14 +191,21 @@ export default {
             actGOOGLE_LOGOUT: `auth/${GOOGLE_LOGOUT}`
         }),
         async logoutMethod(){
-            await this.actGOOGLE_LOGOUT();
+            await this.actGOOGLE_LOGOUT().then(()=>{
+                window.google.accounts.id.disableAutoSelect();
+                this.gfbtn = false
+                window.location.reload();
+            }).catch(error => {
+                console.error('error logout',error)
+            })
         },
         handleCredentialResponse(response) {
             const gToken = response.credential;
             this.actAUTH_GET_GOOGLE_TOKEN(gToken).then((v) => {
-                // commit user ke Vuex
+                // commit user ke store
                 this.actAUTH_USER(v).then(() => {
                     this.actCHECK_AUTH();
+                    this.gfbtn = true;
                 }).catch(error => {
                     console.error('error set user', error);
                 });
@@ -216,11 +224,13 @@ export default {
                 { theme: "outline", size: "large" }
             );
 
-            await this.actCHECK_AUTH().then(() => {
-                console.log('auth cecked', this.getSET_USER);
-            });
+            await this.actCHECK_AUTH()
+            if(this.getSET_USER) {
+                this.gfbtn = true;
+            } else {
+                this.gfbtn = false
+            }
         })
     }
-
 }
 </script>
