@@ -74,21 +74,79 @@
                     </v-card>
                 </v-col>
             </v-row>
+            <v-row justify="center">
+                <v-col cols="12" md="12">
+                    <div class="d-flex flex-column align-center ga-3 my-10">
+                        <div class="text-h5 text-exr_accent_orange_600">Team</div>
+                        <div class="text-h4">The Company Dream Team</div>
+                    </div>
+                </v-col>
+            </v-row>
+            <v-row justify="center">
+                <v-col cols="12" md="3" v-for="(i, idx) in companyDreamTeam" :key=idx>
+                    <v-card class="mx-auto hover-card h-100 d-flex flex-column" rounded="lg" variant="tonal">
+                        <v-img height="450px" :src="i.img_src" cover></v-img>
+                        <v-card-title>
+                            <div class="d-flex ga-2">
+                                <div class="d-flex text-h5">{{ i.f_name }}</div>
+                                <div class="d-flex text-h5 text-exr_accent_orange_600">{{ i.l_name }}</div>
+                            </div>
+                        </v-card-title>
+                        <v-card-text>
+                            <div class="text-h6 text-disabled">{{ i.job_title }}</div>
+                        </v-card-text>
+                        <v-card-actions class="mt-auto">
+                            <div class="d-flex ga-3 pa-3">
+                                <v-icon :class="i.github_ico"></v-icon>
+                                <v-icon :class="i.x_ico"></v-icon>
+                            </div>
+                        </v-card-actions>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <div style="min-height: 200px;"></div> <!-- spacer -->
+            <v-row class="my-10">
+                <v-col cols="12" md="6">
+                    <div class="d-flex flex-column my-10">
+                        <div class="d-flex flex-column ga-3">
+                            <div class="text-exr_accent_orange_600 text-h6">Contact</div>
+                            <div class="text-h4">Connect With Us</div>
+                            <div class="text-h6 text-disabled">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ipsam sint enim exercitationem ex autem corrupti quas tenetur</div>
+                        </div>
+                        <div class="">
+                            <div class="d-flex flex-column my-10" v-for="(i,idx) in companyContactUs" :key="idx">
+                                <div class="d-flex flex-row ga-3">
+                                    <v-icon :class="i.contact_us_ico"></v-icon>
+                                    <div class="text-h6">{{ i.title }}</div>
+                                </div>
+                                <div class="_desc_contact_us text-h6">{{ i.desc }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </v-col>
+                <v-col cols="12" md="6">
+                    <form>
+                        <v-text-field
+                            label="Name"
+                            required
+                        ></v-text-field>
+
+                        <v-text-field
+                            label="E-mail"
+                            required
+                        ></v-text-field>
+
+                        <v-select
+                            label="Item"
+                            required
+                        ></v-select>
+
+                        <v-checkbox label="Do you agree?" required></v-checkbox>
+                        <v-btn class="me-4" variant="tonal" color="exr_accent_orange_600">submit</v-btn>
+                    </form>
+                </v-col>
+            </v-row>
         </v-container>
-        <v-row justify="center" class="mt-10 bg-ligthCustom pa-10 align-center">
-            <v-col cols="12" md="4" class="justify-center d-flex">
-                <v-img src="../../public/exr-logo.png" class="rounded-xl" width="400" height="400" cover></v-img>
-            </v-col>
-            <v-col cols="12" md="8">
-                <p class="text">
-                    Jalaniaga is more than just a shipping company. We go above and beyond just getting your package from point A to point B. Our team is dedicated to providing exceptional customer service, and we pride ourselves on delivering the highest level of satisfaction to our clients.
-                    With Jalaniaga, you can have peace of mind knowing that your package is being handled by experienced logistic professionals. Our state-of-the-art technology allows us to track every step of the delivery process, ensuring that your package arrives at its destination on time, every time.
-                    We offer a wide range of shipping services, including domestic and international shipping, air freight, warehousing, and last-mile delivery. Whatever your needs are, our team is ready to go above and beyond to make sure that your packages are delivered on time, every time.
-                    At Jalaniaga, we believe that every shipment tells a unique story. Let us help you tell yours. Contact us today to learn how we can help you with your logistics needs.
-                    Feel free to customize and expand on this draft, and let me know if you need any further assistance.
-                </p>
-            </v-col>
-        </v-row>
     </v-container>
 </template>
 
@@ -117,6 +175,56 @@ export default {
     data() { 
         return { 
             logoByFTP: import.meta.env.VITE_APP_URL_FTP + "/portal/portals/jala-logo-web.png",
+            companyContactUs:[
+                {   
+                    id: 1,
+                    title: 'Find Us',
+                    desc: '742 Evergreen Terrace, Springfield, IL 62704',
+                    contact_us_ico: 'fa-solid fa-building',
+                },
+                {   
+                    id: 2,
+                    title: 'Call Us',
+                    desc: '+1 (619) 123-4567',
+                    contact_us_ico: 'fa-solid fa-phone',
+                },
+                {   
+                    id: 3,
+                    title: 'Mail Us',
+                    desc: 'exordium@gmail.com',
+                    contact_us_ico: 'fa-solid fa-envelope',
+                },
+            ],
+            companyDreamTeam:[
+                {   
+                    id: 1,
+                    f_name: 'Achmed',
+                    l_name: 'Gracias',
+                    job_title: 'Flutter mobile developer',
+                    img_src: '../../src/assets/achmed_gracias.jpg',
+                    github_ico: 'fa-brands fa-github',
+                    x_ico: 'fa-brands fa-x-twitter',
+
+                },
+                {   
+                    id: 2,
+                    f_name: 'Armenskuy',
+                    l_name: 'Py',
+                    job_title: 'Senior Backend Engineer',
+                    img_src: '../../src/assets/armanskuy.png',
+                    github_ico: 'fa-brands fa-github',
+                    x_ico: 'fa-brands fa-x-twitter',
+                },
+                {   
+                    id: 3,
+                    f_name: 'Ido',
+                    l_name: 'Rahadi',
+                    job_title: 'Vue Frontend Developer',
+                    img_src: 'https://cdn.vuetifyjs.com/images/cards/sunshine.jpg',
+                    github_ico: 'fa-brands fa-github',
+                    x_ico: 'fa-brands fa-x-twitter',
+                },
+            ],
             serviceShowOnCards:[
                 {   
                     id: 1,
@@ -135,7 +243,7 @@ export default {
                 },  
                 {   
                     id: 4,
-                    title: 'Mobile Development',
+                    title: 'Security',
                     desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, rerum a. Fuga, eius dolorum et beatae explicabo'
                 },  
             ],
