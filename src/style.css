@@ -127,17 +127,15 @@ body::--webkit-scrollbar {
     transition: all 0.4s ease;
 }
 
-.card-images { 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.card-images .v-img{
-    max-height: 9rem;
-    max-width: 9rem;
-
-}
-
 .no-resize textarea { 
     resize: none;
+}
+
+.hover-card img {
+  filter: grayscale(100%);
+  transition: filter 0.4s ease-in;
+}
+
+.hover-card:hover img {
+  filter: grayscale(0%);
 }
