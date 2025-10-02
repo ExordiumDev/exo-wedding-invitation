@@ -1,6 +1,6 @@
 <template>
     <div class="main-header">
-        <v-app-bar color="lightCustom" density="comfortable" elevante-on-scroll class="_floating-header px-5" height="80">
+        <v-app-bar color="" density="comfortable" elevante-on-scroll class="_floating-header px-5" height="80">
             <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none">
                 <v-icon>mdi-menu</v-icon>
             </v-app-bar-nav-icon>
@@ -16,8 +16,8 @@
                 <router-link :to="{ name: 'Home.view' }" class="nav-link">
                     <v-btn 
                         text
-                        class="py-0"
-                        :class="$route.name === 'Home.view' ? 'active-navbar-item' : ''"
+                        class="py-0 text-exr_accent_orange_950"
+                        :class="$route.name === 'Home.view' ? 'bg-exr_accent_orange_200' : ''"
                         color="secondary"
                     >
                         Home
@@ -27,8 +27,8 @@
                 <router-link :to="{ name: 'News.view' }" class="nav-link">
                     <v-btn 
                         text 
-                        class="py-0"
-                        :class="$route.name === 'News.view' ? 'active-navbar-item' : ''"
+                        class="py-0 text-exr_accent_orange_950"
+                        :class="$route.name === 'News.view' ? 'bg-exr_accent_orange_200' : ''"
                         color="secondary"
                     >
                         News
