@@ -1,8 +1,8 @@
 <template>
-    <div class="main-footer d-flex flex-column bg-customFooterLight">
+    <div class="main-footer d-flex flex-column">
         <v-row justify="center" class="my-5">
             <v-col cols="12" class="d-flex justify-center">
-                <h2>JALA Net</h2>
+                <div class="text-h4 text-exr_accent_orange_950">Exordium</div>
             </v-col>
         </v-row>
         <v-row class="my-5">
@@ -36,7 +36,7 @@
             </v-col>
             <v-col cols="12" md="6" class="px-10">
                 <div class="_address-content-header d-flex justify-space-between ">
-                    <h3 class="font-weight-light">JALA</h3>
+                    <h3 class="font-weight-light"></h3>
                     <h3 class="font-weight-light">Head Office</h3>
                 </div>
                 <v-divider></v-divider>

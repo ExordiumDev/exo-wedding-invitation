@@ -43,8 +43,10 @@
                         <v-btn
                             color="dark"
                             v-bind="props"
-                        >
-                            {{ getSET_USER.name }}
+                        >   
+                            <div class="text-exr_accent_orange_600">
+                                {{ getSET_USER.name }}
+                            </div>
                         </v-btn>
                     </template>
 
