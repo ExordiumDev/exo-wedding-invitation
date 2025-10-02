@@ -4,6 +4,9 @@ import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { fa } from 'vuetify/iconsets/fa-svg'
+import '@fortawesome/fontawesome-free/css/all.css'
+
 
 const vuetify = createVuetify({ 
     components, 
@@ -13,6 +16,7 @@ const vuetify = createVuetify({
         aliases,
         sets: {
             mdi,
+            fa
         }
     },
     theme: {
