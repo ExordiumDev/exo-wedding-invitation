@@ -33,7 +33,17 @@ const vuetify = createVuetify({
                     lightCustom: '#F2F9FF',
                     customFooterLight: '#344450',
                     customFooterDark: '#142129',
-                    exr_accent_orange: '#ea580c',
+                    exr_accent_orange_950: '#431407',
+                    exr_accent_orange_900: '#7c2d12',
+                    exr_accent_orange_800: '#9a3412',
+                    exr_accent_orange_700: '#c2410c',
+                    exr_accent_orange_600: '#ea580c',
+                    exr_accent_orange_500: '#f97316',
+                    exr_accent_orange_400: '#fb923c',
+                    exr_accent_orange_300: '#fdba74',
+                    exr_accent_orange_200: '#fed7aa',
+                    exr_accent_orange_100: '#ffedd5',
+                    exr_accent_orange_50: '#fff7ed',
                 }
             }
         }
