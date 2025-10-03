@@ -27,4 +27,8 @@ export const SET_USER = "SET_USER";
 export const CHECK_AUTH = "CHECK_AUTH";
 export const GET_DATA = "GET_DATA";
 
+export const SIGNIN_WITH_GOOGLE = "SIGNIN_WITH_GOOGLE";
+export const EX_CODE = "EX_CODE"
+
+
 

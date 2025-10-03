@@ -1,7 +1,7 @@
 import { setAuthToken,setCookie,getCookie,delCookie } from './api';
 import {$axInstance, $axios} from './api.js';
 import CryptoJS from 'crypto-js';
-import { GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS,AUTH_LOGOUT,AUTH_DESTROY_SESSION,AUTHENTICATOR,LOGOUT,DELETEALL_COOKIES } from './actions/reqApi.js';
+import { EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS,AUTH_LOGOUT,AUTH_DESTROY_SESSION,AUTHENTICATOR,LOGOUT,DELETEALL_COOKIES } from './actions/reqApi.js';
 const APP_JWT_SECRET = import.meta.env.VITE_APP_JWT_SECRET;
 import 'url-search-params-polyfill';
 
@@ -50,6 +50,18 @@ const mutations = {
 
 
 const actions = {
+
+    [EX_CODE]({ commit, dispatch, rootState }, code) {
+        return new Promise((resolve, reject) => {
+            $axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/auth/google/callback`, {code}).then(async(res) => {
+                resolve(res)
+                console.log('response from ex code ', res)
+            }).catch(async (error) => {
+                reject(error)
+            });
+        })
+    },
+
     [GOOGLE_LOGOUT]: async ({ commit }) => {
         try {
             const res = await $axios.post("/auth/logout");
