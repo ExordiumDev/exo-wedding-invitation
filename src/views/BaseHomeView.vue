@@ -125,25 +125,40 @@
                     </div>
                 </v-col>
                 <v-col cols="12" md="6">
-                    <form>
-                        <v-text-field
-                            label="Name"
-                            required
-                        ></v-text-field>
+                    <v-card class="py-5" color="">
+                        <v-card-item>
+                            <div class="d-flex ga-3 pt-5">
+                                <v-text-field
+                                    variant="outlined"
+                                    label="First Name"
+                                    required
+                                ></v-text-field>
+                                <v-text-field
+                                    variant="outlined"
+                                    label="Last Name"
+                                ></v-text-field>
+                            </div>
+                            <v-text-field
+                                variant="outlined"
+                                label="E-mail"
+                                required
+                            ></v-text-field>
+    
+                            <v-select
+                                label="Subject"
+                                clearable
+                                chips
+                                :items="['Web Development', 'Mobile Development', 'UI Design']"
+                                variant="outlined"
+                                required
+                            ></v-select>
 
-                        <v-text-field
-                            label="E-mail"
-                            required
-                        ></v-text-field>
+                            <v-textarea clearable variant="outlined" label="Message" row-height="25" rows="4">
 
-                        <v-select
-                            label="Item"
-                            required
-                        ></v-select>
-
-                        <v-checkbox label="Do you agree?" required></v-checkbox>
-                        <v-btn class="me-4" variant="tonal" color="exr_accent_orange_600">submit</v-btn>
-                    </form>
+                            </v-textarea>
+                            <v-btn class="me-4 w-100" variant="tonal" color="exr_accent_orange_600">submit</v-btn>
+                        </v-card-item>
+                    </v-card>
                 </v-col>
             </v-row>
         </v-container>
