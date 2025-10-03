@@ -31,12 +31,18 @@
                         :class="$route.name === 'News.view' ? 'bg-exr_accent_orange_200' : ''"
                         color="secondary"
                     >
-                        News
+                        News 
                     </v-btn>
                 </router-link>
             </div>
             
             <!-- google sso buat iframe nya dia -->
+            <div>
+                <v-btn variant="flat" @click="signInDialog = true">Sign in</v-btn>
+                <v-dialog max-width="550" persistent v-model="signInDialog">
+                    <signDialog @close="signInDialog = false" />
+                </v-dialog>
+            </div>
             <div v-if="gfbtn" class="d-flex justify-space-around">
                 <v-menu transition="scale-transition">
                     <template v-slot:activator="{ props }">
@@ -167,11 +173,16 @@
 
 <script>
 
+
+import signDialog from './signDialog.vue'
 import { mapGetters, mapActions } from 'vuex';
 import { GOOGLE_LOGOUT, SET_USER, AUTH_TOKEN, AUTH_USER, AUTH_GET_USER, AUTH_GET_GOOGLE_TOKEN, CHECK_AUTH } from '../stores/actions/reqApi'
 
 export default {
     name: 'Header',
+    components: {
+        signDialog
+    },
     data() { 
         return { 
             logoByFTP: import.meta.env.VITE_APP_URL_FTP + "/portal/portals/portal-header-logo.png",
@@ -191,6 +202,7 @@ export default {
             iframeAuthUrl: null,
             authFailed: false,
             gfbtn: false,
+            signInDialog:false
         }
     },
     computed: { 
