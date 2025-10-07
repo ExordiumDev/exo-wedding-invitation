@@ -29,6 +29,8 @@ export const GET_DATA = "GET_DATA";
 
 export const SIGNIN_WITH_GOOGLE = "SIGNIN_WITH_GOOGLE";
 export const EX_CODE = "EX_CODE"
+export const SET_USER_IF_UNAUTHENTICATED = "SET_USER_IF_UNAUTHENTICATED"
+
 
 
 

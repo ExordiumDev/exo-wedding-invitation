@@ -1,11 +1,12 @@
 import { setAuthToken,setCookie,getCookie,delCookie } from './api';
 import {$axInstance, $axios} from './api.js';
 import CryptoJS from 'crypto-js';
-import { EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS,AUTH_LOGOUT,AUTH_DESTROY_SESSION,AUTHENTICATOR,LOGOUT,DELETEALL_COOKIES } from './actions/reqApi.js';
+import { SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS,AUTH_LOGOUT,AUTH_DESTROY_SESSION,AUTHENTICATOR,LOGOUT,DELETEALL_COOKIES } from './actions/reqApi.js';
 const APP_JWT_SECRET = import.meta.env.VITE_APP_JWT_SECRET;
 import 'url-search-params-polyfill';
 
 const state = {
+    SET_USER: {},
     AUTH_TOKEN:{},
     // AUTH_USER:{id:10, name:'ido rahadi', username:'admin'},
     AUTH_USER:{},
@@ -14,7 +15,7 @@ const state = {
     // AUTH_STATUS: getCookie('dapi2') || false,
     AUTH_STATUS: true,
     AUTH_GET_GOOGLE_TOKEN: null,
-    SET_USER: {}
+   
 };
 
 const getters = {
@@ -28,6 +29,9 @@ const getters = {
 };
 
 const mutations = { 
+    [SET_USER_IF_UNAUTHENTICATED](state) {
+        state.SET_USER = {}
+    },
     [AUTH_TOKEN](state, resp) {
         state.AUTH_TOKEN = resp;
     },
@@ -45,17 +49,17 @@ const mutations = {
     },
     SET_USER(state,user) {
         state.SET_USER = user
-    }
+    },
+   
 }
 
 
 const actions = {
 
-    [EX_CODE]({ commit, dispatch, rootState }, code) {
+    [EX_CODE]({ dispatch }, code) {
         return new Promise((resolve, reject) => {
-            $axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/auth/google/callback`, {code}).then(async(res) => {
+            $axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/google/callback`, {code}).then(async(res) => {
                 resolve(res)
-                console.log('response from ex code ', res)
             }).catch(async (error) => {
                 reject(error)
             });
@@ -74,9 +78,8 @@ const actions = {
     
     [CHECK_AUTH]: async ({ commit }) => {
         try {
-            const res = await $axios.get("/auth/me");
+            const res = await $axios.get("/auth/m");
             commit('SET_USER', res.data);
-            console.log('res data ', res.data)
         } catch (error) {
             commit('SET_USER', null);
             throw error;
@@ -108,6 +111,7 @@ const actions = {
 
     [AUTH_TOKEN]:async ({ commit,dispatch},payload) => {
         try {
+            console.log('pelot ', payload)
             if(!(payload instanceof Object)) throw 'invalid token';
             commit(AUTH_TOKEN,payload);
             setAuthToken(payload);

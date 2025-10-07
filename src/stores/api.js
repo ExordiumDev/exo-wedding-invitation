@@ -22,7 +22,6 @@ const $axInstance = axios.create({
 });
 
 let akses = undefined;
-let curdapi2 = undefined;
 
 function setupInterceptor(instance) {
     instance.interceptors.request.use(
@@ -36,11 +35,9 @@ function setupInterceptor(instance) {
     );
 }
 
-setupInterceptor($axInstance);
+setupInterceptor($axios);
 
-
-$axInstance.interceptors.request.use (
-   
+$axios.interceptors.request.use (   
     function (config) {
         config.headers['Authorization'] = `${akses?.token_type} ${akses?.access_token}`; 
         return config;
@@ -120,25 +117,12 @@ export const delCookie = (name=undefined) =>{
 
 export const setAuthToken = (payload) => {
     if (payload) {
-        const {access_token,refresh_token,expires_in,token_type,thirdParty} = payload;
+        const {access_token,refresh_token,expires_in,token_type} = payload;
         akses = {access_token,refresh_token,expires_in,token_type};
-        curdapi2 = thirdParty;
-        $axInstance.defaults.headers['Authorization'] = `${token_type} ${access_token}`;
-
+        $axios.defaults.headers['Authorization'] = `${token_type} ${access_token}`;
     } else {
-        delete $axInstance.defaults.headers['Authorization'];
+        delete $axios.defaults.headers['Authorization'];
     }
-};  
-
-export const axDT = async (url,data,callback,settings,method='post')=>{
-    if (akses?.access_token) {
-        let resp = await $axInstance({
-            method:method,
-            url:url,
-            data
-        });
-        callback({draw: data?.draw,recordsTotal: resp?.data?.recordsTotal,recordsFiltered: resp?.data?.recordsFiltered,data: resp?.data?.data});
-    }
-}
+};
 
 export { $axInstance, $axios };
