@@ -28,7 +28,7 @@
                         color="exr_accent_orange_600"
                         class="google-btn"
                         prepend-icon="mdi-google"
-                        :href="oauthURI+'/auth/auth/google/login'"
+                        :href="oauthURI+'/auth/google/login'"
                     >
                         Sign in with Google
                     </v-btn>

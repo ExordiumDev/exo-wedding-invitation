@@ -39,8 +39,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const defTitle = 'Portal';
-    document.title = `${defTitle} | ${to.meta.title}` || defTitle;
+    const appTitle = import.meta.env.VITE_APP_NAME;
+    document.title = `${appTitle} | ${to.meta.title}` || appTitle;
     next()
 })
 

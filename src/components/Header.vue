@@ -37,7 +37,7 @@
             </div>
             
             <!-- google sso buat iframe nya dia -->
-            <div>
+            <div v-if="!getSET_USER">
                 <v-btn variant="flat" @click="signInDialog = true">Sign in</v-btn>
                 <v-dialog max-width="550" persistent v-model="signInDialog">
                     <signDialog @close="signInDialog = false" />
@@ -72,7 +72,6 @@
                     </v-list>
                 </v-menu>
             </div>
-            <div v-else id="googleBtn" ref="googleBtn"></div>
         </v-app-bar>
         <v-navigation-drawer
             v-model="drawer"
@@ -250,17 +249,6 @@ export default {
     },
     mounted() {
         this.$nextTick(async() => {
-            window.google.accounts.id.initialize({
-                client_id: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID,
-                callback: this.handleCredentialResponse,
-                auto_select: false
-            });
-            window.google.accounts.id.renderButton(
-                document.getElementById("googleBtn"),
-                { theme: "outline", size: "large" }
-            );
-
-            await this.actCHECK_AUTH()
             if(this.getSET_USER) {
                 this.gfbtn = true;
             } else {
