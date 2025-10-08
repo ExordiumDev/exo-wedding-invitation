@@ -23,7 +23,7 @@ import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 import BaseIndex from './BaseIndex.vue';
 import { DotLottieVue } from '@lottiefiles/dotlottie-vue'
-import { AUTH_TOKEN, AUTH_USER, AUTH_GET_USER, EX_CODE, CHECK_AUTH, SET_USER_IF_UNAUTHENTICATED, AUTH_STATUS } from '../stores/actions/reqApi.js'
+import { AUTH_TOKEN, AUTH_USER, AUTH_GET_USER, EX_CODE, SET_USER_IF_UNAUTHENTICATED } from '../stores/actions/reqApi.js'
 import { mapState } from 'vuex/dist/vuex.cjs.js';
 
 export default {
