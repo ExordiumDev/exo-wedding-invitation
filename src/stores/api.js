@@ -1,9 +1,9 @@
+import store from '../stores'
 import axios from 'axios';
 
 const $axios = axios.create({
     withCredentials: true,
     baseURL: import.meta.env.VITE_APP_API_URL,
-    // baseURL: '/api',
     headers:{
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -37,58 +37,68 @@ function setupInterceptor(instance) {
 
 setupInterceptor($axios);
 
-$axios.interceptors.request.use (   
-    function (config) {
-        config.headers['Authorization'] = `${akses?.token_type} ${akses?.access_token}`; 
-        return config;
-    },
-    async function (error) {
-        NProgress.done();
+// $axios.interceptors.request.use (   
+//     function (config) {
+//         config.headers['Authorization'] = `${akses?.token_type} ${akses?.access_token}`; 
+//         return config;
+//     },
+//     async function (error) {
+//         NProgress.done();
+//         const originalRequest = error.config;
+//         if(error.code != "ERR_NETWORK" && error.response){
+//             const errMessage = {status:error.response.status}
+//             if (error.response.status === 401 && !originalRequest._retry) {
+//                 try {
+//                     if (!curdapi2) { throw new Error(`curdapi2 : ${curdapi2}`); }
+//                     const vResult = await curdapi2.getRefreshToken(akses)
+//                     const {access_token,expires_in,refresh_token,token_type} = vResult;
+//                     akses = {access_token,expires_in,refresh_token,token_type};
+//                     $axInstance.defaults.headers['Authorization'] = `${token_type} ${access_token}`;
+//                     originalRequest._retry = true;
+//                     return $axInstance(originalRequest);
+//                 } catch (error) {
+//                     errMessage.message ='unauthentication'
+//                 }
+//             }else{
+//                 switch (error.response.status) {
+//                     case 403:
+//                         errMessage.message ='not found' 
+//                         break;
+//                     case 500:
+//                         errMessage.message ='internal server error';
+//                         break;
+//                     default:
+//                         errMessage.message=error.response?.data;
+//                         break;
+//                 }
+//             }
+//             throw errMessage
+//         }
+//         return Promise.reject(error);
+//     }
+// );
+
+$axios.interceptors.response.use(
+    (response) => response,
+    async (error) => {
         const originalRequest = error.config;
-        if(error.code != "ERR_NETWORK" && error.response){
-            const errMessage = {status:error.response.status}
-            if (error.response.status === 401 && !originalRequest._retry) {
-                try {
-                    if (!curdapi2) { throw new Error(`curdapi2 : ${curdapi2}`); }
-                    const vResult = await curdapi2.getRefreshToken(akses)
-                    const {access_token,expires_in,refresh_token,token_type} = vResult;
-                    akses = {access_token,expires_in,refresh_token,token_type};
-                    $axInstance.defaults.headers['Authorization'] = `${token_type} ${access_token}`;
-                    originalRequest._retry = true;
-                    return $axInstance(originalRequest);
-                } catch (error) {
-                    errMessage.message ='unauthentication'
-                }
-            }else{
-                switch (error.response.status) {
-                    case 403:
-                        errMessage.message ='not found' 
-                        break;
-                    case 500:
-                        errMessage.message ='internal server error';
-                        break;
-                    default:
-                        errMessage.message=error.response?.data;
-                        break;
-                }
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+
+            try {
+                const res = await $axios.post(import.meta.env.VITE_APP_API_URL+'/auth/refresh', {}, { withCredentials: true });
+                const newData = res.data;
+                setAuthToken(newData);
+                await store.dispatch('auth/AUTH_GET_USER');
+                return $axios(originalRequest);
+            } catch (err) {
+                console.error("Invalid token:", err);
+                return Promise.reject(err)
             }
-            throw errMessage
         }
         return Promise.reject(error);
     }
 );
-
-$axInstance.interceptors.response.use(function (response) {
-    return response;
-    }, 
-    async function (error) {
-    if(error?.response?.status==401){
-        console.log(error);
-        // Redirect to a new URL
-        // window.location.href = `${process.env.VUE_APP_OAUTH_URL}/login`;
-    }
-    return Promise.reject(error);
-});
 
 export const setCookie = (name, value, days)=>{
     let expires = "";

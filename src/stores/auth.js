@@ -6,14 +6,11 @@ const APP_JWT_SECRET = import.meta.env.VITE_APP_JWT_SECRET;
 import 'url-search-params-polyfill';
 
 const state = {
-    SET_USER: {},
+    SET_USER: null,
     AUTH_TOKEN:{},
-    // AUTH_USER:{id:10, name:'ido rahadi', username:'admin'},
     AUTH_USER:{},
     SOCKET_CLIENT:{},
     AUTH_PROFILE:{},
-    // AUTH_STATUS: getCookie('dapi2') || false,
-    AUTH_STATUS: true,
     AUTH_GET_GOOGLE_TOKEN: null,
    
 };
@@ -36,6 +33,7 @@ const mutations = {
         state.AUTH_TOKEN = resp;
     },
     [AUTH_USER](state, resp){
+        console.log('pake mutasi ', resp)
         state.AUTH_USER = resp;
     },
     [SOCKET_CLIENT](state, resp){
@@ -47,7 +45,7 @@ const mutations = {
     [AUTH_GET_GOOGLE_TOKEN](state, resp){
         state.AUTH_GET_GOOGLE_TOKEN = resp;
     },
-    SET_USER(state,user) {
+    [SET_USER](state,user) {
         state.SET_USER = user
     },
    
@@ -79,9 +77,10 @@ const actions = {
     [CHECK_AUTH]: async ({ commit }) => {
         try {
             const res = await $axios.get("/auth/m");
-            commit('SET_USER', res.data);
+            console.log('res dari check auth', res)
+            commit(SET_USER, res.data);
         } catch (error) {
-            commit('SET_USER', null);
+            commit(SET_USER, null);
             throw error;
         }
     },
@@ -100,6 +99,7 @@ const actions = {
 
     [AUTH_USER]: async ({ commit }, payload) => {
         try {
+            console.log('ini jalan ga ?')
             if (!(payload instanceof Object) || !payload.user) throw new Error('invalid user');
             commit('SET_USER', payload.user);
             console.log('User setted in Vuex:', payload.user);
@@ -111,7 +111,6 @@ const actions = {
 
     [AUTH_TOKEN]:async ({ commit,dispatch},payload) => {
         try {
-            console.log('pelot ', payload)
             if(!(payload instanceof Object)) throw 'invalid token';
             commit(AUTH_TOKEN,payload);
             setAuthToken(payload);
@@ -125,8 +124,10 @@ const actions = {
 
     [AUTH_GET_USER]({ commit, dispatch, rootState }, payload) {
         return new Promise((resolve, reject) => {
-            $axInstance.get(`${import.meta.env.VITE_APP_OAUTH_URL}/api/user`).then(async(response) => {
+            console.log('pake auth get user')
+            $axios.get("/auth/m").then(async(response) => {
                 resolve(response?.data)
+                commit(AUTH_USER, response?.data)
             }).catch(async (error) => {
                 reject(error)
             });
