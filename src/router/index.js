@@ -50,7 +50,7 @@ router.beforeEach(async(to, from, next) => {
             console.warn('Auth failed', error)
             store.commit('SET_AUTH_DIALOG', true)
             store.commit('SET_PROGRESS_BAR', false)
-            return next(false);
+            return next('/');
             // return next('/')
         }
     } else {
