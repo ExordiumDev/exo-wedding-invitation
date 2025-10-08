@@ -66,7 +66,7 @@ export default {
                 console.log('result ', res);
             } catch (error) {
                 this.authDialog = true;
-                console.error('Error ', error);
+                console.error('Error get data ', error);
             }
         })
     }

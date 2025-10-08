@@ -36,14 +36,13 @@
                 </router-link>
             </div>
             
-            <!-- google sso buat iframe nya dia -->
-            <div v-if="!getSET_USER">
+            <div v-if="!authUser || !authUser.name">
                 <v-btn variant="flat" @click="signInDialog = true">Sign in</v-btn>
                 <v-dialog max-width="550" persistent v-model="signInDialog">
                     <signDialog @close="signInDialog = false" />
                 </v-dialog>
             </div>
-            <div v-if="gfbtn" class="d-flex justify-space-around">
+            <div v-else class="d-flex justify-space-around">
                 <v-menu transition="scale-transition">
                     <template v-slot:activator="{ props }">
                         <v-btn
@@ -51,7 +50,7 @@
                             v-bind="props"
                         >   
                             <div class="text-exr_accent_orange_600">
-                                {{ getSET_USER.name }}
+                                {{ authUser.name }}
                             </div>
                         </v-btn>
                     </template>
@@ -61,7 +60,7 @@
                             <v-card hover>
                                 <v-card-item>
                                     <v-card-title>
-                                        {{ getSET_USER.email }}
+                                        {{ authUser.email }}
                                     </v-card-title>
                                 </v-card-item>
                                 <v-card-text>
@@ -174,11 +173,17 @@
 
 
 import signDialog from './signDialog.vue'
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 import { GOOGLE_LOGOUT, SET_USER, AUTH_TOKEN, AUTH_USER, AUTH_GET_USER, AUTH_GET_GOOGLE_TOKEN, CHECK_AUTH } from '../stores/actions/reqApi'
 
 export default {
     name: 'Header',
+    props: {
+        authUser: {
+            type: Object,
+            default: () => ({})
+        }
+    },
     components: {
         signDialog
     },
@@ -206,8 +211,7 @@ export default {
     },
     computed: { 
         ...mapGetters({
-            getAUTH_USER: 'auth/'+AUTH_USER,
-            getSET_USER: 'auth/'+SET_USER
+            getAUTH_USER: 'auth/AUTH_USER',
         }),
         usrPhotosProfile() {
             if (!this.getAUTH_USER?.photos?.image_url) return null
@@ -215,6 +219,9 @@ export default {
         },
         dataLoginUri() {
             return import.meta.env.VITE_APP_URL;
+        },
+        isLoggedIn(){
+            return this.getAUTH_USER && Object.keys(this.getAUTH_USER).length > 0
         }
     },
     methods: {
@@ -222,39 +229,20 @@ export default {
             actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
             actAUTH_USER: `auth/${AUTH_USER}`,
             actAUTH_GET_GOOGLE_TOKEN: `auth/${AUTH_GET_GOOGLE_TOKEN}`,
-            actCHECK_AUTH: `auth/${CHECK_AUTH}`,
             actGOOGLE_LOGOUT: `auth/${GOOGLE_LOGOUT}`
         }),
         async logoutMethod(){
             await this.actGOOGLE_LOGOUT().then(()=>{
-                window.google.accounts.id.disableAutoSelect();
-                this.gfbtn = false
                 window.location.reload();
             }).catch(error => {
                 console.error('error logout',error)
             })
         },
-        handleCredentialResponse(response) {
-            const gToken = response.credential;
-            this.actAUTH_GET_GOOGLE_TOKEN(gToken).then((v) => {
-                // commit user ke store
-                this.actAUTH_USER(v).then(() => {
-                    this.actCHECK_AUTH();
-                    this.gfbtn = true;
-                }).catch(error => {
-                    console.error('error set user', error);
-                });
-            });
-        },
     },
     mounted() {
-        this.$nextTick(async() => {
-            if(this.getSET_USER) {
-                this.gfbtn = true;
-            } else {
-                this.gfbtn = false
-            }
+        this.$nextTick(() => {
+            console.log('header get user ', this.authUser)
         })
-    }
+    },
 }
 </script>
