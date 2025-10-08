@@ -1,6 +1,10 @@
 <template>
     <v-app>
         <Header v-if="isRender" :authUser="getAUTH_USER" />
+        <v-dialog max-width="550" persistent v-model="$store.state.authDialog">
+            <signDialog @close="$store.commit('SET_AUTH_DIALOG', false)" />
+        </v-dialog>
+        <v-progress-linear v-if="$store.state.pageLoad" color="primary" height="5" indeterminate absolute top></v-progress-linear>
         <v-main class="main-wrapper">
             <router-view></router-view>
         </v-main>
@@ -13,6 +17,7 @@
 </style>
 
 <script>
+import signDialog from '../components/signDialog.vue'
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
@@ -35,6 +40,7 @@ export default {
         Header,
         Footer,
         DotLottieVue,
+        signDialog,
     },
     computed: {
         ...mapGetters({

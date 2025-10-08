@@ -59,16 +59,15 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(async() => {
-            try {
-                const res = await this.actGET_DATA();
-                this.authDialog = false;
-                console.log('result ', res);
-            } catch (error) {
-                this.authDialog = true;
-                console.error('Error get data ', error);
-            }
-        })
+        // this.$nextTick(async() => {
+        //     try {
+        //         await this.actGET_DATA();
+        //         this.authDialog = false;
+        //     } catch (error) {
+        //         this.authDialog = true;
+        //         console.error('Error get data ', error);
+        //     }
+        // })
     }
 }
 
