@@ -45,14 +45,18 @@
             <div v-else class="d-flex justify-space-around">
                 <v-menu transition="scale-transition">
                     <template v-slot:activator="{ props }">
-                        <v-btn
-                            color="dark"
-                            v-bind="props"
-                        >   
-                            <div class="text-exr_accent_orange_600">
-                                {{ authUser.name }}
-                            </div>
-                        </v-btn>
+                        <div class="d-flex justify-center align-center">
+                            <v-img :src="authUser.pict_uri" height="40" width="40" cover class="rounded-circle"></v-img>
+                            <v-btn
+                                color="dark"
+                                v-bind="props"
+                            >   
+                                
+                                <div class="text-exr_accent_orange_600">
+                                    {{ authUser.name }}
+                                </div>
+                            </v-btn>
+                        </div>
                     </template>
 
                     <v-list>
@@ -174,7 +178,7 @@
 
 import signDialog from './signDialog.vue'
 import { mapGetters, mapActions, mapState } from 'vuex';
-import { GOOGLE_LOGOUT, SET_USER, AUTH_TOKEN, AUTH_USER, AUTH_GET_USER, AUTH_GET_GOOGLE_TOKEN, CHECK_AUTH } from '../stores/actions/reqApi'
+import { GOOGLE_LOGOUT, AUTH_USER, AUTH_GET_USER, AUTH_GET_GOOGLE_TOKEN } from '../stores/actions/reqApi'
 
 export default {
     name: 'Header',

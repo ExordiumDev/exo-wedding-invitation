@@ -17,6 +17,8 @@
                     <v-text-field variant="outlined" label="E-mail" required></v-text-field>
                     <v-text-field variant="outlined" label="Password" type="password" required></v-text-field>
 
+                    <v-btn variant="flat" block prepend-icon="mdi-login" color="exr_accent_orange_600">Login</v-btn>
+
                     <div class="d-flex align-center my-4">
                         <v-divider></v-divider>
                         <span class="mx-2 text-grey">OR</span>
@@ -24,6 +26,7 @@
                     </div>
 
                     <v-btn
+                        variant="tonal"
                         block
                         color="exr_accent_orange_600"
                         class="google-btn"
