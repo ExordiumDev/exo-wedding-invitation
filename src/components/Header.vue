@@ -46,7 +46,6 @@
                 <v-menu transition="scale-transition">
                     <template v-slot:activator="{ props }">
                         <div class="d-flex justify-center align-center">
-                            <v-img :src="authUser.pict_uri" height="40" width="40" cover class="rounded-circle"></v-img>
                             <v-btn
                                 color="dark"
                                 v-bind="props"
@@ -64,11 +63,15 @@
                             <v-card hover>
                                 <v-card-item>
                                     <v-card-title>
-                                        {{ authUser.email }}
+                                        <div class="d-flex ga-3 align-center">
+                                            <v-img :src="authUser.pict_uri" height="40" width="40" cover class="rounded-circle"></v-img>
+                                            <label class="text-h6">{{ authUser.email }}</label>
+                                        </div>
+                                        <v-divider class="my-5"></v-divider>
                                     </v-card-title>
                                 </v-card-item>
                                 <v-card-text>
-                                    <v-btn @click="logoutMethod">Logout</v-btn>
+                                    <v-btn @click="logoutMethod" variant="tonal" color="exr_accent_orange_600" block>Logout</v-btn>
                                 </v-card-text>
                             </v-card>
                         </v-list-item>
