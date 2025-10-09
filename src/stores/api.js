@@ -1,5 +1,7 @@
-import store from '../stores'
+import store from '../stores';
 import axios from 'axios';
+import router from '../router/index';
+import { isShallow } from 'vue';
 
 const $axios = axios.create({
     withCredentials: true,
@@ -22,6 +24,7 @@ const $axInstance = axios.create({
 });
 
 let akses = undefined;
+let usrLogout = false
 
 function setupInterceptor(instance) {
     instance.interceptors.request.use(
@@ -82,17 +85,28 @@ $axios.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
+
+        if(originalRequest.url.includes('/auth/refresh')) {
+            return Promise.reject(error)
+        }
+
         if (error.response && error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
-                const res = await $axios.post(import.meta.env.VITE_APP_API_URL+'/auth/refresh', {}, { withCredentials: true });
-                const newData = res.data;
-                setAuthToken(newData);
+                await $axios.post(import.meta.env.VITE_APP_API_URL+'/auth/refresh', {}, { withCredentials: true });
+                // const newData = res.data;
+                // setAuthToken(newData);
                 await store.dispatch('auth/AUTH_GET_USER');
                 return $axios(originalRequest);
             } catch (err) {
-                console.error("Invalid token:", err);
+                console.log('error detail', err?.response?.data?.detail)
+                if ( err?.response?.data?.detail === "Refresh token not found" ) {
+                    console.error("You have logged in from another device:", err);
+                    await store.dispatch('auth/GOOGLE_LOGOUT')
+                    router.push('/')
+                }
+                console.log('err', err)
                 return Promise.reject(err)
             }
         }
