@@ -51,7 +51,7 @@ $axios.interceptors.response.use(
                 if ( err?.response?.data?.detail === "Refresh token not found" ) {
                     console.error("You have logged in from another device:", err);
                     await store.dispatch('auth/GOOGLE_LOGOUT')
-                    router.push('/')
+                    router.push('/home')
                 }
                 console.log('err', err)
                 return Promise.reject(err)

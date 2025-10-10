@@ -1,5 +1,5 @@
 import {$axios} from './api.js';
-import { SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS,AUTH_LOGOUT,AUTH_DESTROY_SESSION,AUTHENTICATOR,LOGOUT,DELETEALL_COOKIES } from './actions/reqApi.js';
+import { AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS } from './actions/reqApi.js';
 
 const state = {
     SET_USER: null,
@@ -48,6 +48,17 @@ const mutations = {
 
 
 const actions = {
+
+    [AUTH_SET_PASSWORD]({ dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post(
+                `${import.meta.env.VITE_APP_API_URL}/auth/set-pass`,
+                payload
+            )
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+        })
+    },
 
     [EX_CODE]({ dispatch }, code) {
         return new Promise((resolve, reject) => {
@@ -115,7 +126,6 @@ const actions = {
 
     [AUTH_GET_USER]({ commit, dispatch, rootState }, payload) {
         return new Promise((resolve, reject) => {
-            
             $axios.get("/auth/m").then(async(response) => {
                 resolve(response?.data)
                 commit(AUTH_USER, response?.data)
