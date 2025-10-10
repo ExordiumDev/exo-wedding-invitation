@@ -3,6 +3,7 @@ import store from '../stores'
 
 import HomeView from '../views/BaseHomeView.vue';
 import NewsView from '../views/BaseNewsView.vue';
+import UserSetPass from '../views/BaseUserSetPass.vue';
 import BaseIndex from '../views/BaseIndex.vue';
 
 const routes = [
@@ -29,6 +30,17 @@ const routes = [
                     requiresAuth: true,
                     title: 'News',
                     breadcrumb: 'News'
+                }
+            },
+            {
+                path: 'Set',
+                name: 'User.set',
+                title: 'Set Pass',
+                component: UserSetPass,
+                meta: {
+                    requiresAuth: true,
+                    title: 'Set Password',
+                    breadcrumb: 'Set Password'
                 }
             },
         ]
