@@ -57,17 +57,6 @@ export default {
             actAUTH_GET_USER: `auth/${AUTH_GET_USER}`,
             actAUTH_USER: `auth/${AUTH_USER}`,
         }),
-        handleIframeMessage(event) {
-            try {
-                const data = event.data;
-                console.log("Message from iframe:", data);
-                if (data.action === "triggerPageTriggerParentResponse") {
-                    console.log("Token response:", data.param);
-                }
-            } catch (err) {
-                console.error("Invalid message", err);
-            }
-        },
         ...mapMutations({
             mutSET_USER_IF_UNAUTHENTICATED: `auth/${SET_USER_IF_UNAUTHENTICATED}`
         }),
