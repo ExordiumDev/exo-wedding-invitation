@@ -68,6 +68,18 @@
                                             <label class="text-h6">{{ authUser.email }}</label>
                                         </div>
                                         <v-divider class="my-5"></v-divider>
+                                        <router-link :to="{ name: 'User.set' }">
+                                            <v-btn 
+                                                variant="tonal"
+                                                block
+                                                color="exr_accent_orange_600"
+                                            >
+                                                Settings
+                                            </v-btn>
+                                        </router-link>
+                                        <div class="d-flex my-3 align-center">
+                                            
+                                        </div>
                                     </v-card-title>
                                 </v-card-item>
                                 <v-card-text>
