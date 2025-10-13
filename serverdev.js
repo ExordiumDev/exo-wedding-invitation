@@ -1,32 +1,4 @@
-// import express from 'express';
-// import { createProxyMiddleware } from 'http-proxy-middleware';
-
-// import 'dotenv/config';
-// import { config } from 'dotenv';
-// config({ path: '.env.development' });
-
-// const app = express();
-// const host = '127.0.0.1';
-// const port = process.env.VITE_APP_PORT || 5173;
-
-// app.use(
-//   '/',
-//   createProxyMiddleware({
-//     target: `https://localhost:${process.env.VITE_APP_PORT}`,
-//     secure: false,
-//     changeOrigin: true,
-//     ws: true, 
-//     logLevel: 'silent',
-//   })
-// );
-
-// app.listen(port, host, () => {
-//   console.log('Express server proxying Vite now running at:', `http://${host}:${port}`);
-// });
-
-
 // ------------------------------------------------------------------------------------------
-
 
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -41,8 +13,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 const options = {
-  key: fs.readFileSync(path.join(__dirname, './crt/exordium.id-key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './crt/exordium.id.pem')),
+  key: fs.readFileSync(path.join(__dirname, './crt/app.exordium.com-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, './crt/app.exordium.com.pem')),
 };
 app.use(
   '/',
@@ -66,7 +38,7 @@ server.on('upgrade', (req, socket, head) => {
 
   // Tambahkan ini untuk WS Origin
   proxy.on('proxyReqWs', function (proxyReq) {
-    proxyReq.setHeader('Origin', 'https://exordium.id');
+    proxyReq.setHeader('Origin', 'https://app.exordium.com');
   });
 
   proxy.ws(req, socket, head);
@@ -74,7 +46,7 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 server.listen(443, () => {
-  console.log('Express server proxying Vite now running at: https://exordium.id');
+  console.log('Express server proxying Vite now running at: https://app.exordium.com');
 });
 
 // ------------------------------------------------------------------------------------------

@@ -29,12 +29,12 @@ export default defineConfig(({ mode }) => {
       host: env.VITE_APP_ALLOWED_HOSTS,
       port: 443,
       https: {
-        key: fs.readFileSync('./crt/exordium.id-key.pem'),
-        cert: fs.readFileSync('./crt/exordium.id.pem'),
+        key: fs.readFileSync('./crt/app.exordium.com-key.pem'),
+        cert: fs.readFileSync('./crt/app.exordium.com.pem'),
       },
       hmr: {
         protocol: 'wss',
-        host: 'exordium.id',
+        host: 'app.exordium.com',
         clientPort: 443,
       },
       cors: { 
