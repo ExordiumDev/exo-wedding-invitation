@@ -13,6 +13,7 @@ const store = createStore({
     state: {
         authDialog: false,
         pageLoad: false,
+        disBtn: false,
     },
      mutations: {
         SET_AUTH_DIALOG(state, val) {
@@ -20,6 +21,9 @@ const store = createStore({
         },
         SET_PROGRESS_BAR(state, val) {
             state.pageLoad = val
+        },
+        SET_DISBTN(state, val) {
+            state.disBtn = val
         }
     },
 });

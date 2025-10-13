@@ -1,5 +1,5 @@
 import {$axios} from './api.js';
-import { AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS } from './actions/reqApi.js';
+import { AUTH_SIGNIN, AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS } from './actions/reqApi.js';
 
 const state = {
     SET_USER: null,
@@ -43,11 +43,22 @@ const mutations = {
     [SET_USER](state,user) {
         state.SET_USER = user
     },
-   
 }
 
 
 const actions = {
+
+    [AUTH_SIGNIN]({ dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/signin`, payload).then(async(res) => {
+                resolve(res);
+                dispatch(AUTH_GET_USER)
+                window.location.reload()
+            }).catch(async (error) => {
+                reject(error)
+            });
+        })
+    },
 
     [AUTH_SET_PASSWORD]({ dispatch }, payload) {
         return new Promise((resolve, reject) => {

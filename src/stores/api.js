@@ -34,9 +34,19 @@ $axios.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if(originalRequest.url.includes('/auth/refresh')) {
-            return Promise.reject(error)
-        }
+        if(
+            originalRequest.url.includes('/auth/refresh') ||
+            originalRequest.url.includes('/auth/signin')
+        ) { return Promise.reject(error) }
+
+        // if (
+        //     originalRequest.url.includes('/auth/refresh') ||
+        //     originalRequest.url.includes('/auth/signin') ||
+        //     originalRequest.url.includes('/auth/google') ||
+        //     originalRequest.url.includes('/auth/logout')
+        // ) {
+        //     return Promise.reject(error);
+        // }
 
         if (error.response && error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
