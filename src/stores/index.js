@@ -14,6 +14,10 @@ const store = createStore({
         authDialog: false,
         pageLoad: false,
         disBtn: false,
+        sbShow: false,
+        sbText: '',
+        sbColor: '',
+        sbTimeout: 2000,
     },
      mutations: {
         SET_AUTH_DIALOG(state, val) {
@@ -24,7 +28,16 @@ const store = createStore({
         },
         SET_DISBTN(state, val) {
             state.disBtn = val
-        }
+        },
+        SET_SB_SHOW(state, val) {
+            state.sbShow = val
+        },
+        SET_SB_TEXT(state, val) {
+            state.sbText = val
+        },
+        SET_SB_COLOR(state, val) {
+            state.sbColor = val
+        },
     },
 });
 
