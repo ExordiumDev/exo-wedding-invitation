@@ -1,5 +1,8 @@
 <template>
     <v-container class="h-100 justify-center">
+        <v-snackbar v-model="setPassTrue" :timeout="alertTimeout" location="top" color="success" class="elevation-24">
+            {{ setPassRespText }}
+        </v-snackbar>
         <v-row class="my-10 d-flex justify-center">
             <v-col cols="12" md="6">
                 <div class="d-flex flex-column ga-3 pa-5">
@@ -10,8 +13,9 @@
                                 <v-text-field
                                     type="password"
                                     variant="outlined"
-                                    label="Password"
+                                    label="New Password"
                                     ref="_p"
+                                    v-model="_p"
                                     required
                                     @input="checkMatch"
                                 ></v-text-field>
@@ -21,6 +25,7 @@
                                     type="password"
                                     variant="outlined"
                                     ref="_cp"
+                                    v-model="_cp"
                                     label="Confirm Password"
                                     @input="checkMatch"
                                 ></v-text-field>
@@ -48,6 +53,11 @@ export default {
         return { 
             canSubmit: false,
             errorField: false,
+            alertTimeout: 2000,
+            setPassTrue: false,
+            setPassRespText: '',
+            _p: '',
+            _cp: '',
         }
     },
     computed: {
@@ -79,9 +89,14 @@ export default {
             }
         },
         async submitSetPassword(){
-            const _p = this.$refs._p.$el.querySelector('input').value;
+            const _p = this.$refs._p.$el.querySelector('input');
             try {
-                await this.actAUTH_SET_PASSWORD({p: _p});
+                await this.actAUTH_SET_PASSWORD({p: _p.value}).then((r) => {
+                    this._p = '';
+                    this._cp = '';
+                    this.setPassTrue = true;
+                    this.setPassRespText = r?.data?.message;
+                });
             } catch (error) {
                 console.error('Error ', error)
             }

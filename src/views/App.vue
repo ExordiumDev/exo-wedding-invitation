@@ -71,6 +71,7 @@ export default {
                     await this.actEX_CODE(code);
                     await this.actAUTH_GET_USER();
                     await this.$router.push("/")
+                    location.reload();
                 } else { 
                     await this.actAUTH_GET_USER();
                 }
