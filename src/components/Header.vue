@@ -260,7 +260,6 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            console.log('header get user ', this.authUser)
         })
     },
 }
