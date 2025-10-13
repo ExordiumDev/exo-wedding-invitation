@@ -1,7 +1,5 @@
 <template>
     <v-card>
-        <v-snackbar v-model="sloginResp" :timeout="alertTimeout" location="top" color="success" class="elevation-24">{{ loginRespTxt }}</v-snackbar>
-        <v-snackbar v-model="eloginResp" :timeout="alertTimeout" location="top" color="danger" class="elevation-24">{{ loginRespTxt }}</v-snackbar>
         <div class="d-flex justify-end pa-3">
             <v-btn variant="flat" @click="$emit('close')">
                 <v-icon class="fa-solid fa-xmark"></v-icon>
@@ -89,13 +87,11 @@ export default {
                 this.$store.commit('SET_PROGRESS_BAR', true)
                 this.$store.commit('SET_DISBTN', true)
                 const res = await this.actAUTH_SIGNIN(payload);
-                this.loginRespTxt = res
                 console.log("res success", res)
             } catch (error) {
+                this.showSnackbar(true, error?.response?.data?.detail || 'An error occurred during sign in.', 'error', 2000);
                 this.$store.commit('SET_PROGRESS_BAR', false)
                 this.$store.commit('SET_DISBTN', false)
-                this.eloginResp = true;
-                this.loginRespTxt = error?.response?.data?.detail
                 console.error('er on component -> ', error)
             }
         }

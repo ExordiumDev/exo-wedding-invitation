@@ -1,6 +1,7 @@
 <template>
     <v-app>
         <Header v-if="isRender" :authUser="getAUTH_USER" />
+        <v-snackbar v-model="$store.state.sbShow" :timeout="$store.state.sbTimeout" location="top" :color="$store.state.sbColor" class="elevation-24">{{ $store.state.sbText }}</v-snackbar>
         <v-dialog max-width="550" persistent v-model="$store.state.authDialog">
             <signDialog @close="$store.commit('SET_AUTH_DIALOG', false)" />
         </v-dialog>

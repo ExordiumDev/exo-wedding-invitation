@@ -1,8 +1,5 @@
 <template>
     <v-container class="h-100 justify-center">
-        <v-snackbar v-model="setPassTrue" :timeout="alertTimeout" location="top" color="success" class="elevation-24">
-            {{ setPassRespText }}
-        </v-snackbar>
         <v-row class="my-10 d-flex justify-center">
             <v-col cols="12" md="6">
                 <div class="d-flex flex-column ga-3 pa-5">
@@ -94,8 +91,7 @@ export default {
                 await this.actAUTH_SET_PASSWORD({p: _p.value}).then((r) => {
                     this._p = '';
                     this._cp = '';
-                    this.setPassTrue = true;
-                    this.setPassRespText = r?.data?.message;
+                    this.showSnackbar(true, r?.data?.message || 'Update password succeed.', 'success', 2000);
                 });
             } catch (error) {
                 console.error('Error ', error)
