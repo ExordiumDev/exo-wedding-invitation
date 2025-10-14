@@ -39,15 +39,6 @@ $axios.interceptors.response.use(
             originalRequest.url.includes('/auth/signin')
         ) { return Promise.reject(error) }
 
-        // if (
-        //     originalRequest.url.includes('/auth/refresh') ||
-        //     originalRequest.url.includes('/auth/signin') ||
-        //     originalRequest.url.includes('/auth/google') ||
-        //     originalRequest.url.includes('/auth/logout')
-        // ) {
-        //     return Promise.reject(error);
-        // }
-
         if (error.response && error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 
@@ -57,11 +48,10 @@ $axios.interceptors.response.use(
                 await store.dispatch('auth/AUTH_GET_USER');
                 return $axios(originalRequest);
             } catch (err) {
-                console.log('error detail', err?.response?.data?.detail)
                 if ( err?.response?.data?.detail === "Refresh token not found" ) {
                     console.error("You have logged in from another device:", err);
                     await store.dispatch('auth/GOOGLE_LOGOUT')
-                    router.push('/home')
+                    router.push('/login')
                 }
                 console.log('err', err)
                 return Promise.reject(err)

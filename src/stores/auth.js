@@ -4,11 +4,11 @@ import { AUTH_SIGNIN, AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, G
 const state = {
     SET_USER: null,
     AUTH_TOKEN:{},
-    AUTH_USER:{},
+    AUTH_USER:null,
     SOCKET_CLIENT:{},
     AUTH_PROFILE:{},
     AUTH_GET_GOOGLE_TOKEN: null,
-   
+    isAuthenticating: false,
 };
 
 const getters = {
@@ -43,6 +43,9 @@ const mutations = {
     [SET_USER](state,user) {
         state.SET_USER = user
     },
+    SET_AUTHENTICATING(state, val) {
+        state.isAuthenticating = val
+    }
 }
 
 
@@ -84,7 +87,7 @@ const actions = {
     [GOOGLE_LOGOUT]: async ({ commit }) => {
         try {
             const res = await $axios.post("/auth/logout");
-            commit(AUTH_USER, {});
+            commit(AUTH_USER, null);
             return res
         } catch (error) {
             console.error("Not authenticated", error);
@@ -140,6 +143,7 @@ const actions = {
             $axios.get("/auth/m").then(async(response) => {
                 resolve(response?.data)
                 commit(AUTH_USER, response?.data)
+                console.log('auth store ', response.data)
             }).catch(async (error) => {
                 reject(error)
             });
