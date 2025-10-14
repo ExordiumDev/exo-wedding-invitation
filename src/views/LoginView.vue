@@ -1,8 +1,8 @@
 <template>
-    <v-container class="py-10 h-100">
+    <v-container class="py-10 h-100 bg-exr_accent_orange_50" fluid>
         <v-row justify="center" class="align-center h-100">
             <v-col cols="12" md="4">
-                <v-card>
+                <v-card variant="elevated">
                     <v-tabs v-model="tab" grow>
                         <v-tab value="signin">Sign In</v-tab>
                         <v-tab value="signup">Sign Up</v-tab>
@@ -43,7 +43,7 @@
                                 <v-text-field variant="outlined" label="Name" required v-model="uSignupN" />
                                 <v-text-field variant="outlined" label="E-mail" required v-model="uSignupE" />
                                 <v-text-field variant="outlined" label="Password" type="password" required v-model="uSignupP" ref="uSignupP" @input="checkMatch"/>
-                                <v-text-field variant="outlined" label="Confirm Password" type="password" required ref="uSignupCP" @input="checkMatch"/>
+                                <v-text-field variant="outlined" label="Confirm Password" type="password" required v-model="uSignupCP" ref="uSignupCP" @input="checkMatch"/>
                                 <small class="text-red" v-if="errorField">{{ errorField }}</small>
                             </v-card-text>
                             <v-card-actions>
@@ -90,10 +90,10 @@ export default {
             actAUTH_SIGNUP: `auth/${AUTH_SIGNUP}`
         }),
         checkMatch() {
-            const _p = this.$refs.uSignupP.$el.querySelector('input').value;
-            const _cp = this.$refs.uSignupCP.$el.querySelector('input').value;
+            const _p = this.uSignupP
+            const _cp = this.uSignupCP
 
-            if(_p.length === 0 && _cp.length === 0) {
+            if(!_p && !_cp) {
                 this.errorField = '';
                 return
             }
@@ -116,13 +116,11 @@ export default {
             }
             try {
                 this.$store.commit('SET_PROGRESS_BAR', true)
-                const res = await this.actAUTH_SIGNUP(payload);
-                this.showSnackbar(true, res?.response?.data?.detail || 'signup succeed.', 'success', 2500);
-                localStorage.setItem('v_em', this.uSignupE);
+                await this.actAUTH_SIGNUP(payload);
+                sessionStorage.setItem('v_em', this.uSignupE);
                 this.$router.push('/v');
             } catch (error) {
                 console.log('error ', error);
-                this.showSnackbar(true, error?.response?.data?.detail || 'An error occurred during sign up.', 'error', 2500);
             } finally {
                 this.$store.commit('SET_PROGRESS_BAR', false)
             }
@@ -139,10 +137,9 @@ export default {
                 const res = await this.actAUTH_SIGNIN(payload);
                 console.log("res success", res)
             } catch (error) {
-                this.showSnackbar(true, error?.response?.data?.detail || 'An error occurred during sign in.', 'error', 2000);
+                this.showToast('Error login', 'error', { timeout: 2500 })
                 this.$store.commit('SET_PROGRESS_BAR', false)
                 this.$store.commit('SET_DISBTN', false)
-                console.error('er on component -> ', error)
             }
         }
     },
