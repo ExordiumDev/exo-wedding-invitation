@@ -6,7 +6,7 @@
                     <v-toolbar-title>Exordium </v-toolbar-title>
                     <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
                 </div>
-                <div class="user-profile">
+                <div class="user-profile d-flex align-center">
                     <v-menu transition="scale-transition">
                         <template v-slot:activator="{ props }">
                             <div class="d-flex justify-center align-center">
