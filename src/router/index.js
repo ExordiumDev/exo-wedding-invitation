@@ -1,49 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import store from '../stores'
 
-import HomeView from '../views/BaseHomeView.vue';
-import NewsView from '../views/BaseNewsView.vue';
-import UserSetPass from '../views/BaseUserSetPass.vue';
-import BaseIndex from '../views/BaseIndex.vue';
+import publicRoutes from './public'
+import privateRoutes from './private'
 
 const routes = [
+    ...publicRoutes,
+    ...privateRoutes,
     {
-        path: '/',
-        redirect: {name: 'Home.view'},
-        component: BaseIndex,
-        children: [
-            {
-                path: 'home',
-                name: 'Home.view',
-                component: HomeView,
-                meta: { 
-                    title: 'Home',
-                    breadcrumb: 'Home'
-                },
-            },
-            {
-                path: 'News',
-                name: 'News.view',
-                title: 'News',
-                component: NewsView,
-                meta: {
-                    requiresAuth: true,
-                    title: 'News',
-                    breadcrumb: 'News'
-                }
-            },
-            {
-                path: 'Set',
-                name: 'User.set',
-                title: 'Set Pass',
-                component: UserSetPass,
-                meta: {
-                    requiresAuth: true,
-                    title: 'Set Password',
-                    breadcrumb: 'Set Password'
-                }
-            },
-        ]
+        path: '/:catchAll(.*)',
+        redirect: '/login'
     }
 ]
 
@@ -52,31 +18,24 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async(to, from, next) => {
-    if ( to.matched.some(record => record.meta.requiresAuth)) {
-        try {
-            store.commit('SET_PROGRESS_BAR', true)
-            await store.dispatch('data/GET_DATA')
-            next()
-        } catch (error) {
-            console.warn('Auth failed', error)
-            store.commit('SET_AUTH_DIALOG', true)
-            store.commit('SET_PROGRESS_BAR', false)
-            return next('/');
-            // return next('/')
-        }
-    } else {
-        next()
+router.beforeEach(async (to, from, next) => {
+    const isAuth = store.state.auth?.AUTH_USER;
+    const needsAuth = to.matched.some(record => record.meta.requiresAuth);
+    if (needsAuth && !isAuth) {
+        return next('/login');
     }
-    const pageTitle = to.meta?.title ? `${appTitle} | ${to.meta.title}` : appTitle
-    document.title = pageTitle
+
+    if (to.path === '/login' && isAuth) {
+        return next('/dashboard');
+    }
+    next();
 });
 
 router.afterEach((to) => {
     const appTitle = import.meta.env.VITE_APP_NAME;
     const pageTitle = to.meta?.title ? `${appTitle} | ${to.meta.title}` : appTitle;
     document.title = pageTitle;
-    store.commit('SET_PROGRESS_BAR', false)
+    store.commit('SET_PROGRESS_BAR', false);
 });
 
 export default router;
