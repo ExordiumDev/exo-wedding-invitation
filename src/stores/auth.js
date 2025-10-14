@@ -1,5 +1,5 @@
 import {$axios} from './api.js';
-import { AUTH_SIGNIN, AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS } from './actions/reqApi.js';
+import { AUTH_SIGNUP_VERIFY, AUTH_SIGNUP, AUTH_SIGNIN, AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS } from './actions/reqApi.js';
 
 const state = {
     SET_USER: null,
@@ -50,6 +50,26 @@ const mutations = {
 
 
 const actions = {
+
+    [AUTH_SIGNUP_VERIFY]({}, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/verify`, payload).then(async(res) => {
+                resolve(res);
+            }).catch(async (error) => {
+                reject(error)
+            });
+        })
+    },
+
+    [AUTH_SIGNUP]({ dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post(`${import.meta.env.VITE_APP_API_URL}/auth/signup`, payload).then(async(res) => {
+                resolve(res);
+            }).catch(async (error) => {
+                reject(error)
+            });
+        })
+    },
 
     [AUTH_SIGNIN]({ dispatch }, payload) {
         return new Promise((resolve, reject) => {

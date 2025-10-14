@@ -38,6 +38,9 @@ const store = createStore({
         SET_SB_COLOR(state, val) {
             state.sbColor = val
         },
+        SET_SB_TO(state, val) {
+            state.sbTimeout = val
+        },
     },
 });
 
