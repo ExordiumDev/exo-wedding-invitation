@@ -1,5 +1,4 @@
 :root {
-  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
     font-family: 'DM Sans', sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -30,12 +29,9 @@ html, body {
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    height: 100vh;
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none; /* IE & Edge lama */
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
 }
-
-
 
 h1 {
   font-size: 3.2em;
@@ -61,10 +57,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.card {
-  padding: 2em;
-}
-
 .v-application__wrap {
     /* min-height: 100% !important; */
     position: relative !important;
@@ -79,14 +71,6 @@ button:focus-visible {
     box-shadow: none !important;
 }
 
-.main-wrapper {
-    flex: 1 0 auto;
-}
-
-body::--webkit-scrollbar {
-  display: none;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -98,44 +82,4 @@ body::--webkit-scrollbar {
   button {
     background-color: #f9f9f9;
   }
-}
-
-.images img {
-    width: 100%;
-    height: auto; 
-    object-fit: cover; 
-    display: block;
-}
-
-.parent-category-scroll {
-    overflow-x: auto;
-}
-.category-scroll{
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    cursor: grab;
-    user-select: none;
-}
-
-.category-scroll:active {
-    cursor: grabbing;
-}
-
-.slide-y-transition-enter-active,
-.slide-y-transition-leave-active {
-    transition: all 0.4s ease;
-}
-
-.no-resize textarea { 
-    resize: none;
-}
-
-.hover-card img {
-  filter: grayscale(100%);
-  transition: filter 0.4s ease-in;
-}
-
-.hover-card:hover img {
-  filter: grayscale(0%);
 }
