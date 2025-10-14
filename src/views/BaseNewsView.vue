@@ -2,23 +2,6 @@
     <v-container class="py-10">
         <v-row>
             <v-col>
-                <v-dialog
-                    v-model="authDialog"
-                    max-width="400"
-                    persistent
-                >
-                    <v-card
-                        prepend-icon="mdi-map-marker"
-                        text="Please Login first"
-                    >
-                        <template v-slot:actions>
-                            <v-spacer></v-spacer>
-                            <v-btn @click="backHome">
-                                Back to home
-                            </v-btn>
-                        </template>
-                    </v-card>
-                </v-dialog>
                 <v-card>
                     <v-card-title v-if="getGET_DATA">
                         {{ getGET_DATA.user }}
@@ -54,20 +37,11 @@ export default {
         ...mapActions({
             actGET_DATA: `data/${GET_DATA}`,
         }),
-        backHome() {
-            this.pushRoute('/home')
-        }
     },
     mounted() {
-        // this.$nextTick(async() => {
-        //     try {
-        //         await this.actGET_DATA();
-        //         this.authDialog = false;
-        //     } catch (error) {
-        //         this.authDialog = true;
-        //         console.error('Error get data ', error);
-        //     }
-        // })
+        this.$nextTick(async() => {
+            await this.actGET_DATA()
+        })
     }
 }
 
