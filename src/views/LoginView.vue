@@ -2,14 +2,35 @@
     <v-container class="py-10 h-100 bg-exr_accent_orange_50" fluid>
         <v-row justify="center" class="align-center h-100">
             <v-col cols="12" md="4">
-                <v-card variant="elevated">
+                <v-card>
+                    <v-card-title>
+                        <div class="d-flex justify-center my-5">
+                            <span class="text-h5">Login to your exordium account</span>
+                        </div>
+                    </v-card-title>
+                    <v-card-text class="pa-7">
+                        <v-form ref="formLogin">
+                            <v-card-item>
+                                <div class="py-2 d-flex flex-column ga-3">
+                                    <v-text-field variant="outlined" label="E-mail" type="email" ref="uE" v-model="uE" required :rules="emailRules"></v-text-field>
+                                    <v-text-field variant="outlined" label="Password" :type="showPwd ? 'text' : 'password'" required ref="uP" v-model="uP" :append-inner-icon="showPwd ? 'mdi-eye-off' : 'mdi-eye'" @click:append-inner="showPwd = !showPwd"></v-text-field>
+                                </div>
+                            </v-card-item>
+                            <v-card-actions class="d-flex flex-column">
+                                <v-btn type="submit" variant="flat" block prepend-icon="mdi-login" color="exr_accent_orange_600" @click="SignIn" :disabled="$store.state.pageLoad">Login</v-btn>
+                                <v-divider></v-divider>
+                                <v-btn variant="tonal" block color="exr_accent_orange_600">Forgot Password</v-btn>
+                            </v-card-actions>
+                        </v-form>
+                    </v-card-text>
+                </v-card>
+                <!-- <v-card variant="elevated">
                     <v-tabs v-model="tab" grow>
                         <v-tab value="signin">Sign In</v-tab>
                         <v-tab value="signup">Sign Up</v-tab>
                     </v-tabs>
 
                     <v-window v-model="tab">
-                        <!-- sign in -->
                         <v-window-item value="signin">
                             <v-card-text class="pa-7">
                                 <v-text-field variant="outlined" label="E-mail" required type="email" ref="uE" v-model="uE"></v-text-field>
@@ -51,7 +72,7 @@
                             </v-card-actions>
                         </v-window-item>
                     </v-window>
-                </v-card>
+                </v-card> -->
             </v-col>
         </v-row>
     </v-container>
@@ -77,6 +98,11 @@ export default {
             uSignupE: '',
             uSignupP: '',
             errorField: '',
+            emailRules: [
+                v => !!v || 'Email is required',
+                v => /.+@.+\..+/.test(v) || 'Email must be valid'
+            ],
+            showPwd: false,
         }
     },
     computed: {
@@ -137,7 +163,7 @@ export default {
                 const res = await this.actAUTH_SIGNIN(payload);
                 console.log("res success", res)
             } catch (error) {
-                this.showToast('Error login', 'error', { timeout: 2500 })
+                this.showToast(error?.response?.data?.detail || 'Error login', 'error', { timeout: 2500 })
                 this.$store.commit('SET_PROGRESS_BAR', false)
                 this.$store.commit('SET_DISBTN', false)
             }
