@@ -32,6 +32,7 @@
     "vue-cookies": "^1.8.6",
     "vue-plugin-load-script": "^2.1.1",
     "vue-router": "^4.5.1",
+    "vue-toastification": "^2.0.0-rc.5",
     "vuetify": "^3.9.0",
     "vuex": "^4.1.0"
   },
