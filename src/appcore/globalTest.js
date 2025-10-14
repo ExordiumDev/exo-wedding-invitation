@@ -1,3 +1,4 @@
+import { useToast } from "vue-toastification"
 export default { 
     data() { 
         return { 
@@ -5,22 +6,30 @@ export default {
         }
     },
     methods: {
-        isImage(filePath) {
-            const ext = filePath.split('.').pop().toLowerCase();
-            return ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
-        },
-        isPdf(filePath) {
-            const ext = filePath.split('.').pop().toLowerCase();
-            return ['pdf'].includes(ext);
-        },
         pushRoute(route) {
             this.$router.push(route)
         },
-        showSnackbar(state, message, color, timeout) {
-            this.$store.commit('SET_SB_TO', timeout || 2000);
-            this.$store.commit('SET_SB_TEXT', message);
-            this.$store.commit('SET_SB_COLOR', color);
-            this.$store.commit('SET_SB_SHOW', state);
+        showSnackbar(show, message, color = 'info', timeout = 3000) {
+            try {
+                this.snackbar.show = show
+                this.snackbar.message = message
+                this.snackbar.color = color
+                this.snackbar.timeout = timeout
+            } catch (e) {
+                console.warn('Snackbar failed to show:', e)
+            }
+        },
+        showToast(message, type = 'info', options = {}) {
+            try {
+                const toast = useToast()
+                if (typeof toast[type] === "function") {
+                    toast[type](message, options)
+                } else {
+                    toast.info(message, options)
+                }
+            } catch (e) {
+                console.warn('Toast failed to show:', e)
+            }
         }
     }
 }

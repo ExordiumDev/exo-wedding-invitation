@@ -14,6 +14,8 @@ import '@fontsource/dm-sans';
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/700.css';
 import LoadScript  from "vue-plugin-load-script"
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 async function initApp() {
     try {
@@ -27,6 +29,7 @@ async function initApp() {
     app.mixin(globalTest);
     app.component('AppAlert', AppAlert );
     app.use(LoadScript );
+    app.use(Toast);
 
     app.use(router).use(store).use(vuetify).mount("#app");
 }
