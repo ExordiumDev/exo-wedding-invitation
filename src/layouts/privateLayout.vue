@@ -1,10 +1,6 @@
 <template>
     <v-app class="d-flex flex-column min-h-screen">
-        <Header :authUser="getAUTH_USER" />
-        <v-main class="flex-grow-1">
-            <router-view />
-        </v-main>
-        <Footer />
+        
     </v-app>
 </template>
 
@@ -19,15 +15,12 @@
 
 <script >
 
-import Footer from '../components/Footer.vue'
-import Header from '../components/Header.vue'
 import { mapActions, mapGetters } from 'vuex';
 import { AUTH_USER, AUTH_GET_USER } from '../stores/actions/reqApi.js'
 
 export default { 
     components: {
-        Header,
-        Footer,
+
     },
     data() {
         return { 

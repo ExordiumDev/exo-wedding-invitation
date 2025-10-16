@@ -1,5 +1,14 @@
 <template>
-    <main class="public-layout">
+    <v-app class="public-layout">
         <router-view />
-    </main>
+    </v-app>
 </template>
+
+<style scoped>
+/* .public-layout { 
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+} */
+</style>

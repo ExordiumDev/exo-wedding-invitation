@@ -1,5 +1,26 @@
+@font-face {
+  font-family: 'Salina-trial-book';
+  src: url('./assets/fonts/Salina-Trial-Book-BF64b607e29dd58.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Salina-trial-book-italic';
+  src: url('./assets/fonts/Salina-Trial-BookItalic-BF64b607e2dc77d.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('./assets/fonts/AvenirLTProOblique.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-    font-family: 'DM Sans', sans-serif;
+    /* font-family: 'Salina-trial-book', sans-serif; */
     line-height: 1.5;
     font-weight: 400;
 
@@ -26,6 +47,7 @@ a:hover {
 }
 
 html, body {
+    font-family: 'Salina-trial-book', sans-serif !important;
     overflow-x: hidden;
     margin: 0;
     padding: 0;

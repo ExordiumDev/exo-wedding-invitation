@@ -17,26 +17,12 @@ import LoadScript  from "vue-plugin-load-script"
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
-async function initApp() {
-    try {
-        await store.dispatch('auth/AUTH_GET_USER');
-    } catch (error) {
-        console.error('unauthenticated', error)
-    }    
-    const app = createApp(App);
-    app.use(VueCookies);
-    app.use(global);
-    app.mixin(globalTest);
-    app.component('AppAlert', AppAlert );
-    app.use(LoadScript );
-    app.use(Toast);
+const app = createApp(App);
+app.use(VueCookies);
+app.use(global);
+app.mixin(globalTest);
+app.component('AppAlert', AppAlert );
+app.use(LoadScript );
+app.use(Toast);
 
-    app.use(router).use(store).use(vuetify).mount("#app");
-}
-
-initApp()
-export async function reloadAuthState() {
-    await store.dispatch('auth/AUTH_GET_USER').then(() => {
-        router.push('/dashboard')
-    });
-}
+app.use(router).use(store).use(vuetify).mount("#app");

@@ -1,3 +1,4 @@
+import gsap from 'gsap'
 import { useToast } from "vue-toastification"
 export default { 
     data() { 
@@ -30,6 +31,24 @@ export default {
             } catch (e) {
                 console.warn('Toast failed to show:', e)
             }
-        }
+        },
+        animateOnMount(txtEl) {
+            gsap.from(txtEl, {
+                opacity: 0,
+                y: 22,
+                duration: 1.3,
+                ease: 'power3.in',
+                // stagger: 0.1,
+            })
+        },
+        animateOnMount2(els) {
+            gsap.from(els, {
+                opacity: 0,
+                y: 22,
+                duration: 1,
+                ease: 'power3.in',
+                transformOrigin: 'top'
+            })
+        },
     }
 }
