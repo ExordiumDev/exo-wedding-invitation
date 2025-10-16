@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
     plugins: [vue()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '/src'),
+        '@': path.resolve(__dirname, 'src'),
       }
     },
     server: {
@@ -29,12 +29,12 @@ export default defineConfig(({ mode }) => {
       host: env.VITE_APP_ALLOWED_HOSTS,
       port: 443,
       https: {
-        key: fs.readFileSync('./crt/app.exordium.com-key.pem'),
-        cert: fs.readFileSync('./crt/app.exordium.com.pem'),
+        key: fs.readFileSync('./crt/pratiwi-ahmad.com-key.pem'),
+        cert: fs.readFileSync('./crt/pratiwi-ahmad.com.pem'),
       },
       hmr: {
         protocol: 'wss',
-        host: 'app.exordium.com',
+        host: 'pratiwi-ahmad.com',
         clientPort: 443,
       },
       cors: { 

@@ -13,8 +13,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 const options = {
-  key: fs.readFileSync(path.join(__dirname, './crt/app.exordium.com-key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './crt/app.exordium.com.pem')),
+  key: fs.readFileSync(path.join(__dirname, './crt/pratiwi-ahmad.com-key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, './crt/pratiwi-ahmad.com.pem')),
 };
 app.use(
   '/',
@@ -38,7 +38,7 @@ server.on('upgrade', (req, socket, head) => {
 
   // Tambahkan ini untuk WS Origin
   proxy.on('proxyReqWs', function (proxyReq) {
-    proxyReq.setHeader('Origin', 'https://app.exordium.com');
+    proxyReq.setHeader('Origin', 'https://pratiwi-ahmad.com');
   });
 
   proxy.ws(req, socket, head);
@@ -46,7 +46,7 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 server.listen(443, () => {
-  console.log('Express server proxying Vite now running at: https://app.exordium.com');
+  console.log('Express server proxying Vite now running at: https://pratiwi-ahmad.com');
 });
 
 // ------------------------------------------------------------------------------------------
