@@ -256,12 +256,13 @@ export default {
             });
 
             tl.to([leftEl, rightEl], {
+                // scale: 0.821,
+                height:'70%',
                 scale: 0.821,
-                z: 0,
+                z:90,
                 transformOrigin: 'center top',
                 duration: 2, 
                 ease: 'power3.inOut',
-
             }).to(introEl, {
                     opacity: 0,
                     y: -40,
@@ -292,7 +293,7 @@ export default {
                 gsap.from(textEl, {
                     opacity: 0,
                     y: 90,
-                    duration: 1.5,
+                    duration: 2,
                     ease: "power3.out",
                 })
             })
