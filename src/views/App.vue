@@ -11,7 +11,6 @@
 </style>
 
 <script>
-// import { reloadAuthState } from '../main.js'
 import signDialog from '../components/signDialog.vue'
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 import Header from '../components/Header.vue';
