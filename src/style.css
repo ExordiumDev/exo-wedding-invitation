@@ -46,6 +46,12 @@ a:hover {
     box-sizing: border-box;
 }
 
+.main-wrapper { 
+  background-image: url('./assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-bg-depan-tanpa-tiang.png');
+  background-size: cover;
+  background-size: 100% 100%;
+}
+
 html, body {
     font-family: 'Salina-trial-book', sans-serif !important;
     overflow-x: hidden;
