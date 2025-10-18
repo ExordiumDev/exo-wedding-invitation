@@ -2,23 +2,18 @@
     <v-container
         fluid 
         class="h-100 d-flex justify-center align-center flex-column perspective-wrapper">
-
-
-        <!-- svg bajingan -->
-        <div style="max-width: 100px; max-height: 100px;">
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="1942" height="1836">
-                <path d="M0 0 C2.31141604 2.85074644 3 4.3139451 3 8 C3.75667969 8.09796875 4.51335937 8.1959375 5.29296875 8.296875 C12.75334855 10.23463599 17.24206269 20.18231234 20.8984375 26.3515625 C21.59908126 27.56763752 22.29959913 28.78378508 23 30 C23.36383789 30.61456055 23.72767578 31.22912109 24.10253906 31.86230469 C33.60346007 48.01634675 38.86073934 65.63253347 43.3125 83.75 C43.54283936 84.68134766 43.77317871 85.61269531 44.01049805 86.57226562 C48.40563617 105.39797286 49.70517749 124.30240971 50.625 143.5625 C50.74649148 145.96033245 50.86888355 148.35811944 50.9921875"></path>
-            </svg>
-        </div>
-
         <!-- SECTION HOME TEXT -->
-        <div v-if="!showAyat && !showWeddingContent" class="d-flex flex-column align-center ga-3 text-section" ref="introSection">
-            <span class="text-h5 _salina_text">Dear</span>
-            <span class="text-h2 _salina_text">Ahmad Fauzi</span>
-            <v-divider :thickness="1" color="background"></v-divider>
-            <span class="text-h5 _salina_text">We Invite you to the weeding of</span>
-            <v-btn variant="flat" class="text-none" @click="animateExit">Open the invitation</v-btn>
-        </div>
+        <v-row>
+            <v-col cols="12" md="12">
+                <div v-if="!showAyat && !showWeddingContent" class="d-flex flex-column align-center ga-3 text-section justify-center h-100" ref="introSection">
+                    <span class="text-h6 text-md-h5 _salina_text">Dear</span>
+                    <span class="text-h3 text-md-h2 _salina_text">Ahmad Fauzi</span>
+                    <v-divider :thickness="1" color="background"></v-divider>
+                    <span class="text-h6 text-md-h5 _salina_text">We Invite you to the weeding of</span>
+                    <v-btn variant="flat" class="text-none" @click="animateExit">Open the invitation</v-btn>
+                </div>
+            </v-col>
+        </v-row>
 
         <!-- SECTION INVITATION OPENED -->
         <div v-if="showAyat" class="d-flex flex-column align-center justify-start h-100 ga-1 text-background" ref="textSection">
@@ -81,10 +76,10 @@
         <v-img v-if="showBurung" :src="burungKiri" class="_burung_left" ref="burungLeft"></v-img>
         <v-img v-if="showBurung" :src="burungKanan" class="_burung_right" ref="burungRight"></v-img>
 
-        <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
-        <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img>
+        <!-- <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
+        <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img> -->
         
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
+        <!-- <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
         <v-img :src="bungaClover" class="_bunga_bottom_left_clover_0"></v-img>
         <v-img :src="bungaClover" class="_bunga_bottom_left_clover_50"></v-img>
         <v-img :src="bungaGede" class="_bunga_bottom_left_30"></v-img>
@@ -94,22 +89,11 @@
         <v-img :src="bungaGede" class="_bunga_bottom_right"></v-img>
         <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
         <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
+        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img> -->
     </v-container>
 </template>
 
 <style scoped>
-._avenir_text { 
-    font-family: 'Avenir';
-}
-
-._salina_text_2 { 
-    font-family: 'Salina-trial-book-italic' !important;
-}
-
-._salina_text { 
-    font-family: 'Salina-trial-book' !important;
-}
 
 .perspective-wrapper { 
     perspective: 1000px; 
@@ -117,8 +101,7 @@
 }
 
 ._mempelai {
-    width: 22rem;
-    max-width: 22rem;
+    width: 260px;
     height: auto;
 }
 
@@ -140,7 +123,7 @@
 }
 
 
-._tiang_left { 
+/* ._tiang_left { 
     width: 15%;
     position: absolute;
     bottom: 0;
@@ -154,8 +137,109 @@
     bottom: 0;
     right: 12%;
     z-index: 1;
-    /* transform: scaleX(-1); */
+} */
+
+@media (max-width : 768px) { 
+    ._tiang_left { 
+        width: 32%;
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        z-index: -1;
+    }
+
+    ._tiang_right { 
+        width: 32%;
+        position: absolute;
+        bottom: 0;
+        right: 5%;
+        z-index: -1;
+    }
+  ._bunga_bottom_left_clover_0 { 
+        width: 1rem !important;
+        position: absolute;
+        bottom: 0;
+        left: 0%;
+        z-index: 1;
+        transform: scaleX(-1)
+    }
+
+  ._bunga_bottom_left_clover_50 { 
+        width: 1rem;
+        position: absolute;
+        bottom: 0;
+        left: 16%;
+        z-index: 2;
+    }
+
+  ._bunga_bottom_left { 
+        width: 5rem !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0;
+        z-index: 1;
+        transform: scaleX(-1)
+    }
+
+  ._bunga_bottom_left_30 { 
+        width: 5rem !important;
+        position: absolute;
+        bottom: 0;
+        left: 8%;
+        z-index: 1;
+        transform: scaleX(-1)
+    }
+
+  ._bunga_bottom_left_60 { 
+        width: 3rem !important;
+        position: absolute;
+        bottom: 0;
+        left: 17%;
+        z-index: 1;
+    }
+
+  ._bunga_bottom_left_90 { 
+        width:6rem !important;
+        position: absolute;
+        bottom: 0;
+        left: 23%;
+        z-index: 1;
+    }
+
+  ._bunga_bottom_right { 
+        width: 6rem !important;
+        position: absolute;
+        bottom: 0;
+        right: -3%;
+        z-index: 1;
+    }
+
+  ._bunga_bottom_right_30 { 
+        width: 5rem !important;
+        position: absolute;
+        bottom: 0;
+        right: 13%;
+        z-index: 1;
+        transform: scaleX(-1);
+    }
+
+  ._bunga_bottom_right_60 { 
+        width: 7rem !important;
+        position: absolute;
+        bottom: 0;
+        right: 18%;
+        z-index: 1;
+    }
+
+  ._bunga_bottom_right_90 { 
+        width: 5.5rem !important;
+        position: absolute;
+        bottom: 0;
+        right: 25%;
+        z-index: 1;
+    }
 }
+
 
 ._bunga_bottom_left_clover_0 { 
     width: 3rem;
@@ -268,6 +352,8 @@ import burungKanan from '../assets/images/partial/burung-kanan.png'
 import mempelaiWanita from "../assets/images/partial/m_wanita.png"
 import mempelaiPria from "../assets/images/partial/m-pria.png"
 
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
+
 export default { 
     data() { 
         return { 
@@ -292,32 +378,38 @@ export default {
         }
     },
     methods: {
+        ...mapMutations({
+            // setCRoutes: 'SET_C_ROUTES'
+        }),
         animateExit() {
-            const introEl = this.$refs.introSection;
-            const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft
-            const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight
-            const tl = gsap.timeline({
-                defaults: { ease: "power3.inOut" },
-                onComplete: () => {
-                    this.showAyat = true;
-                    this.$nextTick(() => this.animateAyatEnter());
-                }
-            });
+            this.$router.push({name: 'inv.open'});
+            this.$store.commit('SET_C_ROUTES', true);
+            
+            // const introEl = this.$refs.introSection;
+            // const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft
+            // const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight
+            // const tl = gsap.timeline({
+            //     defaults: { ease: "power3.inOut" },
+            //     onComplete: () => {
+            //         this.showAyat = true;
+            //         this.$nextTick(() => this.animateAyatEnter());
+            //     }
+            // });
 
-            tl.to([leftEl, rightEl], {
-                // scale: 0.821,
-                height:'70%',
-                scale: 0.821,
-                z:90,
-                transformOrigin: 'center top',
-                duration: 2, 
-                ease: 'power3.inOut',
-            }).to(introEl, {
-                    opacity: 0,
-                    y: -40,
-                    duration: 0.8
-                },"<"
-            );
+            // tl.to([leftEl, rightEl], {
+            //     // scale: 0.821,
+            //     height:'70%',
+            //     scale: 0.821,
+            //     z:90,
+            //     transformOrigin: 'center top',
+            //     duration: 2, 
+            //     ease: 'power3.inOut',
+            // }).to(introEl, {
+            //         opacity: 0,
+            //         y: -40,
+            //         duration: 0.8
+            //     },"<"
+            // );
         },
         animateAyatEnter() {
             const textEl = this.$refs.textSection;
@@ -385,11 +477,11 @@ export default {
         const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-        tl.from([leftEl, rightEl], {
-            opacity: 0,
-            duration: 1.2,
-            y: 80,
-        });
+        // tl.from([leftEl, rightEl], {
+        //     opacity: 0,
+        //     duration: 1.2,
+        //     y: 80,
+        // });
         tl.from(
             textEl,
             {

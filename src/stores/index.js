@@ -11,6 +11,7 @@ const store = createStore({
         data: data,
     },
     state: {
+        cRoutes: false,
         authDialog: false,
         pageLoad: false,
         disBtn: false,
@@ -41,6 +42,9 @@ const store = createStore({
         SET_SB_TO(state, val) {
             state.sbTimeout = val
         },
+        SET_C_ROUTES(state,val) { 
+            state.cRoutes = val
+        }
     },
 });
 

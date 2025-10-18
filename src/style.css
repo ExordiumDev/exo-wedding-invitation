@@ -47,9 +47,28 @@ a:hover {
 }
 
 .main-wrapper { 
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  /* background-image: url('./assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-bg-depan-tanpa-tiang.png');
+  background-size: contain;
+  background-size: 100% 100%;
+  background-attachment: fixed; */
+}
+
+.main-wrapper::before { 
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image: url('./assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-bg-depan-tanpa-tiang.png');
   background-size: cover;
   background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -10;
 }
 
 html, body {
@@ -59,12 +78,6 @@ html, body {
     padding: 0;
     scrollbar-width: none;
     -ms-overflow-style: none; 
-}
-
-.main-wrapper {
-  background-image: url('./assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-bg-depan-tanpa-tiang.png');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 }
 
 h1 {
@@ -117,3 +130,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+._avenir_text { 
+    font-family: 'Avenir';
+}
+
+._salina_text_2 { 
+    font-family: 'Salina-trial-book-italic' !important;
+}
+
+._salina_text { 
+    font-family: 'Salina-trial-book' !important;
+}
+

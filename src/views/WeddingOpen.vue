@@ -1,12 +1,6 @@
 <template>
     <v-container 
         fluid 
-        :style="{
-            backgroundImage: `url(${imaBg})`,
-            backgroundSize: '100% 100%',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-        }" 
         class="h-100 d-flex justify-center align-center flex-column">
         <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background" ref="textSection">
             <v-spacer></v-spacer>
@@ -23,21 +17,6 @@
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
         </div>
-
-        <v-img :src="tiangKecil" class="_tiang_left" ref="tiangLeft"></v-img>
-        <v-img :src="tiangKecil" class="_tiang_right" ref="tiangRight"></v-img>
-        
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
-        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_0"></v-img>
-        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_50"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_left_30"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left_60"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_left_90"></v-img>
-
-        <v-img :src="bungaGede" class="_bunga_bottom_right"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
     </v-container>
 </template>
 
