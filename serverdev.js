@@ -49,5 +49,9 @@ server.listen(443, () => {
   console.log('Express server proxying Vite now running at: https://pratiwi-ahmad.com');
 });
 
+app.listen(8080, () => {
+  console.log('HTTP server running at http://pratiwi-ahmad.com:8080');
+})
+
 // ------------------------------------------------------------------------------------------
 
