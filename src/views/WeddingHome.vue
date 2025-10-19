@@ -75,21 +75,6 @@
 
         <v-img v-if="showBurung" :src="burungKiri" class="_burung_left" ref="burungLeft"></v-img>
         <v-img v-if="showBurung" :src="burungKanan" class="_burung_right" ref="burungRight"></v-img>
-
-        <!-- <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
-        <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img> -->
-        
-        <!-- <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
-        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_0"></v-img>
-        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_50"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_left_30"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left_60"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_left_90"></v-img>
-
-        <v-img :src="bungaGede" class="_bunga_bottom_right"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img> -->
     </v-container>
 </template>
 
@@ -138,107 +123,6 @@
     right: 12%;
     z-index: 1;
 } */
-
-@media (max-width : 768px) { 
-    ._tiang_left { 
-        width: 32%;
-        position: absolute;
-        bottom: 0;
-        left: 5%;
-        z-index: -1;
-    }
-
-    ._tiang_right { 
-        width: 32%;
-        position: absolute;
-        bottom: 0;
-        right: 5%;
-        z-index: -1;
-    }
-  ._bunga_bottom_left_clover_0 { 
-        width: 1rem !important;
-        position: absolute;
-        bottom: 0;
-        left: 0%;
-        z-index: 1;
-        transform: scaleX(-1)
-    }
-
-  ._bunga_bottom_left_clover_50 { 
-        width: 1rem;
-        position: absolute;
-        bottom: 0;
-        left: 16%;
-        z-index: 2;
-    }
-
-  ._bunga_bottom_left { 
-        width: 5rem !important;
-        position: absolute !important;
-        bottom: 0 !important;
-        left: 0;
-        z-index: 1;
-        transform: scaleX(-1)
-    }
-
-  ._bunga_bottom_left_30 { 
-        width: 5rem !important;
-        position: absolute;
-        bottom: 0;
-        left: 8%;
-        z-index: 1;
-        transform: scaleX(-1)
-    }
-
-  ._bunga_bottom_left_60 { 
-        width: 3rem !important;
-        position: absolute;
-        bottom: 0;
-        left: 17%;
-        z-index: 1;
-    }
-
-  ._bunga_bottom_left_90 { 
-        width:6rem !important;
-        position: absolute;
-        bottom: 0;
-        left: 23%;
-        z-index: 1;
-    }
-
-  ._bunga_bottom_right { 
-        width: 6rem !important;
-        position: absolute;
-        bottom: 0;
-        right: -3%;
-        z-index: 1;
-    }
-
-  ._bunga_bottom_right_30 { 
-        width: 5rem !important;
-        position: absolute;
-        bottom: 0;
-        right: 13%;
-        z-index: 1;
-        transform: scaleX(-1);
-    }
-
-  ._bunga_bottom_right_60 { 
-        width: 7rem !important;
-        position: absolute;
-        bottom: 0;
-        right: 18%;
-        z-index: 1;
-    }
-
-  ._bunga_bottom_right_90 { 
-        width: 5.5rem !important;
-        position: absolute;
-        bottom: 0;
-        right: 25%;
-        z-index: 1;
-    }
-}
 
 
 ._bunga_bottom_left_clover_0 { 
