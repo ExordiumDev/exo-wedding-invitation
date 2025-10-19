@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import store from '../stores'
 import invHome from '../views/WeddingHome.vue'
 import invOpen from '../views/WeddingOpen.vue'
+import invContent from '../views/WeddingContent.vue'
 
 const routes = [
     {
@@ -25,7 +26,16 @@ const routes = [
                     requiresAuth: false,
                     title: 'Hello'
                 }
-            },            
+            },    
+            {
+                path: '/content',
+                name: 'inv.content',
+                component: invContent,
+                meta: { 
+                    requiresAuth: false,
+                    title: 'Content'
+                }
+            },    
         ]
     },
 ]

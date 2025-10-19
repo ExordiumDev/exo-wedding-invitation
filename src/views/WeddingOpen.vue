@@ -1,8 +1,8 @@
 <template>
     <v-container 
         fluid 
-        class="h-100 d-flex justify-center align-center flex-column">
-        <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background" ref="textSection">
+        class="h-100 d-flex justify-center align-center flex-column" ref="touchArea">
+        <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background scroll-detector" ref="textSection">
             <v-spacer></v-spacer>
             <span class="text-h6 _salina_text">Dan di antara ayat-ayat-Nya ialah</span>
             <span class="text-h6 _salina_text">Dia menciptakan untukmu istri-istri</span>
@@ -22,6 +22,10 @@
 
 <style scoped>
 
+.scroll-detector { 
+    touch-action: none !important;
+    overflow: hidden !important;
+}
 
 ._bunga_bottom_left_clover_0 { 
     width: 3rem;
@@ -111,22 +115,16 @@
 
 <script>
 import gsap from 'gsap'
-import tiang from '../assets/images/partial/brimingham-big.png'
-import tiangKecil from '../assets/images/partial/brimingham-sm.png'
-import imaBg from '../assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-bg-depan-tanpa-tiang.png'
-import bungaGede from '../assets/images/partial/bunga-copy.svg'
-import bungaWhiteRose from '../assets/images/partial/white-rose-copy.png'
-import bungaClover from '../assets/images/partial/Clover.png'
 
 export default { 
     data() { 
-        return { 
-            tiang,
-            imaBg,
-            bungaGede,
-            bungaWhiteRose,
-            bungaClover,
-            tiangKecil
+        return {
+            showWeddingContent: false,
+            showBurung: false,
+            burungLoaded: {
+                left: false,
+                right: false
+            }            
         }
     },
     computed: {
@@ -137,6 +135,53 @@ export default {
     mounted() {
         const textEl = this.$refs.textSection;
         this.animateOnMount(textEl);
+
+        const handleScroll = (e) => {
+            if (e.deltaY > 0 ) {
+                e.preventDefault();
+
+                this.$router.push({ name: 'inv.content' });
+                return
+            }
+        }
+        this._handleScroll = handleScroll;
+
+
+        window.addEventListener('wheel', handleScroll, { passive: false });
+
+        // mobile touch detect 
+        const area = this.$refs.touchArea.$el;
+        let startY = 0;
+
+        const handleTouchStart = (e) => {
+            startY = e.touches[0].clientY;
+        };
+
+        const handleTouchMove = (e) => {
+            const diffY = e.touches[0].clientY - startY;
+
+            if (diffY < -50) {
+                console.log("touch move up detected");
+                this.$router.push({ name: 'inv.open' });
+                e.preventDefault();
+            }
+            else if (diffY > 50) { 
+                e.preventDefault();
+                console.log("swipe down detected");
+                this.$router.push({ name: 'inv.open' });
+            }
+        };
+
+        this._handleTouchStart = handleTouchStart;
+        this._handleTouchMove = handleTouchMove;
+        area.addEventListener('touchstart', handleTouchStart, { passive: false });
+        area.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+    },
+    beforeMount() { 
+        if (this._handleScroll) {
+            window.removeEventListener('wheel', this._handleScroll);
+        }
     }
 }
 

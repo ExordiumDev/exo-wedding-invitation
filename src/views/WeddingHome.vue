@@ -85,11 +85,6 @@
     overflow: hidden;
 }
 
-._mempelai {
-    width: 260px;
-    height: auto;
-}
-
 
 ._burung_left { 
     width: 14%;
