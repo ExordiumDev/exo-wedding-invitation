@@ -23,7 +23,7 @@ const routes = [
                 component: invHome,
                 meta: { 
                     requiresAuth: false,
-                    title: 'Home'
+                    title: 'Hi'
                 }
             },            
             {
@@ -32,7 +32,7 @@ const routes = [
                 component: invOpen,
                 meta: { 
                     requiresAuth: false,
-                    title: 'Hello'
+                    title: 'Ar-rum'
                 }
             },    
             {
