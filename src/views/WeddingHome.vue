@@ -185,7 +185,6 @@ export default {
             this.$nextTick(() => {
                 const textEl = this.$refs.weddingContent;
                 const container_mempelai = this.$refs.container_mempelai;
-                this.showAyat = false;
                 if (!textEl || !container_mempelai) return
 
                 const spans = textEl.querySelectorAll('span')

@@ -72,7 +72,7 @@
         position: fixed;
         bottom: 0;
         left: 0%;
-        z-index: 1;
+        z-index: -1;
         transform: scaleX(-1)
     }
 
@@ -81,7 +81,7 @@
         position: fixed;
         bottom: 0;
         left: 16%;
-        z-index: 2;
+        z-index: -1 !important;
     }
 
   ._bunga_bottom_left { 
@@ -89,7 +89,7 @@
         position: fixed !important;
         bottom: 0 !important;
         left: 0;
-        z-index: 1;
+        z-index: -1 !important;
         transform: scaleX(-1)
     }
 
@@ -98,7 +98,7 @@
         position: fixed;
         bottom: 0;
         left: 8%;
-        z-index: 1;
+        z-index: -1 !important;
         transform: scaleX(-1)
     }
 
@@ -107,7 +107,7 @@
         position: fixed;
         bottom: 0;
         left: 17%;
-        z-index: 1;
+        z-index: -1 !important;
     }
 
   ._bunga_bottom_left_90 { 
@@ -115,7 +115,7 @@
         position: fixed;
         bottom: 0;
         left: 23%;
-        z-index: 1;
+        z-index: -1 !important;
     }
 
   ._bunga_bottom_right { 
@@ -123,7 +123,7 @@
         position: fixed;
         bottom: 0;
         right: -3%;
-        z-index: 1;
+        z-index: -1 !important;
     }
 
   ._bunga_bottom_right_30 { 
@@ -131,7 +131,7 @@
         position: fixed;
         bottom: 0;
         right: 13%;
-        z-index: 1;
+        z-index: -1 !important;
         transform: scaleX(-1);
     }
 
@@ -140,7 +140,7 @@
         position: fixed;
         bottom: 0;
         right: 18%;
-        z-index: 1;
+        z-index: -1 !important;
     }
 
   ._bunga_bottom_right_90 { 
@@ -148,7 +148,7 @@
         position: fixed;
         bottom: 0;
         right: 25%;
-        z-index: 1;
+        z-index: -1 !important;
     }
 }
 

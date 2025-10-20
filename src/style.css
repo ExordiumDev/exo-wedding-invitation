@@ -20,7 +20,6 @@
 }
 
 :root {
-    /* font-family: 'Salina-trial-book', sans-serif; */
     line-height: 1.5;
     font-weight: 400;
 
@@ -34,21 +33,16 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  font-weight: 500
 }
 
-* {
+*{
     box-sizing: border-box;
 }
 
 .main-wrapper { 
   position: relative;
-  z-index: 0;
+  z-index: 1;
   overflow: hidden;
   /* background-image: url('./assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-bg-depan-tanpa-tiang.png');
   background-size: contain;
@@ -69,7 +63,6 @@ a:hover {
   background-position: center;
   background-repeat: no-repeat;
   z-index: -10;
-  pointer-events: none !important;
 }
 
 html, body {
@@ -79,7 +72,6 @@ html, body {
     padding: 0;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    touch-action: none !important;
 }
 
 h1 {
@@ -106,31 +98,10 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.v-application__wrap {
-    /* min-height: 100% !important; */
-    position: relative !important;
-    backface-visibility: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 1 1 auto !important;
-}
 
 .v-btn:focus {
     outline: none !important;
     box-shadow: none !important;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 ._avenir_text { 
@@ -155,6 +126,6 @@ button:focus-visible {
 }
 
 .divider_ { 
-  min-height: 120px !important;
+  min-height: 60px !important;
 }
 

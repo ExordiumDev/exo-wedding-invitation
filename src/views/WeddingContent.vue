@@ -1,5 +1,10 @@
 <template>
     <v-container fluid class="_show_content">
+        <div class="d-flex justfy-center align-center w-100">
+            <v-btn variant="plain" block color="background" @click="routeInvOpen">
+                <v-icon icon="mdi-chevron-double-up"></v-icon>
+            </v-btn>
+        </div>
         <div class="divider_"></div>
         <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingContent">
             <span class="text-h6 text-center _salina_text_2 mb-5">Assalamu'alaikum Warahmatullahi Wabarakaatuh</span>
@@ -11,7 +16,7 @@
                     <v-col cols="12" md="5" class="pa-0">
                         <div class="d-flex flex-column text-center align-center">
                             <v-img :src="mempelaiWanita" class="_mempelai"></v-img>
-                            <div class="_bacod d-flex flex-column" style="z-index: 10 !important;">
+                            <div class="d-flex flex-column" style="z-index: 10 !important;">
                                 <span class="text-h3 _salina_text">Sitti Pratiwi</span>
                                 <span class="text-none">Putra pertama</span>
                                 <span class="text-none">Bapak Irwan Bakri</span>
@@ -31,18 +36,25 @@
                     <v-col cols="12" md="5" class="pa-0">
                         <div class="d-flex flex-column text-center align-center">
                             <v-img :src="mempelaiPria" class="_mempelai"></v-img>
-                            <span class="text-h3 _salina_text">Ahmad Abdul Gani Nasution</span>
-                            <span class="text-none">Putra Terakhir</span>
-                            <span class="text-none">Bapak Hamdan Nasution</span>
-                            <span class="text-none">& Ibu Elfi Sahra Lubis</span>
+                            <div class="d-flex flex-column" style="z-index: 10 !important;">
+                                <span class="text-h3 _salina_text">Ahmad Abdul Gani Nasution</span>
+                                <span class="text-none">Putra Terakhir</span>
+                                <span class="text-none">Bapak Hamdan Nasution</span>
+                                <span class="text-none">& Ibu Elfi Sahra Lubis</span>
+                            </div>
                         </div>
                     </v-col>
                 </v-row>
             </v-container>
         </div>
 
+
+        <!-- wedding schedule -->
         <v-row class="my-10">
             <v-col cols="12" col="12">
+                <div class="divider_"></div>
+                <div class="divider_"></div>
+                <div class="divider_"></div>
                 <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingSchedule">
                     <span class="text-h4 text-md-h2 _salina_text_2 mb-5">9 NOVEMBER 2025</span>
                     <span class="text-none text-md-h5 _salina_text_2">Akad Nikah</span>
@@ -57,6 +69,8 @@
                     <span class="text-none text-md-h6 _salina_text">Sovereign Plaza Jl. TB. Simatupang</span>
                     <span class="text-none text-md-h6 _salina_text">No 56 Cilandak Barat. Cilandak, Jakarta Selatan</span>
                 </div>
+                <div class="divider_"></div>
+                <div class="divider_"></div>
             </v-col>
         </v-row>
 
@@ -85,6 +99,8 @@
 
         <v-row>
             <v-col cols="12" md="12">
+                <div class="divider_"></div>
+                <div class="divider_"></div>
                 <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingGiftCard">
                     <span class="text-h4 text-md-h4 _salina_text mb-5">Wedding Gift</span>
                     <span class="text-none text-md-h6 _avenir_text">Kehadiran dan doa restu dari Bapak/Ibu</span>
@@ -96,6 +112,10 @@
                     <strong class="text-none text-md-h6 _avenir_text">atau Mandiri 123456789</strong>
                     <strong class="text-none text-md-h6 _avenir_text">a.n Ahmad Abdul Gani</strong>
                 </div>
+                <div class="divider_"></div>
+                <div class="divider_"></div>
+                <div class="divider_"></div>
+                <div class="divider_"></div>
             </v-col>
         </v-row>
 
@@ -117,6 +137,7 @@
                         </v-card-actions>
                     </v-card>
                 </v-form>
+                <v-spacer></v-spacer>
             </v-col>
         </v-row>
         <v-row justify="center">
@@ -126,6 +147,11 @@
         </v-row>
 
         <!-- wedding outro -->
+        <div class="divider_"></div>
+        <div class="divider_"></div>
+        <div class="divider_"></div>
+        <div class="divider_"></div>
+
 
         <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingOutro">
             <span class="text-none text-md-h3 _salina_text mb-5">Thank You</span>
@@ -148,6 +174,7 @@
 
             <span class="_salina_text text-none text-md-h6 mt-5 text-center">Wassalamu'alaikum Warahmmatullahi Wabarakaatuh</span>
         </div>
+        <div class="divider_"></div>
         <div class="divider_"></div>
     </v-container>
 </template>
@@ -181,6 +208,9 @@ export default {
         }
     },
     methods: {
+        routeInvOpen() { 
+            this.$router.push({ name: 'inv.open' })
+        },
         setShowBird() {
             this.$store.commit('SET_SHOW_BIRD', true)
         },

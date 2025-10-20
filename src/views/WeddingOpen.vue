@@ -18,8 +18,14 @@
                     <span class="text-h6 text-md-h4 _salina_text">Ar-rum ayat 21</span>
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
-                    <v-spacer></v-spacer>
                 </div>
+            </v-col>
+        </v-row>
+        <v-row class="w-100" ref="btnNext">
+            <v-col cols="12" md="12">
+                <v-btn @click="toRouteContent" variant="plain" block color="background">
+                    <v-icon icon="mdi-chevron-double-down"></v-icon>
+                </v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -32,7 +38,6 @@
 <script>
 import mempelaiWanita from "../assets/images/partial/m_wanita.png"
 import mempelaiPria from "../assets/images/partial/m-pria.png"
-import { useWheelNavigation } from '../plugins/usewheeleNavigation';
 import gsap from 'gsap'
 
 export default { 
@@ -49,37 +54,49 @@ export default {
         }
     },
     methods: {
+        toRouteContent() { 
+            this.$router.push({ name: 'inv.content' })  
+        },
+        showBtn() { 
+            this.$nextTick(() => {
+                const btnEl = this.$refs.btnNext.$el;
+                // const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+                gsap.from(btnEl, {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.8,
+                }, "-=0.4");
+            });
+        },
         showAyat() {
             this.$nextTick(() => {
                 const textEl = this.$refs.textSection;
                 const spans = textEl.querySelectorAll('span')
-                const tl = gsap.timeline()
+                const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
                 tl.from(spans, {
                     opacity: 0,
                     y: 30,
                     duration: 0.8,
                     stagger: 0.2,
-                    ease: "power3.out",
-                }, "+=0.1")
+                }, "+=0.1");
+
+                // tl.from(btnEl, {
+                //     opacity: 0,
+                //     y: -20,
+                //     duration: 0.8,
+                // }, "-=0.4");
             });
         },
     },
     mounted() {
-        this.showAyat()
-        const { attach, detach } = useWheelNavigation({
-            nextRoute: 'inv.content',
-            prevRoute: 'inv.home',
-            delay: 2500,
-        })
-
-        const el = this.$refs.touchArea.$el || this.$refs.touchArea
-        attach(el)
-        this.detachFn = () => detach(el)
+        this.showAyat();
+        this.showBtn();
     },
     beforeUnmount() {
         this.detachFn?.()
     }
-
 }
 
 </script>
