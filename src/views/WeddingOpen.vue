@@ -1,147 +1,80 @@
 <template>
     <v-container 
         fluid 
-        class="h-100 d-flex justify-center align-center flex-column" ref="touchArea">
-        <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background scroll-detector" ref="textSection">
-            <v-spacer></v-spacer>
-            <span class="text-none text-md-h6 _salina_text">Dan di antara ayat-ayat-Nya ialah</span>
-            <span class="text-none text-md-h6 _salina_text">Dia menciptakan untukmu istri-istri</span>
-            <span class="text-none text-md-h6 _salina_text">dari Jenismu sendiri, supaya kamu</span>
-            <span class="text-none text-md-h6 _salina_text">merasa nyaman kepadanya, dan</span>
-            <span class="text-none text-md-h6 _salina_text">dijadikan-Nya diantaramu mawadah</span>
-            <span class="text-none text-md-h6 _salina_text">dan rahmah. Sesungguhnya pada yang</span>
-            <span class="text-none text-md-h6 _salina_text">demikian itu benar-benar terdapat</span>
-            <span class="text-none text-md-h6 _salina_text">tanda-tanda bagi kaum yang berpikir.</span>
-            <span class="text-h6 text-md-h4 _salina_text">Ar-rum ayat 21</span>
-            <v-spacer></v-spacer>
-            <v-spacer></v-spacer>
-            <v-spacer></v-spacer>
-        </div>
+        class="h-100 d-flex justify-center align-center flex-column" ref="touchArea"
+    >  
+        <v-row>
+            <v-col cols="12" md="12">
+                <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background scroll-detector" ref="textSection">
+                    <v-spacer></v-spacer>
+                    <span class="text-none text-md-h6 _salina_text">Dan di antara ayat-ayat-Nya ialah</span>
+                    <span class="text-none text-md-h6 _salina_text">Dia menciptakan untukmu istri-istri</span>
+                    <span class="text-none text-md-h6 _salina_text">dari Jenismu sendiri, supaya kamu</span>
+                    <span class="text-none text-md-h6 _salina_text">merasa nyaman kepadanya, dan</span>
+                    <span class="text-none text-md-h6 _salina_text">dijadikan-Nya diantaramu mawadah</span>
+                    <span class="text-none text-md-h6 _salina_text">dan rahmah. Sesungguhnya pada yang</span>
+                    <span class="text-none text-md-h6 _salina_text">demikian itu benar-benar terdapat</span>
+                    <span class="text-none text-md-h6 _salina_text">tanda-tanda bagi kaum yang berpikir.</span>
+                    <span class="text-h6 text-md-h4 _salina_text">Ar-rum ayat 21</span>
+                    <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
+                </div>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <style scoped>
 
-.scroll-detector { 
-    touch-action: none !important;
-    overflow: hidden !important;
-}
-
-._bunga_bottom_left_clover_0 { 
-    width: 3rem;
-    position: absolute;
-    bottom: 0;
-    left: 0%;
-    z-index: 1;
-    transform: scaleX(-1)
-}
-
-._bunga_bottom_left_clover_50 { 
-    width: 3rem;
-    position: absolute;
-    bottom: 0;
-    left: 16%;
-    z-index: 2;
-}
-
-._bunga_bottom_left { 
-    width: 16rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    transform: scaleX(-1)
-}
-
-._bunga_bottom_left_30 { 
-    width: 16rem;
-    position: absolute;
-    bottom: 0;
-    left: 8%;
-    z-index: 1;
-    transform: scaleX(-1)
-}
-
-._bunga_bottom_left_60 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    left: 17%;
-    z-index: 1;
-}
-
-._bunga_bottom_left_90 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    left: 23%;
-    z-index: 1;
-}
-
-._bunga_bottom_right { 
-    width: 24rem;
-    position: absolute;
-    bottom: 0;
-    right: -3%;
-    z-index: 1;
-}
-
-._bunga_bottom_right_30 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    right: 13%;
-    z-index: 1;
-    transform: scaleX(-1);
-}
-
-._bunga_bottom_right_60 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    right: 18%;
-    z-index: 1;
-}
-
-._bunga_bottom_right_90 { 
-    width: 8rem;
-    position: absolute;
-    bottom: 0;
-    right: 25%;
-    z-index: 1;
-}
-
 </style>
 
 <script>
-import gsap from 'gsap'
+import mempelaiWanita from "../assets/images/partial/m_wanita.png"
+import mempelaiPria from "../assets/images/partial/m-pria.png"
 import { useWheelNavigation } from '../plugins/usewheeleNavigation';
+import gsap from 'gsap'
 
 export default { 
     data() { 
         return {
+            mempelaiWanita,
+            mempelaiPria,
             showWeddingContent: false,
             showBurung: false,
             burungLoaded: {
                 left: false,
                 right: false
-            }            
+            },  
         }
     },
-    computed: {
-        imgs() { 
-            
-        }
+    methods: {
+        showAyat() {
+            this.$nextTick(() => {
+                const textEl = this.$refs.textSection;
+                const spans = textEl.querySelectorAll('span')
+                const tl = gsap.timeline()
+                tl.from(spans, {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: "power3.out",
+                }, "+=0.1")
+            });
+        },
     },
     mounted() {
-        const textEl = this.$refs.textSection;
-        this.animateOnMount(textEl);
+        this.showAyat()
+        const { attach, detach } = useWheelNavigation({
+            nextRoute: 'inv.content',
+            prevRoute: 'inv.home',
+            delay: 2500,
+        })
 
-        const { attach, detach } = useWheelNavigation({ nextRoute: 'inv.content', delay: 5000 })
-        const el = this.$refs.touchArea.$el
+        const el = this.$refs.touchArea.$el || this.$refs.touchArea
         attach(el)
         this.detachFn = () => detach(el)
-        
     },
     beforeUnmount() {
         this.detachFn?.()

@@ -19,6 +19,7 @@ const store = createStore({
         sbText: '',
         sbColor: '',
         sbTimeout: 2000,
+        showBird: false,
     },
      mutations: {
         SET_AUTH_DIALOG(state, val) {
@@ -44,6 +45,9 @@ const store = createStore({
         },
         SET_C_ROUTES(state,val) { 
             state.cRoutes = val
+        },
+        SET_SHOW_BIRD(state, val) {
+            state.showBird = val
         }
     },
 });

@@ -1,50 +1,47 @@
 <template>
-    <v-container fluid ref="weddingDua">
-        <v-row justify="center" class="h-100">
+    <v-container fluid ref="weddingDua" id="weddingDua-wrapper">
+        <v-row justify="center" class="h-100 _form_container">
             <v-col cols="12" md="5" class="d-flex justify-center">
-                <v-form class="w-100">
-                    <span class="text-h4 text-md-h4 _salina_text mb-5">Doa dan Kata Hangat untuk kami</span>
-                    <v-card variant="tonal" class="pa-5">
+                <v-form ref="weddingDuaForm">
+                    <v-card variant="plain" color="">
                         <v-card-item>
-                            <v-card-title class="text-h6 text-md-h4 text-center text-background _salina_text mb-5">RSVP</v-card-title>
-                            <v-text-field label="Name" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text mb-2"></v-text-field>
-                            <v-autocomplete label="Confirmation of Attendance" class="text-background" variant="outlined"></v-autocomplete>
+                            <v-card-title>
+                                <span class="text-h6 text-md-h4 text-center text-background _salina_text mb-5 text-wrap">Doa dan Kata Hangat untuk kami</span>
+                            </v-card-title>
+                            <v-text-field label="Name" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text my-2"></v-text-field>
+                            <v-textarea label="Doa & kata-katamu" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text mb-2" no-resize></v-textarea>
                         </v-card-item>
                         <v-card-actions>
-                            <v-btn variant="flat" block class="text-none">Send</v-btn>
+                            <v-btn variant="elevated" block class="text-none">Send</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-form>
             </v-col>
         </v-row>
-        <v-img v-if="showBurung" :src="burungKiri" class="_burung_left" ref="burungLeft"></v-img>
-        <v-img v-if="showBurung" :src="burungKanan" class="_burung_right" ref="burungRight"></v-img>
+        <v-row justify="center">
+            <v-col cols="12" md="5" class="d-flex justify-center">
+                <div class="bg-background w-100" style="min-height: 300px;"></div>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <style scoped>
 
-._burung_left { 
-    width: 14%;
-    position: absolute;
-    top: 8%;
-    left: 18%;
-    z-index: 2;
+._form_container { 
+    max-height: 60%;
+    overflow: auto;
 }
 
-._burung_right { 
-    width: 14%;
-    position: absolute;
-    top: 8%;
-    right: 17%;
-    z-index: 2;
-}
+
 
 </style>
 <script>
 
 import burungKiri from '../assets/images/partial/burung-kiri.png'
 import burungKanan from '../assets/images/partial/burung-kanan.png'
+import gsap from 'gsap'
+
 export default {
     name: 'WeddingGift',
     data() { 
@@ -52,7 +49,35 @@ export default {
             burungKiri,
             burungKanan,
             showBurung: true,
+            preOutro: true,
+            outro: false,
         }
+    },
+    methods: {
+        closedInv() { 
+            this.$router.push({name : 'inv.home'})
+        },
+        showDoaForm() {
+            this.$nextTick(() => {
+                const cardEl = this.$refs.weddingDuaForm.$el || this.$refs.weddingDuaForm;
+                if ( !cardEl ) return
+
+                const tl = gsap.timeline()
+                tl.from(cardEl, {
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: "power3.out",
+                }, "+=0.1")
+            });
+        },
+    },
+    mounted() {
+        this.showDoaForm()       
+    },
+    beforeUnmount() { 
+
     }
 }
 </script>

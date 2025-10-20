@@ -1,6 +1,7 @@
 <template>
     <v-app>
         <v-main class="main-wrapper">
+            
             <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
             <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img>
 
@@ -15,8 +16,13 @@
             <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
             <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
             <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
+
+
+            <v-img v-if="this.$store.state.showBird" :src="burungKiri" class="_burung_left" ref="burungLeft"></v-img>
+            <v-img v-if="this.$store.state.showBird" :src="burungKanan" class="_burung_right" ref="burungRight"></v-img>
+
             <router-view v-slot="{Component}">
-                <transition name="fade" @before-enter="lockScroll" @after-enter="unlockScroll">
+                <transition name="fade">
                     <component :is="Component" />
                 </transition>
             </router-view>
@@ -26,21 +32,40 @@
 
 <style scoped>
 
+
 @media (max-width : 768px) { 
+
+    ._burung_left { 
+        width: 20% !important;
+        position: fixed;
+        bottom: 0 !important;
+        left: 8% !important;
+        z-index: -1 !important;
+        opacity: 0.8;
+    }
+
+    ._burung_right { 
+        width: 20% !important;
+        position: fixed;
+        bottom: 0;
+        right: 9% !important;
+        z-index: -1 !important;
+        opacity: 0.8;
+    }
     ._tiang_left { 
-        width: 32% !important;
+        width: 22% !important;
         position: fixed;
         bottom: 0 !important;
         left: 5% !important;
-        z-index: 1-1;
+        z-index: -1 !important;
     }
 
     ._tiang_right { 
-        width: 32% !important;
+        width: 22% !important;
         position: fixed;
         bottom: 0 !important;
         right: 5% !important;
-        z-index: 1-1;
+        z-index: -1;
     }
   ._bunga_bottom_left_clover_0 { 
         width: 1rem !important;
@@ -125,6 +150,22 @@
         right: 25%;
         z-index: 1;
     }
+}
+
+._burung_left { 
+    width: 12%;
+    position: fixed;
+    top: 8%;
+    left: 14%;
+    z-index: 0;
+}
+
+._burung_right { 
+    width: 12%;
+    position: fixed;
+    top: 8%;
+    right: 14%;
+    z-index: 0;
 }
 
 ._tiang_left { 
@@ -261,34 +302,49 @@ export default {
     computed: {
         ...mapState({
             cRoutes: state => state.cRoutes,
+            showBird: state => state.showBird,
         }),
     },
     methods: {
-        lockScroll() { 
-            this.isLocked = true;
-            document.body.style.overflow = 'hidden'
-            console.log('lock scroll')
-        },
-        unlockScroll() { 
-            this.isLocked = false;
-            document.body.style.overflow = ''
-            console.log('unlock scroll')
-        },
         geserTiang() { 
             const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft
             const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight
+            const isMobile = window.innerWidth <= 768;
             const tl = gsap.timeline({
                 defaults: { ease: "power3.inOut" },
             });
 
-            tl.to([leftEl, rightEl], {
-                height:'70%',
-                scale: 0.79,
-                z:120,
-                transformOrigin: 'center top',
-                duration: 2, 
-                ease: 'power3.inOut',
-            });
+            if (isMobile) {
+                tl.to([leftEl, rightEl], {
+                    height: '30%',
+                    yPercent: -20,
+                    scale: 0.9,
+                    duration: 2,
+                });
+            } else {
+                tl.to([leftEl, rightEl], {
+                    height: '70%',
+                    scale: 0.79,
+                    z: 120,
+                    transformOrigin: 'center top',
+                    duration: 2,
+                });
+            }
+        },
+        munculBurung() {
+            this.$nextTick(()=>{
+                const burungKiri = this.$refs.burungLeft?.$el;
+                const burungKanan = this.$refs.burungRight?.$el;
+
+                if (!burungKiri || !burungKanan) return;
+                gsap.from([burungKiri, burungKanan], { 
+                    opacity: 0,
+                    y: -30,
+                    duration: 1,
+                    stagger: 0.35,
+                    ease: "power3.out",
+                })
+            })
         },
         ...mapActions({
             
@@ -298,14 +354,26 @@ export default {
         }),
     },
     watch: {
+        $route(to) { 
+            if (to.path !== '/home') {
+                this.$store.commit('SET_C_ROUTES', true)
+            } else { 
+                this.$store.commit('SET_C_ROUTES', false)
+            }
+        },
         cRoutes(newVal) { 
             if(newVal) { 
-                this.geserTiang()
+                this.geserTiang();
+            }
+        },
+        showBird(newVal) { 
+            if(newVal) {
+                this.munculBurung();
             }
         }
     },
     mounted() {
-        
+
     },
 }
 

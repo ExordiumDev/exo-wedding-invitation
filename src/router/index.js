@@ -8,6 +8,9 @@ import invSchedule from '../views/WeddingSchedule.vue'
 import invRsvp from '../views/WeddingRsvp.vue'
 import invGift from '../views/WeddingGift.vue'
 import invDoa from '../views/WeddingDua.vue'
+import invPreOutro from '../views/WeddingPreOutro.vue'
+import invOutro from '../views/WeddingOutro.vue'
+
 
 const routes = [
     {
@@ -74,7 +77,25 @@ const routes = [
                 component: invDoa,
                 meta: { 
                     requiresAuth: false,
-                    title: 'Wedding Doa'
+                    title: 'Pray'
+                }
+            },
+            {
+                path: '/pre-outro',
+                name: 'inv.preoutro',
+                component: invPreOutro,
+                meta: { 
+                    requiresAuth: false,
+                    title: 'Pre outro'
+                }
+            },
+            {
+                path: '/outro',
+                name: 'inv.outro',
+                component: invOutro,
+                meta: { 
+                    requiresAuth: false,
+                    title: 'Outro'
                 }
             },
         ]

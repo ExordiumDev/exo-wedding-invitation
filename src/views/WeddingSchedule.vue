@@ -13,27 +13,19 @@
             <span class="text-none text-md-h6 _salina_text">Pukul 08:00 - 09:00</span>
             <span class="text-none text-md-h6 _salina_text">Sovereign Plaza Jl. TB. Simatupang</span>
             <span class="text-none text-md-h6 _salina_text">No 56 Cilandak Barat. Cilandak, Jakarta Selatan</span>
-            
-
-            <v-img v-if="showBurung" :src="burungKiri" class="_burung_left" ref="burungLeft"></v-img>
-            <v-img v-if="showBurung" :src="burungKanan" class="_burung_right" ref="burungRight"></v-img>
         </div>
     </v-container>
 </template>
 
-
-
 <script>
 
 import gsap from 'gsap'
-import burungKiri from '../assets/images/partial/burung-kiri.png'
-import burungKanan from '../assets/images/partial/burung-kanan.png'
 import { useWheelNavigation } from '../plugins/usewheeleNavigation';
 
 export default {
     data() { 
         return {
-            showBurung: false
+
         }
     },
     methods: { 
@@ -54,27 +46,20 @@ export default {
     },
     mounted() {
         this.showSchedule()
+        const { attach, detach } = useWheelNavigation({
+            nextRoute: 'inv.rsvp',
+            prevRoute: 'inv.content',
+            delay: 2500,
+        })
 
-        const { attach, detach } = useWheelNavigation({ nextRoute: 'inv.rsvp', delay: 5000 })
-        const el = this.$refs.weddingSchedule
+        const el = this.$refs.weddingSchedule.$el || this.$refs.weddingSchedule
         attach(el)
         this.detachFn = () => detach(el)
-
-        const handleScroll = (e) => {
-            if (e.deltaY < 0 ) {
-                e.preventDefault();
-                this.$router.push({ name: 'inv.content' });
-                return
-            }
-        }
-        this._handleScroll = handleScroll;
-        window.addEventListener('wheel', handleScroll, { passive: false });
     },
     beforeUnmount() { 
         if (this._handleScroll) {
             window.removeEventListener('wheel', this._handleScroll);
         }
-        
     }
 }
 </script>

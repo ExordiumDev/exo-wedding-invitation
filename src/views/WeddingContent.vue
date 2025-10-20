@@ -1,7 +1,8 @@
 <template>
-    <v-container fluid>
+    <v-container fluid class="_show_content">
+        <div class="divider_"></div>
         <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingContent">
-            <span class="text-h6 _salina_text_2 mb-5">Assalamu'alaikum Warahmatullahi Wabarakaatuh</span>
+            <span class="text-h6 text-center _salina_text_2 mb-5">Assalamu'alaikum Warahmatullahi Wabarakaatuh</span>
             <span class="_avenir_text">Dengan memohon ridho dan rahmat Allah SWT</span>
             <span class="_avenir_text">Kami bermaksud menyelenggarakan</span>
             <span class="_avenir_text">Resepsi Pernikahan putra-putri kami</span>
@@ -10,10 +11,12 @@
                     <v-col cols="12" md="5" class="pa-0">
                         <div class="d-flex flex-column text-center align-center">
                             <v-img :src="mempelaiWanita" class="_mempelai"></v-img>
-                            <span class="text-h3 _salina_text">Sitti Pratiwi</span>
-                            <span class="text-none">Putra pertama</span>
-                            <span class="text-none">Bapak Irwan Bakri</span>
-                            <span class="text-none">& Ibu Nurtina</span>
+                            <div class="_bacod d-flex flex-column" style="z-index: 10 !important;">
+                                <span class="text-h3 _salina_text">Sitti Pratiwi</span>
+                                <span class="text-none">Putra pertama</span>
+                                <span class="text-none">Bapak Irwan Bakri</span>
+                                <span class="text-none">& Ibu Nurtina</span>
+                            </div>
                         </div>
                     </v-col>
                     <v-col cols="12" md="1" class="pa-0">
@@ -36,30 +39,120 @@
                     </v-col>
                 </v-row>
             </v-container>
-            <v-img v-if="showBurung" :src="burungKiri" class="_burung_left" ref="burungLeft"></v-img>
-            <v-img v-if="showBurung" :src="burungKanan" class="_burung_right" ref="burungRight"></v-img>
         </div>
+
+        <v-row class="my-10">
+            <v-col cols="12" col="12">
+                <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingSchedule">
+                    <span class="text-h4 text-md-h2 _salina_text_2 mb-5">9 NOVEMBER 2025</span>
+                    <span class="text-none text-md-h5 _salina_text_2">Akad Nikah</span>
+                    <span class="text-none text-md-h6 _salina_text">Pukul 08:00 - 09:00</span>
+                    <span class="text-none text-md-h6 _salina_text">Sovereign Plaza Jl. TB. Simatupang</span>
+                    <span class="text-none text-md-h6 _salina_text">No 56 Cilandak Barat. Cilandak, Jakarta Selatan</span>
+
+                    <span class="text-none text-md-h6 _salina_text">-----------------------------------------------</span>
+
+                    <span class="text-none text-md-h5 _salina_text_2">Resepsi Pernikahan</span>
+                    <span class="text-none text-md-h6 _salina_text">Pukul 08:00 - 09:00</span>
+                    <span class="text-none text-md-h6 _salina_text">Sovereign Plaza Jl. TB. Simatupang</span>
+                    <span class="text-none text-md-h6 _salina_text">No 56 Cilandak Barat. Cilandak, Jakarta Selatan</span>
+                </div>
+            </v-col>
+        </v-row>
+
+        <!-- wedding content -->
+
+        <v-row justify="center" class="h-100 my-10" ref="weddingRsvpCard">
+            <v-col cols="12" md="5" class="d-flex justify-center">
+                <v-form class="w-100">
+                    <v-card variant="plain" class="pa-5">
+                        <v-card-item>
+                            <v-card-title class="text-h6 text-md-h4 text-center text-background _salina_text mb-5">RSVP</v-card-title>
+                            <v-text-field label="Name" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text mb-2"></v-text-field>
+                            <v-text-field label="Phone Number" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text mb-2" :rules="[rules.required, rules.numeric, rules.min1]"></v-text-field>
+                            <v-text-field label="Number of guest" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text mb-2" :rules="[rules.required, rules.numeric, rules.min1]"></v-text-field>
+                            <v-autocomplete :items="attendance" label="Confirmation of Attendance" class="text-background" variant="outlined"></v-autocomplete>
+                        </v-card-item>
+                        <v-card-actions>
+                            <v-btn variant="flat" block class="text-none">Send</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-form>
+            </v-col>
+        </v-row>
+
+        <!-- wedding gift -->
+
+        <v-row>
+            <v-col cols="12" md="12">
+                <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingGiftCard">
+                    <span class="text-h4 text-md-h4 _salina_text mb-5">Wedding Gift</span>
+                    <span class="text-none text-md-h6 _avenir_text">Kehadiran dan doa restu dari Bapak/Ibu</span>
+                    <span class="text-none text-md-h6 _avenir_text">Saudara/i adalah anugerah terindah bagi kami,</span>
+                    <span class="text-none text-md-h6 _avenir_text">Jika memberi tanda kasih adalah bentuk cinta</span>
+                    <span class="text-none text-md-h6 _avenir_text">yang ingin disampaikan, dengna segala </span>
+                    <span class="text-none text-md-h6 _avenir_text">kerendahan hati, dapat melalui</span>
+                    <strong class="text-none text-md-h6 _avenir_text">BCA 123456789 a.n Sitti Pratiwi</strong>
+                    <strong class="text-none text-md-h6 _avenir_text">atau Mandiri 123456789</strong>
+                    <strong class="text-none text-md-h6 _avenir_text">a.n Ahmad Abdul Gani</strong>
+                </div>
+            </v-col>
+        </v-row>
+
+        <!-- wedding doa  -->
+
+        <v-row justify="center" class="h-100 _form_container">
+            <v-col cols="12" md="5" class="d-flex justify-center">
+                <v-form ref="weddingDuaForm">
+                    <v-card variant="plain" color="">
+                        <v-card-item>
+                            <v-card-title>
+                                <span class="text-h6 text-md-h4 text-center text-background _salina_text mb-5 text-wrap">Doa dan Kata Hangat untuk kami</span>
+                            </v-card-title>
+                            <v-text-field label="Name" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text my-2"></v-text-field>
+                            <v-textarea label="Doa & kata-katamu" variant="outlined" class="text-h6 text-md-h5 text-center text-background _salina_text mb-2" no-resize></v-textarea>
+                        </v-card-item>
+                        <v-card-actions>
+                            <v-btn variant="elevated" block class="text-none">Send</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-form>
+            </v-col>
+        </v-row>
+        <v-row justify="center">
+            <v-col cols="12" md="5" class="d-flex justify-center">
+                <div class="bg-background w-100" style="min-height: 300px;"></div>
+            </v-col>
+        </v-row>
+
+        <!-- wedding outro -->
+
+        <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingOutro">
+            <span class="text-none text-md-h3 _salina_text mb-5">Thank You</span>
+            <span class="text-none text-md-h6 _avenir_text text-center">Merupakan suatu kehormatan dan kebahagiaan kami</span>
+            <span class="text-none text-md-h6 _avenir_text">Keluarga besar yang mengundang mempelai Wanita : </span>
+            <ul>
+                <li>Keluarga Besar Bakri & Lasupu</li>
+                <li>Keluarga Besar Yunus & Abdullah</li>
+                <li>Keluarga Besar Latopada</li>
+            </ul>
+
+            <span class="text-none text-md-h6 _avenir_text text-center">Keluarga besar yang mengundang mempelai Pria : </span>
+            <ul>
+                <li>Keluarga Besar Hamdan Nasution</li>
+                <li>Keluarga Besar Elfi Sahra Lubis</li>
+            </ul>
+
+            <span class="text-none text-md-h6 _avenir_text">apabila Bapak/Ibu/Saudara/i berkenan hadir</span>
+            <span class="text-none text-md-h6 _avenir_text">untuk memberikan doa restu kepada putra-putri kami</span>
+
+            <span class="_salina_text text-none text-md-h6 mt-5 text-center">Wassalamu'alaikum Warahmmatullahi Wabarakaatuh</span>
+        </div>
+        <div class="divider_"></div>
     </v-container>
 </template>
 
-
 <style scoped>
-
-._burung_left { 
-    width: 14%;
-    position: absolute;
-    top: 8%;
-    left: 18%;
-    z-index: 2;
-}
-
-._burung_right { 
-    width: 14%;
-    position: absolute;
-    top: 8%;
-    right: 17%;
-    z-index: 2;
-}
 
 </style>
 
@@ -67,9 +160,6 @@
 import gsap from 'gsap'
 import mempelaiWanita from "../assets/images/partial/m_wanita.png"
 import mempelaiPria from "../assets/images/partial/m-pria.png"
-import burungKiri from '../assets/images/partial/burung-kiri.png'
-import burungKanan from '../assets/images/partial/burung-kanan.png'
-import { useWheelNavigation } from '../plugins/usewheeleNavigation';
 
 export default {
     name: 'WeddingContent',
@@ -77,16 +167,23 @@ export default {
         return { 
             mempelaiWanita,
             mempelaiPria,
-            burungKiri,
-            burungKanan,
             showBurung: false,
             burungLoaded: {
                 left: false,
                 right: false
+            },
+            attendance: ['Present', 'Absent'],
+            rules: {
+                required: v => !!v || 'This field is required',
+                numeric: v => !isNaN(parseFloat(v)) || 'Must be a number',
+                min1: v => (v > 0) || 'Must be greater than 0',
             }
         }
     },
     methods: {
+        setShowBird() {
+            this.$store.commit('SET_SHOW_BIRD', true)
+        },
         showContent() {
             this.$nextTick(() => {
                 const textEl = this.$refs.weddingContent;
@@ -108,37 +205,15 @@ export default {
                     duration: 0.8,
                     ease: "power3.out",
                     immediateRender: false,
-                    onComplete: () => {
-                        this.burungEnter()
-                    }
                 }, "+=0.1")
             })
         },
-        burungEnter() { 
-            this.showBurung = true;
-            this.$nextTick(()=>{
-                const burungKiri = this.$refs.burungLeft?.$el;
-                const burungKanan = this.$refs.burungRight?.$el;
-
-                if (!burungKiri || !burungKanan) return;
-                gsap.from([burungKiri, burungKanan], { 
-                    opacity: 0,
-                    y: -30,
-                    duration: 1,
-                    stagger: 0.35,
-                    ease: "power3.out",
-                })
-            })
-        }
     },
     computed: {
     },
     mounted() { 
         this.showContent();
-        const { attach, detach } = useWheelNavigation({ nextRoute: 'inv.schedule', delay: 5000 })
-        const el = this.$refs.weddingContent
-        attach(el)
-        this.detachFn = () => detach(el)
+        this.setShowBird();
     },
     beforeUnmount() { 
 
