@@ -16,24 +16,7 @@
         </v-row>
 
         <!-- SECTION INVITATION OPENED -->
-        <div v-if="showAyat" class="d-flex flex-column align-center justify-start h-100 ga-1 text-background" ref="textSection">
-            <v-spacer></v-spacer>
-            <span class="text-h6 _salina_text_2">Dan di antara ayat-ayat-Nya ialah</span>
-            <span class="text-h6 _salina_text_2">Dia menciptakan untukmu istri-istri</span>
-            <span class="text-h6 _salina_text_2">dari Jenismu sendiri, supaya kamu</span>
-            <span class="text-h6 _salina_text_2">merasa nyaman kepadanya, dan</span>
-            <span class="text-h6 _salina_text_2">dijadikan-Nya diantaramu mawadah</span>
-            <span class="text-h6 _salina_text_2">dan rahmah. Sesungguhnya pada yang</span>
-            <span class="text-h6 _salina_text_2">demikian itu benar-benar terdapat</span>
-            <span class="text-h6 _salina_text_2">tanda-tanda bagi kaum yang berpikir.</span>
-            <span class="text-h4 mt-10 _salina_text_2">Ar-rum ayat 21</span>
-            <v-spacer></v-spacer>
-            <v-spacer></v-spacer>
-            <v-spacer></v-spacer>
-        </div>
-
-
-        <div v-if="showWeddingContent" class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingContent">
+        <!-- <div v-if="showWeddingContent" class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100" ref="weddingContent">
             <span class="text-h6 _salina_text_2 mb-5">Assalamu'alaikum Warahmatullahi Wabarakaatuh</span>
             <span class="_avenir_text">Dengan memohon ridho dan rahmat Allah SWT</span>
             <span class="_avenir_text">Kami bermaksud menyelenggarakan</span>
@@ -69,7 +52,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </div>
+        </div> -->
 
         <!-- burung -->
 
@@ -84,24 +67,6 @@
     perspective: 1000px; 
     overflow: hidden;
 }
-
-
-._burung_left { 
-    width: 14%;
-    position: absolute;
-    top: 8%;
-    left: 18%;
-    z-index: 2;
-}
-
-._burung_right { 
-    width: 14%;
-    position: absolute;
-    top: 8%;
-    right: 17%;
-    z-index: 2;
-}
-
 
 /* ._tiang_left { 
     width: 15%;

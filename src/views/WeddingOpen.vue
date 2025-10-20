@@ -4,15 +4,15 @@
         class="h-100 d-flex justify-center align-center flex-column" ref="touchArea">
         <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background scroll-detector" ref="textSection">
             <v-spacer></v-spacer>
-            <span class="text-h6 _salina_text">Dan di antara ayat-ayat-Nya ialah</span>
-            <span class="text-h6 _salina_text">Dia menciptakan untukmu istri-istri</span>
-            <span class="text-h6 _salina_text">dari Jenismu sendiri, supaya kamu</span>
-            <span class="text-h6 _salina_text">merasa nyaman kepadanya, dan</span>
-            <span class="text-h6 _salina_text">dijadikan-Nya diantaramu mawadah</span>
-            <span class="text-h6 _salina_text">dan rahmah. Sesungguhnya pada yang</span>
-            <span class="text-h6 _salina_text">demikian itu benar-benar terdapat</span>
-            <span class="text-h6 _salina_text">tanda-tanda bagi kaum yang berpikir.</span>
-            <span class="text-h4 _salina_text">Ar-rum ayat 21</span>
+            <span class="text-none text-md-h6 _salina_text">Dan di antara ayat-ayat-Nya ialah</span>
+            <span class="text-none text-md-h6 _salina_text">Dia menciptakan untukmu istri-istri</span>
+            <span class="text-none text-md-h6 _salina_text">dari Jenismu sendiri, supaya kamu</span>
+            <span class="text-none text-md-h6 _salina_text">merasa nyaman kepadanya, dan</span>
+            <span class="text-none text-md-h6 _salina_text">dijadikan-Nya diantaramu mawadah</span>
+            <span class="text-none text-md-h6 _salina_text">dan rahmah. Sesungguhnya pada yang</span>
+            <span class="text-none text-md-h6 _salina_text">demikian itu benar-benar terdapat</span>
+            <span class="text-none text-md-h6 _salina_text">tanda-tanda bagi kaum yang berpikir.</span>
+            <span class="text-h6 text-md-h4 _salina_text">Ar-rum ayat 21</span>
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
             <v-spacer></v-spacer>
@@ -115,6 +115,7 @@
 
 <script>
 import gsap from 'gsap'
+import { useWheelNavigation } from '../plugins/usewheeleNavigation';
 
 export default { 
     data() { 
@@ -136,53 +137,16 @@ export default {
         const textEl = this.$refs.textSection;
         this.animateOnMount(textEl);
 
-        const handleScroll = (e) => {
-            if (e.deltaY > 0 ) {
-                e.preventDefault();
-
-                this.$router.push({ name: 'inv.content' });
-                return
-            }
-        }
-        this._handleScroll = handleScroll;
-
-
-        window.addEventListener('wheel', handleScroll, { passive: false });
-
-        // mobile touch detect 
-        const area = this.$refs.touchArea.$el;
-        let startY = 0;
-
-        const handleTouchStart = (e) => {
-            startY = e.touches[0].clientY;
-        };
-
-        const handleTouchMove = (e) => {
-            const diffY = e.touches[0].clientY - startY;
-
-            if (diffY < -50) {
-                console.log("touch move up detected");
-                this.$router.push({ name: 'inv.open' });
-                e.preventDefault();
-            }
-            else if (diffY > 50) { 
-                e.preventDefault();
-                console.log("swipe down detected");
-                this.$router.push({ name: 'inv.open' });
-            }
-        };
-
-        this._handleTouchStart = handleTouchStart;
-        this._handleTouchMove = handleTouchMove;
-        area.addEventListener('touchstart', handleTouchStart, { passive: false });
-        area.addEventListener('touchmove', handleTouchMove, { passive: false });
-
+        const { attach, detach } = useWheelNavigation({ nextRoute: 'inv.content', delay: 5000 })
+        const el = this.$refs.touchArea.$el
+        attach(el)
+        this.detachFn = () => detach(el)
+        
     },
-    beforeMount() { 
-        if (this._handleScroll) {
-            window.removeEventListener('wheel', this._handleScroll);
-        }
+    beforeUnmount() {
+        this.detachFn?.()
     }
+
 }
 
 </script>

@@ -15,7 +15,11 @@
             <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
             <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
             <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
-            <router-view />
+            <router-view v-slot="{Component}">
+                <transition name="fade" @before-enter="lockScroll" @after-enter="unlockScroll">
+                    <component :is="Component" />
+                </transition>
+            </router-view>
         </v-main>
     </v-app>
 </template>
@@ -244,6 +248,8 @@ export default {
             bungaClover,
             burungKiri,
             burungKanan,
+
+            isLocked: false,
             isRender: false,
             dapiSrc: '',
             overlayImage: "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie",
@@ -258,6 +264,16 @@ export default {
         }),
     },
     methods: {
+        lockScroll() { 
+            this.isLocked = true;
+            document.body.style.overflow = 'hidden'
+            console.log('lock scroll')
+        },
+        unlockScroll() { 
+            this.isLocked = false;
+            document.body.style.overflow = ''
+            console.log('unlock scroll')
+        },
         geserTiang() { 
             const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft
             const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight
@@ -267,8 +283,8 @@ export default {
 
             tl.to([leftEl, rightEl], {
                 height:'70%',
-                scale: 0.75,
-                z:90,
+                scale: 0.79,
+                z:120,
                 transformOrigin: 'center top',
                 duration: 2, 
                 ease: 'power3.inOut',

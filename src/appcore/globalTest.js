@@ -50,5 +50,33 @@ export default {
                 transformOrigin: 'top'
             })
         },
+        usewheelNavigation({nextRoute, delay = 800, threshold = 50}) { 
+            let navigating = false;
+            const hadnlewheel = async (e) => {
+                if (navigating) return
+                if(e.deltaY > threshold) { 
+                    e.preventDefault();
+                    navigating = true;
+                    window.removeEventListener("wheel", hadnlewheel);
+
+                    try{
+                        await this.$router.push({name: nextRoute})
+                    } catch(err) {
+                        console.warn(err);
+                    }
+
+                    setTimeout(() => {
+                        navigating = false
+                    }, delay);
+                }
+
+            }
+        },
+        mounted() { 
+            window.addEventListener("wheel", hadnlewheel, {passive: false});
+        },
+        beforeUnmount() {
+            window.removeEventListener("wheel", hadnlewheel)
+        },
     }
 }

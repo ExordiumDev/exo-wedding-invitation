@@ -1,8 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import store from '../stores'
+
 import invHome from '../views/WeddingHome.vue'
 import invOpen from '../views/WeddingOpen.vue'
 import invContent from '../views/WeddingContent.vue'
+import invSchedule from '../views/WeddingSchedule.vue'
+import invRsvp from '../views/WeddingRsvp.vue'
+import invGift from '../views/WeddingGift.vue'
+import invDoa from '../views/WeddingDua.vue'
 
 const routes = [
     {
@@ -35,7 +40,43 @@ const routes = [
                     requiresAuth: false,
                     title: 'Content'
                 }
-            },    
+            },
+            {
+                path: '/schedule',
+                name: 'inv.schedule',
+                component: invSchedule,
+                meta: { 
+                    requiresAuth: false,
+                    title: 'Schedule'
+                }
+            },
+            {
+                path: '/rsvp',
+                name: 'inv.rsvp',
+                component: invRsvp,
+                meta: { 
+                    requiresAuth: false,
+                    title: 'Reservation'
+                }
+            },
+            {
+                path: '/w-gift',
+                name: 'inv.gift',
+                component: invGift,
+                meta: { 
+                    requiresAuth: false,
+                    title: 'Wedding Gift'
+                }
+            },
+            {
+                path: '/dua',
+                name: 'inv.doa',
+                component: invDoa,
+                meta: { 
+                    requiresAuth: false,
+                    title: 'Wedding Doa'
+                }
+            },
         ]
     },
 ]
