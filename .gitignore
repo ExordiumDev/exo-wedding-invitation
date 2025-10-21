@@ -14,6 +14,7 @@ dist-ssr
 .env.development
 .env.staging
 .env.production
+.env
 Jenkinsfile-production
 Jenkinsfile-staging
 k8s.yaml

@@ -1,34 +1,152 @@
 <template>
-    <v-app>
-        <v-main class="main-wrapper">
-            
-            <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
-            <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img>
+  <v-app>
+    <v-main class="main-wrapper">
+      <!-- 🌸 Background hanya muncul di non-admin/editor routes -->
+      <template v-if="!isAdminRoute">
+        <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
+        <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img>
 
-            <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
-            <v-img :src="bungaClover" class="_bunga_bottom_left_clover_0"></v-img>
-            <v-img :src="bungaClover" class="_bunga_bottom_left_clover_50"></v-img>
-            <v-img :src="bungaGede" class="_bunga_bottom_left_30"></v-img>
-            <v-img :src="bungaWhiteRose" class="_bunga_bottom_left_60"></v-img>
-            <v-img :src="bungaGede" class="_bunga_bottom_left_90"></v-img>
+        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
+        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_0"></v-img>
+        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_50"></v-img>
+        <v-img :src="bungaGede" class="_bunga_bottom_left_30"></v-img>
+        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left_60"></v-img>
+        <v-img :src="bungaGede" class="_bunga_bottom_left_90"></v-img>
 
-            <v-img :src="bungaGede" class="_bunga_bottom_right"></v-img>
-            <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
-            <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
-            <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
+        <v-img :src="bungaGede" class="_bunga_bottom_right"></v-img>
+        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
+        <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
+        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
 
+        <v-img
+          v-if="$store.state.showBird"
+          :src="burungKiri"
+          class="_burung_left"
+          ref="burungLeft"
+        ></v-img>
+        <v-img
+          v-if="$store.state.showBird"
+          :src="burungKanan"
+          class="_burung_right"
+          ref="burungRight"
+        ></v-img>
+      </template>
 
-            <v-img v-if="this.$store.state.showBird" :src="burungKiri" class="_burung_left" ref="burungLeft"></v-img>
-            <v-img v-if="this.$store.state.showBird" :src="burungKanan" class="_burung_right" ref="burungRight"></v-img>
-
-            <router-view v-slot="{Component}">
-                <transition name="fade">
-                    <component :is="Component" />
-                </transition>
-            </router-view>
-        </v-main>
-    </v-app>
+      <!-- 🌐 Halaman konten -->
+      <router-view v-slot="{ Component }">
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </v-main>
+  </v-app>
 </template>
+
+<script>
+import bungaGede from "../assets/images/partial/bunga-copy.svg";
+import bungaWhiteRose from "../assets/images/partial/white-rose-copy.png";
+import bungaClover from "../assets/images/partial/Clover.png";
+import burungKiri from "../assets/images/partial/burung-kiri.png";
+import burungKanan from "../assets/images/partial/burung-kanan.png";
+import tiang from "../assets/images/partial/brimingham-big.png";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
+import gsap from "gsap";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      tiang,
+      bungaGede,
+      bungaWhiteRose,
+      bungaClover,
+      burungKiri,
+      burungKanan,
+      isLocked: false,
+      isRender: false,
+      dapiSrc: "",
+      overlayImage:
+        "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie",
+    };
+  },
+  computed: {
+    ...mapState({
+      cRoutes: (state) => state.cRoutes,
+      showBird: (state) => state.showBird,
+    }),
+    isAdminRoute() {
+      // 🔍 deteksi route admin/editor
+      const path = this.$route.path;
+      return path.startsWith("/admin") || path.startsWith("/editor");
+    },
+  },
+  methods: {
+    geserTiang() {
+      const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft;
+      const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight;
+      const isMobile = window.innerWidth <= 768;
+      const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+
+      if (isMobile) {
+        tl.to([leftEl, rightEl], {
+          height: "30%",
+          yPercent: -20,
+          scale: 0.9,
+          duration: 2,
+        });
+      } else {
+        tl.to([leftEl, rightEl], {
+          height: "70%",
+          scale: 0.79,
+          z: 120,
+          transformOrigin: "center top",
+          duration: 2,
+        });
+      }
+    },
+    munculBurung() {
+      this.$nextTick(() => {
+        const burungKiri = this.$refs.burungLeft?.$el;
+        const burungKanan = this.$refs.burungRight?.$el;
+        if (!burungKiri || !burungKanan) return;
+        gsap.from([burungKiri, burungKanan], {
+          opacity: 0,
+          y: -30,
+          duration: 1,
+          stagger: 0.35,
+          ease: "power3.out",
+        });
+      });
+    },
+    ...mapActions({}),
+    ...mapMutations({}),
+  },
+  watch: {
+    $route(to) {
+      if (to.path !== "/home") {
+        this.$store.commit("SET_C_ROUTES", true);
+      } else {
+        this.$store.commit("SET_C_ROUTES", false);
+      }
+    },
+    cRoutes(newVal) {
+      if (newVal) {
+        this.geserTiang();
+      }
+    },
+    showBird(newVal) {
+      if (newVal) {
+        this.munculBurung();
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* semua style kamu tetap sama di sini */
+</style>
+
 
 <style scoped>
 
@@ -269,7 +387,7 @@
 }
 </style>
 
-<script>
+<!-- <script>
 import bungaGede from '../assets/images/partial/bunga-copy.svg'
 import bungaWhiteRose from '../assets/images/partial/white-rose-copy.png'
 import bungaClover from '../assets/images/partial/Clover.png'
@@ -377,4 +495,4 @@ export default {
     },
 }
 
-</script>
+</script> -->

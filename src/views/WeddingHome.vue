@@ -5,12 +5,20 @@
         <!-- SECTION HOME TEXT -->
         <v-row>
             <v-col cols="12" md="12">
-                <div v-if="!showAyat && !showWeddingContent" class="d-flex flex-column align-center ga-3 text-section justify-center h-100" ref="introSection">
+                <div v-if="!showAyat && !showWeddingContent" 
+                     class="d-flex flex-column align-center ga-3 text-section justify-center h-100" 
+                     ref="introSection">
                     <span class="text-h6 text-md-h5 _salina_text">Dear</span>
-                    <span class="text-h3 text-md-h2 _salina_text">Ahmad Fauzi</span>
+                    <span class="text-h3 text-md-h2 _salina_text">
+                        {{ guestName || 'Tamu Undangan' }}
+                    </span>
                     <v-divider :thickness="1" color="background"></v-divider>
-                    <span class="text-h6 text-md-h5 _salina_text">We Invite you to the weeding of</span>
-                    <v-btn variant="flat" class="text-none" @click="animateExit">Open the invitation</v-btn>
+                    <span class="text-h6 text-md-h5 _salina_text">
+                        We invite you to the wedding of
+                    </span>
+                    <v-btn variant="flat" class="text-none" @click="animateExit">
+                        Open the invitation
+                    </v-btn>
                 </div>
             </v-col>
         </v-row>
@@ -149,7 +157,7 @@ export default {
             bungaClover,
             burungKiri,
             burungKanan,
-
+            guestName: null,
             isExit: false,
             showAyat:false,
             showWeddingContent: false,
@@ -219,10 +227,20 @@ export default {
                 ease: "power3.out"
             },
         );
+
+        const guest = this.$route.query.guest;
+        if(guest) {
+            this.guestName = decodeURIComponent(guest);
+        }
     },
     beforeUnmount() {
         if (this._handleScroll) {
             window.removeEventListener('wheel', this._handleScroll);
+        }
+    },
+    watch: {
+        '$route.query.guest'(val){
+            this.guestName = val ? decodeURIComponent(val) : null;
         }
     }
 }
