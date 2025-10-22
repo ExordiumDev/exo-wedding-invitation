@@ -148,12 +148,12 @@ const form = reactive({
 
 const isExisting = ref(false)
 const message = ref('')
-const baseUrl = import.meta.env.VITE_API_BASE_URL
+const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"
 
 // === methods ===
 async function fetchSchedule() {
   try {
-    const res = await axios.get(`${baseUrl}/api/schedule`)
+    const res = await axios.get(`${baseUrl}/api/schedule/`)
     Object.assign(form, res.data)
     isExisting.value = true
   } catch (err) {
@@ -163,7 +163,7 @@ async function fetchSchedule() {
 
 async function submitSchedule() {
   try {
-    const res = await axios.post(`${baseUrl}/api/schedule`, form)
+    const res = await axios.post(`${baseUrl}/api/schedule/`, form)
     message.value = res.data.message
     isExisting.value = true
   } catch (err) {
@@ -176,7 +176,7 @@ async function deleteSchedule() {
   if (!confirm('Yakin ingin menghapus jadwal ini?')) return
 
   try {
-    const res = await axios.delete(`${baseUrl}/api/schedule`)
+    const res = await axios.delete(`${baseUrl}/api/schedule/`)
     message.value = res.data.message
     isExisting.value = false
     Object.keys(form).forEach((key) => (form[key] = ''))
