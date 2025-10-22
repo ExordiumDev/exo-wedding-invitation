@@ -148,7 +148,7 @@ const form = reactive({
 
 const isExisting = ref(false)
 const message = ref('')
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"
+const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD || "https://api.haveyoumatiwi.com"
 
 // === methods ===
 async function fetchSchedule() {

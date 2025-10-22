@@ -54,7 +54,7 @@ import axios from 'axios'
 const selectedFiles = ref([])
 const previews = ref([])
 const gallery = ref([])
-const baseUrl = import.meta.env.VITE_API_BASE_URL
+const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD
 
 // ==== methods ====
 async function fetchGallery() {

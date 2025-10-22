@@ -223,7 +223,7 @@ import axios from "axios";
 import { BrowserMultiFormatReader } from '@zxing/browser';
 
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD;
 
 // 🔹 State
 const wishes = ref([]);

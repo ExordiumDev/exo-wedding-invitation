@@ -114,21 +114,21 @@ function onFileChange(event, type) {
 
 async function fetchCouple() {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/couple`)
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL_PROD}/api/couple`)
     const data = res.data
 
     groom.value.name = data.groom_name || ''
     groom.value.parents = data.groom_parents || ''
     groom.value.instagram = data.groom_instagram || ''
     if (data.groom_photo) {
-      groom.value.preview = `${import.meta.env.VITE_API_BASE_URL}/uploads/couple/${data.groom_photo}`
+      groom.value.preview = `${import.meta.env.VITE_API_BASE_URL_PROD}/uploads/couple/${data.groom_photo}`
     }
 
     bride.value.name = data.bride_name || ''
     bride.value.parents = data.bride_parents || ''
     bride.value.instagram = data.bride_instagram || ''
     if (data.bride_photo) {
-      bride.value.preview = `${import.meta.env.VITE_API_BASE_URL}/uploads/couple/${data.bride_photo}`
+      bride.value.preview = `${import.meta.env.VITE_API_BASE_URL_PROD}/uploads/couple/${data.bride_photo}`
     }
 
     slug.value = data.slug || ''
@@ -152,7 +152,7 @@ async function save() {
   formData.append('slug', slug.value)
 
   try {
-    await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/couple`, formData)
+    await axios.put(`${import.meta.env.VITE_API_BASE_URL_PROD}/api/couple`, formData)
     alert('✅ Data berhasil disimpan!')
   } catch (err) {
     console.error('❌ Gagal menyimpan data:', err)

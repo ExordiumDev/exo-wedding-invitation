@@ -290,7 +290,8 @@ export default {
             qrCodeUrl: null,
             showThankYou: false,
             address: "",
-            baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+            // baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+            baseUrl: import.meta.env.VITE_API_BASE_URL_PROD || "https://api.haveyoumatiwi.com",
             burungLoaded: {
                 left: false,
                 right: false
