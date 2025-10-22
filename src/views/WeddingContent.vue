@@ -238,6 +238,34 @@
         <div class="divider_"></div>
         <div class="divider_"></div>
     </v-container>
+
+    <v-dialog v-model="showThankYou" max-width="400px" persistent>
+        <v-card class="text-center pa-5 rounded-xl">
+            <v-card-title class="text-h5 mb-2 font-weight-medium">
+                🎉 Terima Kasih!
+            </v-card-title>
+
+            <v-card-text>
+                <p class="mb-3">
+                    Ucapan kamu sudah terkirim dengan sukses 💌
+                </p>
+
+                <div v-if="qrCodeUrl">
+                    <v-img :src="qrCodeUrl" contain max-width="180" class="mx-auto mb-4 rounded-lg elevation-2"></v-img>
+
+                    <v-btn color="primary" variant="flat" class="mb-2" @click="downloadQr">
+                        Download QR Code
+                    </v-btn>
+                </div>
+            </v-card-text>
+
+            <v-card-actions class="d-flex justify-center">
+                <v-btn color="secondary" variant="text" @click="showThankYou = false">
+                    Tutup
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <style scoped></style>
@@ -259,6 +287,8 @@ export default {
             schedules: [],
             couples: [],
             wishes: [],
+            qrCodeUrl: null,
+            showThankYou: false,
             address: "",
             baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
             burungLoaded: {
@@ -377,13 +407,38 @@ export default {
         async sendWish() {
             try {
                 const res = await axios.post(`${this.baseUrl}/api/wishes`, this.form);
-                console.log("Wish Created", res.data);
-                alert("Terima kasih Sudah Mengisi Undangan Kami!");
-                this.getWishes();
+                console.log("✅ Wish Created", res.data);
+
+                if (res.data.qr_image) {
+                    this.qrCodeUrl = res.data.qr_image;
+                    this.showThankYou = true; // 🔥 tampilkan modal
+                    console.log("Modal aktif?", this.showThankYou);
+                } else {
+                    alert("Terima kasih sudah mengisi undangan kami!");
+                }
+
+                // reset form
+                this.form = {
+                    name: "",
+                    phone: "",
+                    guestCount: "",
+                    attendance: "",
+                    message: "",
+                };
+
+                await this.getWishes();
             } catch (e) {
-                console.error("Error Posting Wishes: ", e);
+                console.error("❌ Error Posting Wishes:", e);
                 alert("Gagal Mengirim Wishes.");
             }
+        },
+
+        downloadQr() {
+            if (!this.qrCodeUrl) return;
+            const link = document.createElement("a");
+            link.href = this.qrCodeUrl;
+            link.download = "qrcode.png";
+            link.click();
         },
 
         async getWishes() {
@@ -479,7 +534,10 @@ export default {
 }
 </script>
 
-<!-- <style scoped>
+<style scoped>
+/* ========================================
+  Base Styles (Desktop)
+======================================== */
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -527,188 +585,132 @@ export default {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.15); /* transparan lembut */
-  backdrop-filter: blur(20px); /* efek kaca */
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-</style> -->
-
-<style scoped>
-/* ========================================
-   🎨 Base Styles (Desktop)
-======================================== */
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 0 8px;
-}
-
-.chat-bubble {
-  max-width: 80%;
-  padding: 12px 18px;
-  border-radius: 18px;
-  word-break: break-word;
-  line-height: 1.4;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: all 0.2s ease;
-}
-
-.chat-bubble:hover {
-  transform: scale(1.02);
-}
-
-.chat-name {
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-  opacity: 0.85;
-}
-
-.chat-message {
-  font-size: 1rem;
-}
-
-.from-left {
-  align-self: flex-start;
-  background: linear-gradient(135deg, #ffe2ec, #ffcce0);
-  color: #4a2c2c;
-  border-top-left-radius: 4px;
-}
-
-.from-right {
-  align-self: flex-end;
-  background: linear-gradient(135deg, #d9ecff, #b9dbff);
-  color: #1e2a3a;
-  border-top-right-radius: 4px;
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 20px;
 }
 
 /* ========================================
-   📱 Responsive (Mobile & Tablet)
+   Responsive (Mobile & Tablet)
 ======================================== */
 @media (max-width: 768px) {
-  ._mempelai {
-    max-width: 70%;
-    height: auto;
-  }
+    ._mempelai {
+        max-width: 70%;
+        height: auto;
+    }
 
-  ._salina_text, ._salina_text_2, ._avenir_text {
-    text-align: center !important;
-    font-size: clamp(1rem, 4vw, 1.4rem);
-  }
+    ._salina_text,
+    ._salina_text_2,
+    ._avenir_text {
+        text-align: center !important;
+        font-size: clamp(1rem, 4vw, 1.4rem);
+    }
 
-  .text-h3 {
-    font-size: 1.6rem !important;
-  }
+    .text-h3 {
+        font-size: 1.6rem !important;
+    }
 
-  .text-h4, .text-h5, .text-h6 {
-    font-size: 1.1rem !important;
-  }
+    .text-h4,
+    .text-h5,
+    .text-h6 {
+        font-size: 1.1rem !important;
+    }
 
-  .v-card {
-    padding: 16px !important;
-  }
+    .v-card {
+        padding: 16px !important;
+    }
 
-  .v-card-title {
-    font-size: 1.2rem !important;
-  }
+    .v-card-title {
+        font-size: 1.2rem !important;
+    }
 
-  .chat-bubble {
-    max-width: 95%;
-    padding: 10px 14px;
-    font-size: 0.9rem;
-  }
+    .chat-bubble {
+        max-width: 95%;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
 
-  .chat-name {
-    font-size: 0.8rem;
-  }
+    .chat-name {
+        font-size: 0.8rem;
+    }
 
-  .chat-message {
-    font-size: 0.9rem;
-  }
+    .chat-message {
+        font-size: 0.9rem;
+    }
 
-  .glass-card {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 14px;
-    border-radius: 12px;
-  }
+    .glass-card {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 14px;
+        border-radius: 12px;
+    }
 
-  .divider_ {
-    height: 12px;
-  }
+    .divider_ {
+        height: 12px;
+    }
 
-  .v-form {
-    width: 100% !important;
-  }
+    .v-form {
+        width: 100% !important;
+    }
 
-  .v-text-field,
-  .v-textarea,
-  .v-autocomplete {
-    font-size: 0.9rem;
-  }
+    .v-text-field,
+    .v-textarea,
+    .v-autocomplete {
+        font-size: 0.9rem;
+    }
 
-  .text-none {
-    font-size: 0.95rem !important;
-  }
+    .text-none {
+        font-size: 0.95rem !important;
+    }
 
-  /* Elemen spacing antar section */
-  .my-10 {
-    margin-top: 24px !important;
-    margin-bottom: 24px !important;
-  }
+    /* Elemen spacing antar section */
+    .my-10 {
+        margin-top: 24px !important;
+        margin-bottom: 24px !important;
+    }
 
-  /* List Outro biar gak terlalu lebar */
-  ul {
-    padding-left: 18px;
-    font-size: 0.9rem;
-  }
+    /* List Outro biar gak terlalu lebar */
+    ul {
+        padding-left: 18px;
+        font-size: 0.9rem;
+    }
 
-  /* Center semua konten */
-  .d-flex.flex-column.align-center.justify-start {
-    text-align: center;
-  }
+    /* Center semua konten */
+    .d-flex.flex-column.align-center.justify-start {
+        text-align: center;
+    }
 }
 
 /* ========================================
    📱 Extra Small (≤480px)
 ======================================== */
 @media (max-width: 480px) {
-  .text-h3 {
-    font-size: 1.4rem !important;
-  }
+    .text-h3 {
+        font-size: 1.4rem !important;
+    }
 
-  ._mempelai {
-    max-width: 90%;
-  }
+    ._mempelai {
+        max-width: 90%;
+    }
 
-  .v-card-title {
-    font-size: 1rem !important;
-  }
+    .v-card-title {
+        font-size: 1rem !important;
+    }
 
-  .chat-bubble {
-    font-size: 0.85rem;
-    padding: 8px 12px;
-  }
+    .chat-bubble {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
 
-  .chat-container {
-    gap: 10px;
-  }
+    .chat-container {
+        gap: 10px;
+    }
 
-  .glass-card {
-    border-radius: 10px;
-    padding: 12px;
-  }
+    .glass-card {
+        border-radius: 10px;
+        padding: 12px;
+    }
 }
 </style>
-

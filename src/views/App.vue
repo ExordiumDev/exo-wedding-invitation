@@ -116,6 +116,19 @@ export default {
           stagger: 0.35,
           ease: "power3.out",
         });
+
+        //Animasi burung
+        [burungKanan, burungKanan].forEach((el, i) => {
+          gsap.to(el, {
+            y: "+=10",
+            duration: 3 + Math.random() * 3,
+            yoyo: true,
+            repeat: -1, 
+            ease: "sine.inOut",
+            delay: Math.random(),
+          })
+        });
+
       });
     },
     ...mapActions({}),
@@ -142,11 +155,6 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* semua style kamu tetap sama di sini */
-</style>
-
 
 <style scoped>
 
