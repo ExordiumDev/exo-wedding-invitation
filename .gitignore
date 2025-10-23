@@ -20,6 +20,8 @@ Jenkinsfile-staging
 k8s.yaml
 k8s-prod.yaml
 dockerfile
+vite.config.js
+serverdev.js
 
 # Editor directories and files
 .vscode/*
