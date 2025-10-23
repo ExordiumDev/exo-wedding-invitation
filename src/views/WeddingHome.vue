@@ -7,17 +7,17 @@
             <v-col cols="12" md="12">
                 <div class="d-flex flex-column align-center ga-3 text-section justify-center h-100" ref="introSection">
                     <span class="text-h6 text-md-h5 _salina_text">Dear</span>
-                    <span class="text-h3 text-md-h2 _salina_text">
+                    <span class="text-h4 text-md-h2 _salina_text text-center">
                         {{ guestName || 'Tamu Undangan' }}
                     </span>
                     <v-divider class="w-100 my-2" :thickness="4" color="background"></v-divider>
                     <span class="text-h6 text-md-h5 _salina_text">
                         We invite you to the wedding of
                     </span>
-                    <div class="d-flex flex-column w-100 my-10">
-                        <span class="text-h1 _salina_text text-background ps-10 tight-text">Pratiwi</span>
-                        <span class="text-h1 _salina_text text-background text-end tight-text pe-10">&</span>
-                        <span class="text-h1 _salina_text text-background text-end tight-text pe-5">Ahmad</span>
+                    <div class="d-flex flex-column w-100 my-5 my-md-10">
+                        <span class="text-h3 text-md-h1 _salina_text text-background tight-text _bride_text">Pratiwi</span>
+                        <span class="text-h3 text-md-h1 _salina_text text-background text-end tight-text _and_text">&</span>
+                        <span class="text-h3 text-md-h1 _salina_text text-background text-end tight-text _groom_text">Ahmad</span>
                     </div>
                     <v-btn variant="flat" class="text-none" @click="animateExit">
                         Open the invitation
@@ -30,10 +30,18 @@
 
 <style scoped>
 
-.tight-text { 
-    line-height: 0.6;
-    margin: 0;
-    padding: 0;
+@media (max-width: 768px) { 
+    ._bride_text { 
+        padding-left:13% !important;
+    }
+
+    ._and_text { 
+        padding-right: 30% !important;
+    }
+
+    ._groom_text{ 
+        padding-right: 20% !important;
+    }    
 }
 
 .perspective-wrapper { 
@@ -136,6 +144,7 @@ export default {
         },
     },
     mounted() {
+        this.$store.commit("SET_SHOW_BIRD", false);
         const textEl = this.$refs.introSection
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 

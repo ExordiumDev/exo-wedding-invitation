@@ -91,6 +91,7 @@ export default {
         },
     },
     mounted() {
+        this.$store.commit("SET_SHOW_BIRD", false);
         this.showAyat();
         this.showBtn();
     },

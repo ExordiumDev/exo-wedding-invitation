@@ -129,3 +129,22 @@ button:focus-visible {
   min-height: 60px !important;
 }
 
+
+
+.tight-text { 
+    line-height: 0.6 !important;
+    margin: 0;
+    padding: 0;
+}
+
+._bride_text { 
+    padding-left: 10% !important;
+}
+
+._and_text { 
+    padding-right: 23% !important;
+}
+
+._groom_text{ 
+    padding-right: 15% !important;
+}

@@ -19,7 +19,7 @@ import ScheduleEditor from '../views/admins/ScheduleEditor.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/demo/home', // default redirect ke contoh slug
+    redirect: '/guest/home', // default redirect ke contoh slug
   },
 
   // === UNDANGAN (Dynamic Slug) ===
@@ -33,7 +33,7 @@ const routes = [
         component: invHome,
         props: route => ({
           slug: route.params.slug,
-          guest: route.query.guest || ''
+          guest: route.query.guest || 'Tamu Undangan'
         }),
         meta: { requiresAuth: false, title: 'Home' }
       },

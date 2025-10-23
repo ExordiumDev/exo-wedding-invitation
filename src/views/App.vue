@@ -64,9 +64,6 @@ export default {
       burungKanan,
       isLocked: false,
       isRender: false,
-      dapiSrc: "",
-      overlayImage:
-        "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie",
     };
   },
   computed: {
@@ -81,6 +78,29 @@ export default {
     },
   },
   methods: {
+    balikinTiang() { 
+      const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft;
+      const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight;
+      const isMobile = window.innerWidth <= 768;
+      const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
+
+      if (isMobile) {
+        tl.to([leftEl, rightEl], {
+          height: "50%",
+          yPercent: 20,
+          scale: 1,
+          duration: 2,
+        });
+      } else {
+        tl.to([leftEl, rightEl], {
+          height: "70%",
+          scale: 1,
+          z: 0,
+          transformOrigin: "center top",
+          duration: 2,
+        });
+      }
+    },
     geserTiang() {
       const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft;
       const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight;
@@ -90,8 +110,8 @@ export default {
       if (isMobile) {
         tl.to([leftEl, rightEl], {
           height: "30%",
-          yPercent: -20,
-          scale: 0.9,
+          yPercent: -8,
+          scale: 0.7,
           duration: 2,
         });
       } else {
@@ -118,7 +138,7 @@ export default {
         });
 
         //Animasi burung
-        [burungKanan, burungKanan].forEach((el, i) => {
+        [burungKiri, burungKanan].forEach((el, i) => {
           gsap.to(el, {
             y: "+=10",
             duration: 3 + Math.random() * 3,
@@ -136,17 +156,23 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.path !== "/home") {
+      if (to.path !== "/guest/home") {
         this.$store.commit("SET_C_ROUTES", true);
-      } else {
-        this.$store.commit("SET_C_ROUTES", false);
-      }
-    },
-    cRoutes(newVal) {
-      if (newVal) {
+        console.log('path ?',to.path)
         this.geserTiang();
+      } else if (to.path === "/guest/home") {
+        this.$store.commit("SET_C_ROUTES", false);
+        
+        console.log('path ?',to.path)
+        this.balikinTiang();
       }
     },
+    // cRoutes(newVal) {
+    //   if (newVal) {
+    //     console.log('routes ', newVal)
+    //     this.geserTiang();
+    //   }
+    // },
     showBird(newVal) {
       if (newVal) {
         this.munculBurung();
@@ -394,113 +420,3 @@ export default {
     z-index: 1;
 }
 </style>
-
-<!-- <script>
-import bungaGede from '../assets/images/partial/bunga-copy.svg'
-import bungaWhiteRose from '../assets/images/partial/white-rose-copy.png'
-import bungaClover from '../assets/images/partial/Clover.png'
-import burungKiri from '../assets/images/partial/burung-kiri.png'
-import burungKanan from '../assets/images/partial/burung-kanan.png'
-import tiang from '../assets/images/partial/brimingham-big.png'
-import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
-import gsap from 'gsap'
-
-export default {
-    name: 'App',
-    data() {
-        return { 
-            tiang,
-            bungaGede,
-            bungaWhiteRose,
-            bungaClover,
-            burungKiri,
-            burungKanan,
-
-            isLocked: false,
-            isRender: false,
-            dapiSrc: '',
-            overlayImage: "https://lottie.host/e3b71b26-703e-4343-802e-28b8793b277b/pVIvUkQDkQ.lottie",
-        }
-    },
-    components: {
-
-    },
-    computed: {
-        ...mapState({
-            cRoutes: state => state.cRoutes,
-            showBird: state => state.showBird,
-        }),
-    },
-    methods: {
-        geserTiang() { 
-            const leftEl = this.$refs.tiangLeft?.$el || this.$refs.tiangLeft
-            const rightEl = this.$refs.tiangRight?.$el || this.$refs.tiangRight
-            const isMobile = window.innerWidth <= 768;
-            const tl = gsap.timeline({
-                defaults: { ease: "power3.inOut" },
-            });
-
-            if (isMobile) {
-                tl.to([leftEl, rightEl], {
-                    height: '30%',
-                    yPercent: -20,
-                    scale: 0.9,
-                    duration: 2,
-                });
-            } else {
-                tl.to([leftEl, rightEl], {
-                    height: '70%',
-                    scale: 0.79,
-                    z: 120,
-                    transformOrigin: 'center top',
-                    duration: 2,
-                });
-            }
-        },
-        munculBurung() {
-            this.$nextTick(()=>{
-                const burungKiri = this.$refs.burungLeft?.$el;
-                const burungKanan = this.$refs.burungRight?.$el;
-
-                if (!burungKiri || !burungKanan) return;
-                gsap.from([burungKiri, burungKanan], { 
-                    opacity: 0,
-                    y: -30,
-                    duration: 1,
-                    stagger: 0.35,
-                    ease: "power3.out",
-                })
-            })
-        },
-        ...mapActions({
-            
-        }),
-        ...mapMutations({
-            
-        }),
-    },
-    watch: {
-        $route(to) { 
-            if (to.path !== '/home') {
-                this.$store.commit('SET_C_ROUTES', true)
-            } else { 
-                this.$store.commit('SET_C_ROUTES', false)
-            }
-        },
-        cRoutes(newVal) { 
-            if(newVal) { 
-                this.geserTiang();
-            }
-        },
-        showBird(newVal) { 
-            if(newVal) {
-                this.munculBurung();
-            }
-        }
-    },
-    mounted() {
-
-    },
-}
-
-</script> -->
