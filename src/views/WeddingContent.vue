@@ -52,14 +52,12 @@
 
 
         <!-- wedding schedule -->
-        <v-row class="my-10">
-            <v-col cols="12">
+        <v-row class="my-10" justify=center>
+            <v-col cols="12" md=4>
                 <div class="divider_"></div>
                 <div class="divider_"></div>
                 <div class="divider_"></div>
-                <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100"
-                    ref="weddingSchedule">
-                    <!-- Tampilkan data kalau sudah ada -->
+                <div class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100 text-center" ref="weddingSchedule">
                     <template v-if="schedules">
                         <!-- Akad -->
                         <span class="text-h4 text-md-h2 _salina_text_2 mb-5">
@@ -113,8 +111,16 @@
             </v-col>
         </v-row>
 
-        <!-- wedding gift -->
+        <!-- wedding galery -->
+        <v-row justify="center">
+            <v-col cols="12" md="5">
+                <div class="d-flex w-100 bg-secondary" style="min-height: 300px;">
 
+                </div>
+            </v-col>
+        </v-row>
+
+        <!-- wedding gift -->
         <v-row>
             <v-col cols="12" md="12">
                 <div class="divider_"></div>
@@ -156,20 +162,12 @@
                                 RSVP
                             </v-card-title>
 
-                            <v-text-field v-model="form.name" label="Name" variant="outlined" class="text-center mb-2"
-                                :rules="[rules.required]" />
+                            <v-text-field v-model="form.name" label="Name" variant="outlined" class="text-center mb-2":rules="[rules.required]" readonly />
+                            <v-text-field v-model="form.phone" label="Phone Number" variant="outlined" class="text-center mb-2" :rules="[rules.required, rules.numeric]" />
+                            <v-text-field v-model="form.guestCount" label="Number of guests" variant="outlined" class="text-center mb-2" :rules="[rules.required, rules.numeric]" />
 
-                            <v-text-field v-model="form.phone" label="Phone Number" variant="outlined"
-                                class="text-center mb-2" :rules="[rules.required, rules.numeric]" />
-
-                            <v-text-field v-model="form.guestCount" label="Number of guests" variant="outlined"
-                                class="text-center mb-2" :rules="[rules.required, rules.numeric]" />
-
-                            <v-autocomplete v-model="form.attendance" :items="attendance"
-                                label="Confirmation of Attendance" variant="outlined" class="text-center mb-2" />
-
-                            <v-textarea v-model="form.message" label="Doa & kata-katamu" variant="outlined"
-                                class="text-center mb-2" no-resize />
+                            <v-autocomplete v-model="form.attendance" :items="attendance" label="Confirmation of Attendance" variant="outlined" class="text-center mb-2" />
+                            <v-textarea v-model="form.message" label="Doa & kata-katamu" variant="outlined" class="text-center mb-2" no-resize />
                         </v-card-item>
 
                         <v-card-actions>
@@ -198,7 +196,6 @@
                         </div>
                     </div>
                 </v-card>
-
             </v-col>
         </v-row>
 
@@ -268,8 +265,6 @@
     </v-dialog>
 </template>
 
-<style scoped></style>
-
 <script>
 import gsap from 'gsap'
 import axios from 'axios'
@@ -278,6 +273,16 @@ import mempelaiPria from "../assets/images/partial/m-pria.png"
 
 export default {
     name: 'WeddingContent',
+    props: {
+        slug: {
+            type: String,
+            required: true
+        },
+        guest: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
             mempelaiWanita,
@@ -313,41 +318,41 @@ export default {
     },
     methods: {
         async fetchGiftData() {
-            console.log("🔍 Memulai fetchGiftData...");
+            // console.log("🔍 Memulai fetchGiftData...");
 
             try {
                 const url = `${this.baseUrl}/api/gift`;
-                console.log("➡️ Fetching from:", url);
+                // console.log("➡️ Fetching from:", url);
 
                 const res = await axios.get(url);
-                console.log("✅ Response diterima:", res.data);
+                // console.log("✅ Response diterima:", res.data);
 
                 if (res.data?.gifts) {
                     this.gifts = res.data.gifts.map((g) => ({
                         ...g,
                         bank_logo: g.bank_logo ? `${this.baseUrl}${g.bank_logo}` : null,
                     }));
-                    console.log("🎁 Data gifts berhasil diset:", this.gifts);
+                    // console.log("🎁 Data gifts berhasil diset:", this.gifts);
                 } else {
                     console.warn("⚠️ Tidak ada data gifts di response!");
                 }
 
                 this.address = res.data?.address || "";
-                console.log("🏠 Address:", this.address);
+                // console.log("🏠 Address:", this.address);
             } catch (err) {
                 console.error("❌ Gagal memuat data gift:", err);
             }
         },
 
         async fetchSchedules() {
-            console.log("🔍 Memulai fetchSchedules...");
+            // console.log("🔍 Memulai fetchSchedules...");
 
             try {
                 const url = `${this.baseUrl}/api/schedule/`;
-                console.log("➡️ Fetching from:", url);
+                // console.log("➡️ Fetching from:", url);
 
                 const res = await axios.get(url);
-                console.log("✅ Response diterima:", res.data);
+                // console.log("✅ Response diterima:", res.data);
 
                 if (res.data) {
 
@@ -365,7 +370,7 @@ export default {
                         countdown_target: res.data.countdown_target || "",
                     };
 
-                    console.log("📅 Data schedule berhasil diset:", this.schedule);
+                    // console.log("📅 Data schedule berhasil diset:", this.schedule);
                 } else {
                     console.warn("⚠️ Tidak ada data schedule di response!");
                 }
@@ -376,13 +381,13 @@ export default {
         },
 
         async fetchCouples() {
-            console.log("Fecthing Couples dimulai gan: ");
+            // console.log("Fecthing Couples dimulai gan: ");
             try {
                 const url = `${this.baseUrl}/api/couple`;
-                console.log("Fetching from:", url);
+                // console.log("Fetching from:", url);
 
                 const res = await axios.get(url);
-                console.log("Response Di terima: ", res.data);
+                // console.log("Response Di terima: ", res.data);
 
                 if (res.data) {
                     this.couples = {
@@ -408,12 +413,12 @@ export default {
         async sendWish() {
             try {
                 const res = await axios.post(`${this.baseUrl}/api/wishes`, this.form);
-                console.log("✅ Wish Created", res.data);
+                // console.log("✅ Wish Created", res.data);
 
                 if (res.data.qr_image) {
                     this.qrCodeUrl = res.data.qr_image;
                     this.showThankYou = true; // 🔥 tampilkan modal
-                    console.log("Modal aktif?", this.showThankYou);
+                    // console.log("Modal aktif?", this.showThankYou);
                 } else {
                     alert("Terima kasih sudah mengisi undangan kami!");
                 }
@@ -517,17 +522,23 @@ export default {
 
             return `${this.baseUrl}${path}`;
         }
-
     },
 
 
     async mounted() {
-        await this.fetchGiftData();
-        await this.fetchSchedules();
-        await this.fetchCouples();
-        await this.getWishes();
-        this.showContent();
-        this.setShowBird();
+        try {
+            await this.fetchGiftData();
+            await this.fetchSchedules();
+            await this.fetchCouples();
+            await this.getWishes();
+            if (this.guest) { 
+                this.form.name = this.guest
+            }
+            this.showContent();
+            this.setShowBird();
+        } catch (error) {
+            console.error('error', error);
+        }
     },
     beforeUnmount() {
 

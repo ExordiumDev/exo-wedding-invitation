@@ -122,14 +122,12 @@ button:focus-visible {
 }
 
 ._show_content { 
-    z-index: 12 !important;
+    z-index: 2 !important;
 }
 
 .divider_ { 
   min-height: 60px !important;
 }
-
-
 
 .tight-text { 
     line-height: 0.6 !important;
@@ -137,14 +135,18 @@ button:focus-visible {
     padding: 0;
 }
 
+._divider_b {
+  max-width: 40% !important;
+}
+
 ._bride_text { 
-    padding-left: 10% !important;
+    padding-left: 36% !important;
 }
 
 ._and_text { 
-    padding-right: 23% !important;
+    padding-right: 42% !important;
 }
 
 ._groom_text{ 
-    padding-right: 15% !important;
+    padding-right: 38% !important;
 }

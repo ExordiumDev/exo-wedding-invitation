@@ -34,9 +34,9 @@
 
       <!-- 🌐 Halaman konten -->
       <router-view v-slot="{ Component }">
-        <transition name="fade">
-          <component :is="Component" />
-        </transition>
+        <component :is="Component" />
+        <!-- <transition name="fade">
+        </transition> -->
       </router-view>
     </v-main>
   </v-app>
@@ -158,12 +158,11 @@ export default {
     $route(to) {
       if (to.path !== "/guest/home") {
         this.$store.commit("SET_C_ROUTES", true);
-        console.log('path ?',to.path)
+        // console.log('path ?',to.path)
         this.geserTiang();
       } else if (to.path === "/guest/home") {
         this.$store.commit("SET_C_ROUTES", false);
-        
-        console.log('path ?',to.path)
+        // console.log('path ?',to.path)
         this.balikinTiang();
       }
     },

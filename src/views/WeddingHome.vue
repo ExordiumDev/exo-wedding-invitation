@@ -3,18 +3,18 @@
         fluid 
         class="h-100 d-flex justify-center align-center flex-column perspective-wrapper">
         <!-- SECTION HOME TEXT -->
-        <v-row>
+        <v-row class="w-100">
             <v-col cols="12" md="12">
                 <div class="d-flex flex-column align-center ga-3 text-section justify-center h-100" ref="introSection">
                     <span class="text-h6 text-md-h5 _salina_text">Dear</span>
                     <span class="text-h4 text-md-h2 _salina_text text-center">
                         {{ guestName || 'Tamu Undangan' }}
                     </span>
-                    <v-divider class="w-100 my-2" :thickness="4" color="background"></v-divider>
+                    <v-divider class="w-100 my-2 _divider_b" :thickness="4" color="background"></v-divider>
                     <span class="text-h6 text-md-h5 _salina_text">
                         We invite you to the wedding of
                     </span>
-                    <div class="d-flex flex-column w-100 my-5 my-md-10">
+                    <div class="d-flex flex-column w-100 my-5 my-md-10 _bride_groom_text_container">
                         <span class="text-h3 text-md-h1 _salina_text text-background tight-text _bride_text">Pratiwi</span>
                         <span class="text-h3 text-md-h1 _salina_text text-background text-end tight-text _and_text">&</span>
                         <span class="text-h3 text-md-h1 _salina_text text-background text-end tight-text _groom_text">Ahmad</span>
@@ -31,12 +31,16 @@
 <style scoped>
 
 @media (max-width: 768px) { 
+    ._divider_b {
+        max-width: 80% !important;
+    }
+
     ._bride_text { 
         padding-left:13% !important;
     }
 
     ._and_text { 
-        padding-right: 30% !important;
+        padding-right: 24% !important;
     }
 
     ._groom_text{ 
@@ -44,10 +48,6 @@
     }    
 }
 
-.perspective-wrapper { 
-    perspective: 1000px; 
-    overflow: hidden;
-}
 
 @keyframes spin {
     from { transform: rotate(0deg); }
@@ -75,7 +75,13 @@ import mempelaiPria from "../assets/images/partial/m-pria.png"
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default { 
-    data() { 
+    props: {
+        guest: {
+            type: String,
+            default: ''
+        },
+    },
+    data() {
         return { 
             mempelaiWanita,
             mempelaiPria,
@@ -102,7 +108,7 @@ export default {
             // setCRoutes: 'SET_C_ROUTES'
         }),
         animateExit() {
-            this.$router.push({name: 'inv.open'});
+            this.$router.push({name: 'inv.open', query: {guest: this.guest}});
             this.$store.commit('SET_C_ROUTES', true);
         },
         animateAyatEnter() {

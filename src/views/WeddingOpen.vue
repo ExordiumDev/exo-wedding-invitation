@@ -41,6 +41,12 @@ import mempelaiPria from "../assets/images/partial/m-pria.png"
 import gsap from 'gsap'
 
 export default { 
+    props: { 
+        guest: {
+            type: String,
+            default: ''
+        }
+    },
     data() { 
         return {
             mempelaiWanita,
@@ -55,7 +61,7 @@ export default {
     },
     methods: {
         toRouteContent() { 
-            this.$router.push({ name: 'inv.content' })  
+            this.$router.push({ name: 'inv.content',query: {guest: this.guest} });
         },
         showBtn() { 
             this.$nextTick(() => {
