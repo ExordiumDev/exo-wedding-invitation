@@ -44,60 +44,6 @@ const routes = [
                     title: 'Content'
                 }
             },
-            {
-                path: '/schedule',
-                name: 'inv.schedule',
-                component: invSchedule,
-                meta: { 
-                    requiresAuth: false,
-                    title: 'Schedule'
-                }
-            },
-            {
-                path: '/rsvp',
-                name: 'inv.rsvp',
-                component: invRsvp,
-                meta: { 
-                    requiresAuth: false,
-                    title: 'Reservation'
-                }
-            },
-            {
-                path: '/w-gift',
-                name: 'inv.gift',
-                component: invGift,
-                meta: { 
-                    requiresAuth: false,
-                    title: 'Wedding Gift'
-                }
-            },
-            {
-                path: '/dua',
-                name: 'inv.doa',
-                component: invDoa,
-                meta: { 
-                    requiresAuth: false,
-                    title: 'Pray'
-                }
-            },
-            {
-                path: '/pre-outro',
-                name: 'inv.preoutro',
-                component: invPreOutro,
-                meta: { 
-                    requiresAuth: false,
-                    title: 'Pre outro'
-                }
-            },
-            {
-                path: '/outro',
-                name: 'inv.outro',
-                component: invOutro,
-                meta: { 
-                    requiresAuth: false,
-                    title: 'Outro'
-                }
-            },
         ]
     },
 ]
