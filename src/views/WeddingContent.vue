@@ -114,8 +114,8 @@
         <!-- wedding galery -->
         <v-row justify="center">
             <v-col cols="12" md="5">
-                <div class="d-flex w-100 bg-secondary" style="min-height: 300px;">
-
+                <div class="d-flex w-100 glass-card justify-center" style="min-height: 500px;">
+                    <v-card-title class="text-background">Galery</v-card-title>
                 </div>
             </v-col>
         </v-row>

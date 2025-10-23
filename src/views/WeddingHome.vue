@@ -108,6 +108,10 @@ export default {
             // setCRoutes: 'SET_C_ROUTES'
         }),
         animateExit() {
+            const bgm = this.$root.$refs.bgm;
+            if( bgm ) { 
+                bgm.play().catch(err => console.log('error', err));
+            }
             this.$router.push({name: 'inv.open', query: {guest: this.guest}});
             this.$store.commit('SET_C_ROUTES', true);
         },

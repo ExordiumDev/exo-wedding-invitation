@@ -38,6 +38,7 @@
         <!-- <transition name="fade">
         </transition> -->
       </router-view>
+      <audio ref="bgm" :src="musicUrl"></audio>
     </v-main>
   </v-app>
 </template>
@@ -49,6 +50,7 @@ import bungaClover from "../assets/images/partial/Clover.png";
 import burungKiri from "../assets/images/partial/burung-kiri.png";
 import burungKanan from "../assets/images/partial/burung-kanan.png";
 import tiang from "../assets/images/partial/brimingham-big.png";
+import musicUrl from "../assets/sound/matiwi-backsong.mp3"
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import gsap from "gsap";
 
@@ -56,6 +58,7 @@ export default {
   name: "App",
   data() {
     return {
+      musicUrl,
       tiang,
       bungaGede,
       bungaWhiteRose,
@@ -156,22 +159,20 @@ export default {
   },
   watch: {
     $route(to) {
-      if (to.path !== "/guest/home") {
+      const audio = this.$refs.bgm
+      if (to.path !== "/matiwi/home") {
         this.$store.commit("SET_C_ROUTES", true);
-        // console.log('path ?',to.path)
         this.geserTiang();
-      } else if (to.path === "/guest/home") {
+        audio.play().catch(err => {
+          console.log('error ', err)
+        })
+      } else if (to.path === "/matiwi/home") {
+        audio.pause();
+        audio.currentTime = 0
         this.$store.commit("SET_C_ROUTES", false);
-        // console.log('path ?',to.path)
         this.balikinTiang();
       }
     },
-    // cRoutes(newVal) {
-    //   if (newVal) {
-    //     console.log('routes ', newVal)
-    //     this.geserTiang();
-    //   }
-    // },
     showBird(newVal) {
       if (newVal) {
         this.munculBurung();

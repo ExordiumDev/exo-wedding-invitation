@@ -19,7 +19,9 @@ import ScheduleEditor from '../views/admins/ScheduleEditor.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/guest/home', // default redirect ke contoh slug
+    redirect: to => ({
+      path: `${import.meta.env.VITE_APP_HOST}/home`, query: to.query
+    })
   },
 
   // === UNDANGAN (Dynamic Slug) ===
