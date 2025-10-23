@@ -47,66 +47,61 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from "vue";
+import axios from "axios";
 
-// ==== state ====
-const selectedFiles = ref([])
-const previews = ref([])
-const gallery = ref([])
-const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD
+// ==== STATE ====
+const selectedFiles = ref([]);
+const previews = ref([]);
+const gallery = ref([]);
+const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD;
 
-// ==== methods ====
+// ==== METHODS ====
 async function fetchGallery() {
   try {
-    const res = await axios.get(`${baseUrl}/api/gallery`)
-    gallery.value = res.data
+    const res = await axios.get(`${baseUrl}/api/gallery`);
+    gallery.value = res.data;
   } catch (err) {
-    console.error('❌ Gagal memuat gallery:', err)
+    console.error("❌ Gagal memuat gallery:", err);
   }
 }
 
 function handleFileChange(event) {
-  selectedFiles.value = Array.from(event.target.files)
-  previews.value = selectedFiles.value.map(file => URL.createObjectURL(file))
+  selectedFiles.value = Array.from(event.target.files);
+  previews.value = selectedFiles.value.map((file) => URL.createObjectURL(file));
 }
 
 async function uploadImages() {
-  if (selectedFiles.value.length === 0) return
-
-  const formData = new FormData()
-  selectedFiles.value.forEach(file => {
-    formData.append('images', file)
-  })
+  if (!selectedFiles.value.length) return;
+  const formData = new FormData();
+  selectedFiles.value.forEach((file) => formData.append("images", file));
 
   try {
-    const res = await axios.post(`${baseUrl}/api/gallery`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-    console.log('✅ Upload berhasil:', res.data)
-    selectedFiles.value = []
-    previews.value = []
-    await fetchGallery()
+    await axios.post(`${baseUrl}/api/gallery`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    selectedFiles.value = [];
+    previews.value = [];
+    await fetchGallery();
   } catch (err) {
-    console.error('❌ Gagal upload:', err)
+    console.error("❌ Gagal upload:", err);
   }
 }
 
 async function deleteImage(id) {
-  if (!confirm('Yakin ingin menghapus gambar ini?')) return
+  if (!confirm("Yakin ingin menghapus gambar ini?")) return;
 
   try {
-    await axios.delete(`${baseUrl}/api/gallery/${id}`)
-    await fetchGallery()
+    await axios.delete(`${baseUrl}/api/gallery/${id}`);
+    await fetchGallery();
   } catch (err) {
-    console.error('❌ Gagal menghapus gambar:', err)
+    console.error("❌ Gagal menghapus gambar:", err);
   }
 }
 
-// ==== lifecycle ====
-onMounted(fetchGallery)
+// ==== LIFECYCLE ====
+onMounted(fetchGallery);
 </script>
-
 
 <style>
 /* Preview Upload */
