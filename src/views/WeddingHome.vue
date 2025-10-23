@@ -5,17 +5,20 @@
         <!-- SECTION HOME TEXT -->
         <v-row>
             <v-col cols="12" md="12">
-                <div v-if="!showAyat && !showWeddingContent" 
-                     class="d-flex flex-column align-center ga-3 text-section justify-center h-100" 
-                     ref="introSection">
+                <div class="d-flex flex-column align-center ga-3 text-section justify-center h-100" ref="introSection">
                     <span class="text-h6 text-md-h5 _salina_text">Dear</span>
                     <span class="text-h3 text-md-h2 _salina_text">
                         {{ guestName || 'Tamu Undangan' }}
                     </span>
-                    <v-divider :thickness="1" color="background"></v-divider>
+                    <v-divider class="w-100 my-2" :thickness="4" color="background"></v-divider>
                     <span class="text-h6 text-md-h5 _salina_text">
                         We invite you to the wedding of
                     </span>
+                    <div class="d-flex flex-column w-100 my-10">
+                        <span class="text-h1 _salina_text text-background ps-10 tight-text">Pratiwi</span>
+                        <span class="text-h1 _salina_text text-background text-end tight-text pe-10">&</span>
+                        <span class="text-h1 _salina_text text-background text-end tight-text pe-5">Ahmad</span>
+                    </div>
                     <v-btn variant="flat" class="text-none" @click="animateExit">
                         Open the invitation
                     </v-btn>
@@ -27,97 +30,15 @@
 
 <style scoped>
 
+.tight-text { 
+    line-height: 0.6;
+    margin: 0;
+    padding: 0;
+}
+
 .perspective-wrapper { 
     perspective: 1000px; 
     overflow: hidden;
-}
-
-._bunga_bottom_left_clover_0 { 
-    width: 3rem;
-    position: absolute;
-    bottom: 0;
-    left: 0%;
-    z-index: 1;
-    transform: scaleX(-1)
-}
-
-._bunga_bottom_left_clover_50 { 
-    width: 3rem;
-    position: absolute;
-    bottom: 0;
-    left: 16%;
-    z-index: 2;
-}
-
-._bunga_bottom_left { 
-    width: 16rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    transform: scaleX(-1)
-}
-
-._bunga_bottom_left_30 { 
-    width: 16rem;
-    position: absolute;
-    bottom: 0;
-    left: 8%;
-    z-index: 1;
-    transform: scaleX(-1)
-}
-
-._bunga_bottom_left_60 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    left: 17%;
-    z-index: 1;
-}
-
-._bunga_bottom_left_90 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    left: 23%;
-    z-index: 1;
-}
-
-._bunga_bottom_right { 
-    width: 24rem;
-    position: absolute;
-    bottom: 0;
-    right: -3%;
-    z-index: 1;
-}
-
-._bunga_bottom_right_30 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    right: 13%;
-    z-index: 1;
-    transform: scaleX(-1);
-}
-
-._bunga_bottom_right_60 { 
-    width: 12rem;
-    position: absolute;
-    bottom: 0;
-    right: 18%;
-    z-index: 1;
-}
-
-._bunga_bottom_right_90 { 
-    width: 8rem;
-    position: absolute;
-    bottom: 0;
-    right: 25%;
-    z-index: 1;
-}
-
-.bunga-gerak { 
-    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
