@@ -4,12 +4,6 @@ import store from '../stores'
 import invHome from '../views/WeddingHome.vue'
 import invOpen from '../views/WeddingOpen.vue'
 import invContent from '../views/WeddingContent.vue'
-import invSchedule from '../views/WeddingSchedule.vue'
-import invRsvp from '../views/WeddingRsvp.vue'
-import invGift from '../views/WeddingGift.vue'
-import invDoa from '../views/WeddingDua.vue'
-import invPreOutro from '../views/WeddingPreOutro.vue'
-import invOutro from '../views/WeddingOutro.vue'
 
 
 const routes = [
