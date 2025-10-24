@@ -165,26 +165,26 @@ export default {
     const updateAppDimensions = () => {
       document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
       document.documentElement.style.setProperty('--app-width', `${window.innerWidth}px`);
-    };
-    window.addEventListener('resize', updateAppDimensions);
-    updateAppDimensions();
-
-window.dispatchEvent(new Event('resize'));
+      };
+      window.addEventListener('resize', updateAppDimensions);
+      updateAppDimensions();
+      window.dispatchEvent(new Event('resize'));
   },
   watch: {
     $route(to) {
+      const isUndangan = to.path.startsWith("/matiwi/");
       const audio = this.$refs.bgm;
+      if (!isUndangan) return;
+
       if (to.path !== "/matiwi/home") {
         this.$store.commit("SET_C_ROUTES", true);
-        this.geserTiang();
-        audio.play().catch((err) => {
-          console.log("error ", err);
-        });
-      } else if (to.path === "/matiwi/home") {
-        audio.pause();
-        audio.currentTime = 0;
+        this.$nextTick(() => this.geserTiang());
+        audio?.play().catch(err => console.log("error", err));
+      } else {
+        audio?.pause();
+        if (audio) audio.currentTime = 0;
         this.$store.commit("SET_C_ROUTES", false);
-        this.balikinTiang();
+        this.$nextTick(() => this.balikinTiang());
       }
     },
     showBird(newVal) {
