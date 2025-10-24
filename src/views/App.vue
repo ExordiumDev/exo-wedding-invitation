@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-main class="main-wrapper">
+  <v-app class="main-wrapper">
+    <v-main>
       <!-- 🌸 Background hanya muncul di non-admin/editor routes -->
       <template v-if="!isAdminRoute">
         <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
@@ -160,6 +160,16 @@ export default {
     },
     ...mapActions({}),
     ...mapMutations({}),
+  },
+  mounted() { 
+    const updateAppDimensions = () => {
+      document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+      document.documentElement.style.setProperty('--app-width', `${window.innerWidth}px`);
+    };
+    window.addEventListener('resize', updateAppDimensions);
+    updateAppDimensions();
+
+window.dispatchEvent(new Event('resize'));
   },
   watch: {
     $route(to) {
