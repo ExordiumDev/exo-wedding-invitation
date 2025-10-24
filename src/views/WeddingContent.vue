@@ -113,24 +113,30 @@
       </v-col>
     </v-row>
 
-    <!-- Wedding Gallery -->
     <v-row justify="center">
-      <v-col cols="12" md="5">
-        <div
-          class="glass-card d-flex flex-column align-center w-100"
-          style="min-height: 500px"
-        >
-          <v-card-title class="text-background text-h5 mb-4">Gallery</v-card-title>
+      <v-col cols="12" md="8">
+        <div class="glass-card w-100">
+          <v-card-title class="text-background text-h5 mb-4 text-center">
+            Gallery
+          </v-card-title>
 
-          <!-- Foto Gallery -->
-          <v-img
-            v-for="(img, index) in galleries"
-            :key="index"
-            :src="img"
-            class="gallery-image"
-            :aspect-ratio="16 / 9"
-            cover
-          ></v-img>
+          <v-carousel
+            v-model="currentSlide"
+            cycle
+            show-arrows="hover"
+            hide-delimiter-background
+            height="400"
+            interval="4000"
+            class="custom-carousel"
+          >
+            <v-carousel-item
+              v-for="(img, index) in galleries"
+              :key="index"
+              class="d-flex align-center justify-center"
+            >
+              <v-img :src="img" class="gallery-img" cover />
+            </v-carousel-item>
+          </v-carousel>
         </div>
       </v-col>
     </v-row>
@@ -529,14 +535,12 @@ export default {
       try {
         const res = await axios.get(`${this.baseUrl}/api/gallery`);
         this.galleries = res.data.map(
-          (img) =>
-            `${import.meta.env.VITE_API_BASE_URL}/api/gallery/uploads/${img.filename}`
+          (img) => `${this.baseUrl}/api/gallery/uploads/${img.filename}`
         );
       } catch (e) {
         console.error("Gagal Mengambil Data Gallery", e);
       }
     },
-
     formatDate(dateStr) {
       if (!dateStr) return "";
       const date = new Date(dateStr);
@@ -687,19 +691,64 @@ export default {
   padding: 20px;
 }
 
-.gallery-image {
-  width: 100%;
-  height: auto;
-  border-radius: 0 0 20px 20px; /* Rounded di ujung bawah */
-  margin-top: 8px;
-  object-fit: cover;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+.custom-carousel {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.gallery-image:hover {
+/* ✅ Semua gambar seragam ukurannya */
+.gallery-img {
+  object-fit: cover;
+  width: 100%;
+  height: 400px;
+  border-radius: 0;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.gallery-img:hover {
   transform: scale(1.03);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ Kecilkan dan rapikan indicator carousel */
+.custom-carousel .v-carousel__controls {
+  bottom: 12px;
+}
+
+.custom-carousel .v-carousel__controls__item {
+  width: 8px !important;
+  height: 8px !important;
+  margin: 0 3px !important;
+  opacity: 0.6;
+}
+
+.custom-carousel .v-carousel__controls__item--active {
+  background-color: #ff5a91 !important; /* warna pink lembut */
+  opacity: 1;
+}
+
+/* ✅ Kecilkan indicator (dot) carousel */
+.custom-carousel .v-carousel__controls {
+  bottom: 10px;
+}
+
+.custom-carousel .v-carousel__controls__item {
+  width: 8px !important;
+  height: 8px !important;
+  margin: 0 3px !important;
+  opacity: 0.7;
+}
+
+.custom-carousel .v-carousel__controls__item--active {
+  background-color: #1976d2 !important; /* warna biru (bisa ganti) */
+  opacity: 1;
+}
+
+/* Optional: efek transisi halus antar gambar */
+.v-carousel-item {
+  transition: transform 0.8s ease-in-out !important;
 }
 
 /* ========================================

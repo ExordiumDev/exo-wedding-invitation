@@ -34,7 +34,7 @@
       >
         <div class="gallery-card position-relative shadow-sm rounded overflow-hidden">
           <img
-            :src="`${baseUrl}/api/gallery/uploads/gallery/${image.filename}`"
+            :src="`${baseUrl}/api/gallery/uploads/${image.filename}`"
             class="w-100 h-100 object-fit-cover"
           />
           <button @click="deleteImage(image.id)" class="btn btn-sm btn-danger delete-btn">
