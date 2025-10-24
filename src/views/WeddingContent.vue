@@ -123,18 +123,19 @@
           <v-carousel
             v-model="currentSlide"
             cycle
+            touch
             show-arrows="hover"
             hide-delimiter-background
             height="400"
             interval="4000"
-            class="custom-carousel"
+            class=""
           >
             <v-carousel-item
               v-for="(img, index) in galleries"
               :key="index"
-              class="d-flex align-center justify-center"
+              class="justify-center"
             >
-              <v-img :src="img" class="gallery-img" cover />
+              <v-img :src="baseUrl + '/api/gallery/uploads/' + img.filename" class="gallery-img" cover />
             </v-carousel-item>
           </v-carousel>
         </div>
@@ -371,6 +372,7 @@ export default {
       galleries: [],
       qrCodeUrl: null,
       showThankYou: false,
+      currentSlide: 0,
       address: "",
       // baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
       baseUrl: import.meta.env.VITE_API_BASE_URL_PROD || "https://api.haveyoumatiwi.com",
@@ -533,10 +535,13 @@ export default {
 
     async fetchGallery() {
       try {
-        const res = await axios.get(`${this.baseUrl}/api/gallery`);
-        this.galleries = res.data.map(
-          (img) => `${this.baseUrl}/api/gallery/uploads/${img.filename}`
-        );
+        await axios.get(`${this.baseUrl}/api/gallery`).then((v) => {
+          this.galleries = v.data;
+          // console.log('galleries' , this.galleries)
+        });
+        // this.galleries = res.data.map(
+        //   (img) => `${this.baseUrl}/api/gallery/uploads/${img.filename}`
+        // );
       } catch (e) {
         console.error("Gagal Mengambil Data Gallery", e);
       }
@@ -614,18 +619,19 @@ export default {
 
   async mounted() {
     try {
+      await this.fetchCouples();
       await this.fetchGiftData();
       await this.fetchSchedules();
-      await this.fetchCouples();
       await this.getWishes();
       await this.fetchGallery();
       if (this.guest) {
         this.form.name = this.guest;
       }
-      this.showContent();
-      this.setShowBird();
     } catch (error) {
-      console.error("error", error);
+        console.error("error", error);
+    } finally {
+        this.showContent();
+        this.setShowBird();
     }
   },
   beforeUnmount() {},
@@ -725,7 +731,7 @@ export default {
 }
 
 .custom-carousel .v-carousel__controls__item--active {
-  background-color: #ff5a91 !important; /* warna pink lembut */
+  background-color: #ff5a91 !important;
   opacity: 1;
 }
 
@@ -742,7 +748,7 @@ export default {
 }
 
 .custom-carousel .v-carousel__controls__item--active {
-  background-color: #1976d2 !important; /* warna biru (bisa ganti) */
+  background-color: #1976d2 !important;
   opacity: 1;
 }
 
