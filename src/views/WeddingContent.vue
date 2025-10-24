@@ -13,9 +13,9 @@
       <span class="text-h6 text-center _salina_text_2 mb-5"
         >Assalamu'alaikum Warahmatullahi Wabarakaatuh</span
       >
-      <span class="_avenir_text">Dengan memohon ridho dan rahmat Allah SWT</span>
-      <span class="_avenir_text">Kami bermaksud menyelenggarakan</span>
-      <span class="_avenir_text">Resepsi Pernikahan putra-putri kami</span>
+      <span class="_salina_text">Dengan memohon ridho dan rahmat Allah SWT</span>
+      <span class="_salina_text">Kami bermaksud menyelenggarakan</span>
+      <span class="_salina_text">Resepsi Pernikahan putra-putri kami</span>
       <div class="divider_"></div>
       <v-container ref="container_mempelai">
         <v-row justify="center">
@@ -156,24 +156,24 @@
           ref="weddingGiftCard"
         >
           <span class="text-h4 text-md-h4 _salina_text mb-5">Wedding Gift</span>
-          <span class="text-none text-md-h6 _avenir_text"
+          <span class="text-none text-md-h6 _salina_text"
             >Kehadiran dan doa restu dari Bapak/Ibu</span
           >
-          <span class="text-none text-md-h6 _avenir_text"
+          <span class="text-none text-md-h6 _salina_text"
             >Saudara/i adalah anugerah terindah bagi kami,</span
           >
-          <span class="text-none text-md-h6 _avenir_text"
+          <span class="text-none text-md-h6 _salina_text"
             >Jika memberi tanda kasih adalah bentuk cinta</span
           >
-          <span class="text-none text-md-h6 _avenir_text"
+          <span class="text-none text-md-h6 _salina_text"
             >yang ingin disampaikan, dengna segala
           </span>
-          <span class="text-none text-md-h6 _avenir_text"
+          <span class="text-none text-md-h6 _salina_text"
             >kerendahan hati, dapat melalui</span
           >
           <div v-if="gifts.length > 0" class="mt-5 text-center">
             <template v-for="(gift, index) in gifts" :key="gift.id">
-              <strong class="text-none text-md-h6 _avenir_text">
+              <strong class="text-none text-md-h6 _salina_text">
                 {{ index === 0 ? "" : "atau " }}
                 {{ gift.bank_name }} {{ gift.account_number }} a.n {{ gift.account_name }}
               </strong>
@@ -282,10 +282,10 @@
       ref="weddingOutro"
     >
       <span class="text-none text-md-h3 _salina_text mb-5">Thank You</span>
-      <span class="text-none text-md-h6 _avenir_text text-center"
+      <span class="text-none text-md-h6 _salina_text text-center"
         >Merupakan suatu kehormatan dan kebahagiaan kami</span
       >
-      <span class="text-none text-md-h6 _avenir_text"
+      <span class="text-none text-md-h6 _salina_text"
         >Keluarga besar yang mengundang mempelai Wanita :
       </span>
       <ul>
@@ -294,7 +294,7 @@
         <li>Keluarga Besar Latopada</li>
       </ul>
 
-      <span class="text-none text-md-h6 _avenir_text text-center"
+      <span class="text-none text-md-h6 _salina_text text-center"
         >Keluarga besar yang mengundang mempelai Pria :
       </span>
       <ul>
@@ -302,10 +302,10 @@
         <li>Keluarga Besar Elfi Sahra Lubis</li>
       </ul>
 
-      <span class="text-none text-md-h6 _avenir_text"
+      <span class="text-none text-md-h6 _salina_text"
         >apabila Bapak/Ibu/Saudara/i berkenan hadir</span
       >
-      <span class="text-none text-md-h6 _avenir_text"
+      <span class="text-none text-md-h6 _salina_text"
         >untuk memberikan doa restu kepada putra-putri kami</span
       >
 
@@ -772,7 +772,7 @@ export default {
 
   ._salina_text,
   ._salina_text_2,
-  ._avenir_text {
+  ._salina_text {
     text-align: center !important;
     font-size: clamp(1rem, 4vw, 1.4rem);
   }
