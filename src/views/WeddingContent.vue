@@ -116,7 +116,7 @@
     <v-row justify="center">
       <v-col cols="12" md="8">
         <div class="glass-card w-100">
-          <v-card-title class="text-background text-h5 mb-4 text-center">
+          <v-card-title class="text-background _salina_text_2 mb-4 text-center">
             Gallery
           </v-card-title>
 
@@ -135,7 +135,11 @@
               :key="index"
               class="justify-center"
             >
-              <v-img :src="baseUrl + '/api/gallery/uploads/' + img.filename" class="gallery-img" cover />
+              <v-img
+                :src="baseUrl + '/api/gallery/uploads/' + img.filename"
+                class="gallery-img"
+                cover
+              />
             </v-carousel-item>
           </v-carousel>
         </div>
@@ -628,10 +632,10 @@ export default {
         this.form.name = this.guest;
       }
     } catch (error) {
-        console.error("error", error);
+      console.error("error", error);
     } finally {
-        this.showContent();
-        this.setShowBird();
+      this.showContent();
+      this.setShowBird();
     }
   },
   beforeUnmount() {},
@@ -709,14 +713,14 @@ export default {
   object-fit: cover;
   width: 100%;
   height: 400px;
-  border-radius: 0;
+  border-radius: 20px;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
-.gallery-img:hover {
+/* .gallery-img:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-}
+} */
 
 /* ✅ Kecilkan dan rapikan indicator carousel */
 .custom-carousel .v-carousel__controls {
@@ -811,7 +815,7 @@ export default {
     border-radius: 12px;
   }
 
-  .gallery-image {
+  .gallery-img {
     border-radius: 12px;
     margin-top: 4px;
   }
