@@ -15,6 +15,7 @@ import WishesEditor from '../views/admins/WishesEditor.vue'
 import GalleryEditor from '../views/admins/GalleryEditor.vue'
 import WeddingGiftEditor from '../views/admins/WeddingGiftEditor.vue'
 import ScheduleEditor from '../views/admins/ScheduleEditor.vue'
+import MusicEditor from '../views/admins/MusicEditor.vue'
 
 const routes = [
   {
@@ -78,7 +79,8 @@ const routes = [
       { path: 'wishes', component: WishesEditor, meta: { title: 'Wishes Editor' } },
       { path: 'gallery', component: GalleryEditor, meta: { title: 'Gallery Editor' } },
       { path: 'gift', component: WeddingGiftEditor, meta: { title: 'Gift Editor' } },
-      { path: 'schedule', component: ScheduleEditor, meta: { title: 'Schedule Editor' } }
+      { path: 'schedule', component: ScheduleEditor, meta: { title: 'Schedule Editor' } },
+      { path: 'music', component: MusicEditor, meta: { title: 'Music Editor' }}
     ]
   },
 ]

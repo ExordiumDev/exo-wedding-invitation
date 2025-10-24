@@ -26,6 +26,10 @@
           >
         </li>
         <li>
+          <router-link to="/editor/music" active-class="active">Music Editor</router-link>
+        </li>
+
+        <li>
           <router-link to="/editor/gift" active-class="active">Gift Editor</router-link>
         </li>
         <li>
@@ -54,22 +58,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-const isSidebarOpen = ref(false)
+const router = useRouter();
+const isSidebarOpen = ref(false);
 
 function toggleSidebar() {
-  isSidebarOpen.value = !isSidebarOpen.value
+  isSidebarOpen.value = !isSidebarOpen.value;
 }
 
 function logout() {
-  localStorage.removeItem('token')
-  router.push('/admin')
+  localStorage.removeItem("token");
+  router.push("/admin");
 }
 </script>
-
 
 <style scoped>
 .admin-layout {
