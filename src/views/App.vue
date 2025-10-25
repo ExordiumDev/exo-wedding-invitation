@@ -160,15 +160,52 @@ export default {
     },
     ...mapActions({}),
     ...mapMutations({}),
+
+    animasiBunga() {
+      const bungaEls = document.querySelectorAll(`
+      ._bunga_bottom_left,
+      ._bunga_bottom_left_30,
+      ._bunga_bottom_left_60,
+      ._bunga_bottom_left_90,
+      ._bunga_bottom_right,
+      ._bunga_bottom_right_30,
+      ._bunga_bottom_right_60,
+      ._bunga_bottom_right_90,
+      ._bunga_bottom_left_clover_0,
+      ._bunga_bottom_left_clover_50`);
+
+      bungaEls.forEach((el) => {
+        const dur = 5 + Math.random() * 5;
+        const xMove = 10 + Math.random() * 10;
+        const yMove = 5 + Math.random() * 5;
+
+        gsap.to(el, {
+          x: `+=${xMove}`,
+          y: `+=${yMove}`,
+          // rotation: Math.random() * 4 - 2,
+          duration: dur,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          delay: Math.random() * 2,
+        });
+      });
+    },
   },
-  mounted() { 
+  mounted() {
     const updateAppDimensions = () => {
-      document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
-      document.documentElement.style.setProperty('--app-width', `${window.innerWidth}px`);
-      };
-      window.addEventListener('resize', updateAppDimensions);
-      updateAppDimensions();
-      window.dispatchEvent(new Event('resize'));
+      document.documentElement.style.setProperty(
+        "--app-height",
+        `${window.innerHeight}px`
+      );
+      document.documentElement.style.setProperty("--app-width", `${window.innerWidth}px`);
+    };
+    window.addEventListener("resize", updateAppDimensions);
+    updateAppDimensions();
+    window.dispatchEvent(new Event("resize"));
+    this.$nextTick(() => {
+      this.animasiBunga();
+    });
   },
   watch: {
     $route(to) {
@@ -179,7 +216,7 @@ export default {
       if (to.path !== "/matiwi/home") {
         this.$store.commit("SET_C_ROUTES", true);
         this.$nextTick(() => this.geserTiang());
-        audio?.play().catch(err => console.log("error", err));
+        audio?.play().catch((err) => console.log("error", err));
       } else {
         audio?.pause();
         if (audio) audio.currentTime = 0;
@@ -216,17 +253,19 @@ export default {
     opacity: 0.8;
   }
   ._tiang_left {
-    width: 22% !important;
+    width: 32% !important;
+    height: 52% !important;
     position: fixed;
-    bottom: 0 !important;
+    bottom: -80px !important;
     left: 5% !important;
     z-index: -1 !important;
   }
 
   ._tiang_right {
-    width: 22% !important;
+    width: 32% !important;
+    height: 52% !important;
     position: fixed;
-    bottom: 0 !important;
+    bottom: -80px !important;
     right: 5% !important;
     z-index: -1;
   }

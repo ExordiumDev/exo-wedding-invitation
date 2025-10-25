@@ -21,7 +21,11 @@
         <v-row justify="center">
           <v-col cols="12" md="5" class="pa-0">
             <div class="d-flex flex-column text-center align-center text-center">
-              <v-img  :src="brideImageUrl || brideFix" class="_mempelai bride my-10" cover></v-img>
+              <v-img
+                :src="brideImageUrl || brideFix"
+                class="_mempelai bride my-10 zoom-inside-brides"
+                cover
+              ></v-img>
               <div class="d-flex flex-column" style="z-index: 10 !important">
                 <span class="text-h3 _salina_text">{{ couples.bride_name }}</span>
                 <span class="text-none">Putri pertama</span>
@@ -40,7 +44,11 @@
           </v-col>
           <v-col cols="12" md="5" class="pa-0">
             <div class="d-flex flex-column text-center align-center">
-              <v-img  :src="groomImageUrl || groomFix" class="_mempelai bride my-10" cover></v-img>
+              <v-img
+                :src="groomImageUrl || groomFix"
+                class="_mempelai bride my-10 zoom-inside-groom"
+                cover
+              ></v-img>
               <div class="d-flex flex-column" style="z-index: 10 !important">
                 <span class="text-h3 _salina_text">{{ couples.groom_name }}</span>
                 <span class="text-none">Putra Terakhir</span>
@@ -348,7 +356,7 @@
 <script>
 import gsap from "gsap";
 import axios from "axios";
-import ovalFrame from "../assets/images/partial/Pratiwi-Ahmad-09-November-WEB-framephoto.png" 
+import ovalFrame from "../assets/images/partial/Pratiwi-Ahmad-09-November-WEB-framephoto.png";
 import brideFix from "../assets/images/partial/bride_fix.jpg";
 import groomFix from "../assets/images/partial/groom_fix.jpg";
 import mempelaiWanita from "../assets/images/partial/m_wanita.png";
@@ -651,7 +659,7 @@ export default {
   Base Styles (Desktop)
 ======================================== */
 
-.mempelai_wrapper { 
+.mempelai_wrapper {
   position: relative;
   width: 300px;
   height: 400px;
@@ -660,7 +668,7 @@ export default {
   align-items: center;
 }
 
-._mempelai.bride { 
+._mempelai.bride {
   /* position: absolute; */
   top: 0;
   left: 0;
@@ -796,11 +804,29 @@ export default {
   transition: transform 0.8s ease-in-out !important;
 }
 
+/* kalau style-mu scoped, tambahkan :deep() seperti ini */
+:deep(.zoom-inside .v-img__img) {
+  transform: scale(1.65); /* 🔥 ngezoom isi gambarnya */
+  transform-origin: center center; /* titik zoom di tengah */
+  transition: transform 0.3s ease-out;
+}
+
+:deep(.zoom-inside-groom .v-img__img) {
+  transform: scale(1.75) translateY(14%);
+  transform-origin: center center;
+  transition: transform 0.3s ease-out;
+}
+
+:deep(.zoom-inside-brides .v-img__img) {
+  transform: scale(1.8); /* 🔥 ngezoom isi gambarnya */
+  transform-origin: center center; /* titik zoom di tengah */
+  transition: transform 0.3s ease-out;
+}
 /* ========================================
    Responsive (Mobile & Tablet)
 ======================================== */
 @media (max-width: 768px) {
-  ._mempelai.bride { 
+  ._mempelai.bride {
     top: 0;
     left: 0;
     width: 70%;
@@ -902,6 +928,10 @@ export default {
   /* Center semua konten */
   .d-flex.flex-column.align-center.justify-start {
     text-align: center;
+  }
+
+  :deep(.zoom-inside .v-img__img) {
+    transform: scale(1.6);
   }
 }
 
