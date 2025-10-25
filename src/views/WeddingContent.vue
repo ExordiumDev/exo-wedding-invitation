@@ -20,13 +20,12 @@
       <v-container ref="container_mempelai">
         <v-row justify="center">
           <v-col cols="12" md="5" class="pa-0">
-            <div class="d-flex flex-column text-center align-center">
-              <v-img :src="brideImageUrl || mempelaiWanita" class="_mempelai"></v-img>
+            <div class="d-flex flex-column text-center align-center text-center">
+              <v-img  :src="brideImageUrl || brideFix" class="_mempelai bride my-10" cover></v-img>
               <div class="d-flex flex-column" style="z-index: 10 !important">
                 <span class="text-h3 _salina_text">{{ couples.bride_name }}</span>
                 <span class="text-none">Putri pertama</span>
                 <span class="text-none">{{ couples.bride_parents }}</span>
-                <!-- <span class="text-none">& Ibu Nurtina</span> -->
               </div>
             </div>
           </v-col>
@@ -41,7 +40,7 @@
           </v-col>
           <v-col cols="12" md="5" class="pa-0">
             <div class="d-flex flex-column text-center align-center">
-              <v-img :src="groomImageUrl || mempelaiPria" class="_mempelai"></v-img>
+              <v-img  :src="groomImageUrl || groomFix" class="_mempelai bride my-10" cover></v-img>
               <div class="d-flex flex-column" style="z-index: 10 !important">
                 <span class="text-h3 _salina_text">{{ couples.groom_name }}</span>
                 <span class="text-none">Putra Terakhir</span>
@@ -126,7 +125,7 @@
             touch
             show-arrows="hover"
             hide-delimiter-background
-            height="400"
+            height="550"
             interval="4000"
             class=""
           >
@@ -349,6 +348,9 @@
 <script>
 import gsap from "gsap";
 import axios from "axios";
+import ovalFrame from "../assets/images/partial/Pratiwi-Ahmad-09-November-WEB-framephoto.png" 
+import brideFix from "../assets/images/partial/bride_fix.jpg";
+import groomFix from "../assets/images/partial/groom_fix.jpg";
 import mempelaiWanita from "../assets/images/partial/m_wanita.png";
 import mempelaiPria from "../assets/images/partial/m-pria.png";
 
@@ -366,6 +368,9 @@ export default {
   },
   data() {
     return {
+      ovalFrame,
+      groomFix,
+      brideFix,
       mempelaiWanita,
       mempelaiPria,
       showBurung: false,
@@ -609,7 +614,6 @@ export default {
 
     groomImageUrl() {
       if (!this.couples.groom_photo) return null;
-
       let path = this.couples.groom_photo.trim();
 
       if (!path.startsWith("/uploads/")) {
@@ -646,6 +650,37 @@ export default {
 /* ========================================
   Base Styles (Desktop)
 ======================================== */
+
+.mempelai_wrapper { 
+  position: relative;
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+._mempelai.bride { 
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+}
+
+._mempelai.bride {
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+._mempelai.frame {
+  z-index: 2;
+  pointer-events: none;
+}
+
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -712,7 +747,7 @@ export default {
 .gallery-img {
   object-fit: cover;
   width: 100%;
-  height: 400px;
+  height: 550px;
   border-radius: 20px;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
@@ -765,6 +800,20 @@ export default {
    Responsive (Mobile & Tablet)
 ======================================== */
 @media (max-width: 768px) {
+  ._mempelai.bride { 
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 70%;
+  }
+
+  ._mempelai.bride {
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  }
   ._mempelai {
     max-width: 70%;
     height: auto;

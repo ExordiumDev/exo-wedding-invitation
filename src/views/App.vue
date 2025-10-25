@@ -201,7 +201,7 @@ export default {
   ._burung_left {
     width: 20% !important;
     position: fixed;
-    bottom: 0 !important;
+    bottom: 20% !important;
     left: 8% !important;
     z-index: -1 !important;
     opacity: 0.8;
@@ -210,7 +210,7 @@ export default {
   ._burung_right {
     width: 20% !important;
     position: fixed;
-    bottom: 0;
+    bottom: 20%;
     right: 9% !important;
     z-index: -1 !important;
     opacity: 0.8;

@@ -40,6 +40,7 @@ a {
     box-sizing: border-box;
 }
 
+
 html, body {
   font-family: 'Salina-trial-book', sans-serif !important;
   overflow-x: hidden;
@@ -144,4 +145,13 @@ button:focus-visible {
 
 ._groom_text{ 
     padding-right: 38% !important;
+}
+
+@media (max-width: 768px) { 
+  body {
+    background: url('./assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-mobile-bg-nobunga.png') no-repeat center center / 100% 100% !important;
+    background-size: cover;
+    background-attachment: scroll;
+    background-size: cover;
+  }
 }
