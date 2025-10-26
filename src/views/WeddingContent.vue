@@ -78,7 +78,7 @@
             </span>
 
             <span class="text-none text-md-h5 _salina_text_2">Akad Nikah</span>
-            <span class="text-none text-md-h6 _salina_text">
+            <span class="text-none text-md-h6 _salina_text font-weight-bold">
               Pukul {{ schedules.akad_time_start }} - {{ schedules.akad_time_end }}
             </span>
 
@@ -156,44 +156,34 @@
     </v-row>
 
     <!-- wedding gift -->
-    <v-row>
-      <v-col cols="12" md="12">
-        <div class="divider_"></div>
-        <div class="divider_"></div>
-        <div
-          class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100"
-          ref="weddingGiftCard"
-        >
-          <span class="text-h4 text-md-h4 _salina_text mb-5">Wedding Gift</span>
-          <span class="text-none text-md-h6 _salina_text"
-            >Kehadiran dan doa restu dari Bapak/Ibu</span
-          >
-          <span class="text-none text-md-h6 _salina_text"
-            >Saudara/i adalah anugerah terindah bagi kami,</span
-          >
-          <span class="text-none text-md-h6 _salina_text"
-            >Jika memberi tanda kasih adalah bentuk cinta</span
-          >
-          <span class="text-none text-md-h6 _salina_text"
-            >yang ingin disampaikan, dengna segala
-          </span>
-          <span class="text-none text-md-h6 _salina_text"
-            >kerendahan hati, dapat melalui</span
-          >
+    <v-row justify="center" class="h-100 my-10" ref="weddingGiftCard">
+      <v-col cols="12" md="6" class="d-flex justify-center">
+        <div class="glass-card pa-8 text-center w-100">
+          <!-- 👇 Bikin baris sendiri -->
+          <div class="mb-4">
+            <span class="text-h4 text-md-h4 _salina_text mb-2 d-block text-white"
+              >Wedding Gift</span
+            >
+          </div>
+
+          <!-- 👇 Teks isi, baris baru -->
+          <div class="text-none text-md-h6 _salina_text text-white">
+            Kehadiran dan doa restu dari Bapak/Ibu<br />
+            Saudara/i adalah anugerah terindah bagi kami,<br />
+            Jika memberi tanda kasih adalah bentuk cinta<br />
+            yang ingin disampaikan, dengan segala kerendahan hati,<br />
+            dapat melalui
+          </div>
+
           <div v-if="gifts.length > 0" class="mt-5 text-center">
             <template v-for="(gift, index) in gifts" :key="gift.id">
-              <strong class="text-none text-md-h6 _salina_text">
+              <strong class="text-none text-md-h6 _salina_text d-block text-white">
                 {{ index === 0 ? "" : "atau " }}
                 {{ gift.bank_name }} {{ gift.account_number }} a.n {{ gift.account_name }}
               </strong>
-              <br v-if="index < gifts.length - 1" />
             </template>
           </div>
         </div>
-        <div class="divider_"></div>
-        <div class="divider_"></div>
-        <div class="divider_"></div>
-        <div class="divider_"></div>
       </v-col>
     </v-row>
 
@@ -825,9 +815,6 @@ export default {
   transition: transform 0.3s ease-out;
 }
 
-.bold-text {
-  font-weight: 800 !important;
-}
 /* ========================================
    Responsive (Mobile & Tablet)
 ======================================== */
