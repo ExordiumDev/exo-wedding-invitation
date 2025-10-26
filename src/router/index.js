@@ -91,13 +91,32 @@ const router = createRouter({
 })
 
 // === Middleware (Auth Check) ===
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const token = localStorage.getItem('token')
+
   if (to.meta.requiresAuth && !token) {
     return next('/admin')
   }
+
+  if (to.name === 'inv.content') {
+    try {
+      await Promise.all([
+        store.dispatch('data/GET_GALLERY_DATA'),
+        store.dispatch('data/GET_WISHES_DATA'),
+        store.dispatch('data/GET_COUPLES_DATA'),
+        store.dispatch('data/GET_SCHEDULE_DATA'),
+        store.dispatch('data/GET_GIFT_DATA'),
+      ])
+      return next()
+    } catch (error) {
+      console.error('Error fetching data before entering /content route:', error)
+      return next(false)
+    }
+  }
+
   next()
 })
+
 
 // === Dynamic Title ===
 router.afterEach((to) => {

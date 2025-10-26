@@ -26,6 +26,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Avenir-LTPro';
+  src: url('./assets/fonts/AvenirLTProRoman.otf') format('opentype');
+  /* font-weight: normal;  */
+  font-style: normal;
+}
+
 :root {
     line-height: 1.5;
     font-weight: 400;
@@ -109,6 +116,10 @@ button:focus-visible {
 
 ._avenir_text { 
     font-family: 'Avenir';
+}
+
+._avenir_text_roman { 
+    font-family: 'Avenir-LTPro';
 }
 
 ._salina_text_2 { 

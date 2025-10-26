@@ -1,11 +1,10 @@
 import {$axios} from './api.js';
-import { AUTH_SIGNUP_VERIFY, AUTH_SIGNUP, AUTH_SIGNIN, AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,SOCKET_CLIENT,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS } from './actions/reqApi.js';
+import { AUTH_SIGNUP_VERIFY, AUTH_SIGNUP, AUTH_SIGNIN, AUTH_SET_PASSWORD, SET_USER_IF_UNAUTHENTICATED, EX_CODE, GOOGLE_LOGOUT, CHECK_AUTH, SET_USER, AUTH_GET_GOOGLE_TOKEN, AUTH_TOKEN,AUTH_USER,AUTH_GET_USER,AUTH_PROFILE,AUTH_STATUS } from './actions/reqApi.js';
 
 const state = {
     SET_USER: null,
     AUTH_TOKEN:{},
     AUTH_USER:null,
-    SOCKET_CLIENT:{},
     AUTH_PROFILE:{},
     AUTH_GET_GOOGLE_TOKEN: null,
     isAuthenticating: false,
@@ -14,7 +13,6 @@ const state = {
 const getters = {
     [AUTH_TOKEN] : state => state.AUTH_TOKEN,
     [AUTH_USER] : state => state.AUTH_USER,
-    [SOCKET_CLIENT] : state => state.SOCKET_CLIENT,
     [AUTH_PROFILE] : state => state.AUTH_PROFILE,
     [AUTH_STATUS] : state => state.AUTH_STATUS,
     [AUTH_GET_GOOGLE_TOKEN] : state => state.AUTH_GET_GOOGLE_TOKEN,
@@ -30,9 +28,6 @@ const mutations = {
     },
     [AUTH_USER](state, resp){
         state.AUTH_USER = resp;
-    },
-    [SOCKET_CLIENT](state, resp){
-        state.SOCKET_CLIENT = resp;
     },
     [AUTH_STATUS](state, resp){
         state.AUTH_STATUS = resp;

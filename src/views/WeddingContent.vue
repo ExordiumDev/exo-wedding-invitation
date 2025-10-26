@@ -27,9 +27,9 @@
                 cover
               ></v-img>
               <div class="d-flex flex-column" style="z-index: 10 !important">
-                <span class="text-h3 _salina_text">{{ couples.bride_name }}</span>
+                <span class="text-h3 _salina_text">{{ getGET_COUPLES_DATA.bride_name }}</span>
                 <span class="text-none">Putri pertama</span>
-                <span class="text-none">{{ couples.bride_parents }}</span>
+                <span class="text-none">{{ getGET_COUPLES_DATA.bride_parents }}</span>
               </div>
             </div>
           </v-col>
@@ -50,9 +50,9 @@
                 cover
               ></v-img>
               <div class="d-flex flex-column" style="z-index: 10 !important">
-                <span class="text-h3 _salina_text">{{ couples.groom_name }}</span>
+                <span class="text-h3 _salina_text">{{ getGET_COUPLES_DATA.groom_name }}</span>
                 <span class="text-none">Putra Terakhir</span>
-                <span class="text-none">{{ couples.groom_parents }}</span>
+                <span class="text-none">{{ getGET_COUPLES_DATA.groom_parents }}</span>
                 <!-- <span class="text-none">& Ibu Elfi Sahra Lubis</span> -->
               </div>
             </div>
@@ -71,23 +71,23 @@
           class="d-flex flex-column align-center justify-start h-100 ga-1 text-background my-10 w-100 text-center"
           ref="weddingSchedule"
         >
-          <template v-if="schedules">
+          <template v-if="getGET_SCHEDULE_DATA">
             <!-- Akad -->
             <span class="text-h4 text-md-h2 _salina_text_2 mb-5">
-              {{ formatDate(schedules.akad_date) }}
+              {{ formatDate(getGET_SCHEDULE_DATA.akad_date) }}
             </span>
 
             <strong class="text-none text-md-h5 _salina_text_bold">Akad Nikah</strong>
             <span class="text-none text-md-h6 _salina_text_bold font-weight-bold">
-              Pukul {{ schedules.akad_time_start }} - {{ schedules.akad_time_end }}
+              Pukul {{ getGET_SCHEDULE_DATA.akad_time_start }} - {{ getGET_SCHEDULE_DATA.akad_time_end }}
             </span>
 
             <span class="text-none text-md-h6 _salina_text_bold">
-              {{ schedules.akad_desc }}
+              {{ getGET_SCHEDULE_DATA.akad_desc }}
             </span>
 
             <span class="text-none text-md-h6 _salina_text_bold">
-              {{ schedules.location }}
+              {{ getGET_SCHEDULE_DATA.location }}
             </span>
 
             <span class="text-none text-md-h6 _salina_text_bold">
@@ -98,15 +98,15 @@
             <span class="text-none text-md-h5 _salina_text_bold"> Resepsi Pernikahan </span>
 
             <span class="text-none text-md-h6 _salina_text_bold">
-              Pukul {{ schedules.resepsi_time_start }} - {{ schedules.resepsi_time_end }}
+              Pukul {{ getGET_SCHEDULE_DATA.resepsi_time_start }} - {{ getGET_SCHEDULE_DATA.resepsi_time_end }}
             </span>
 
             <span class="text-none text-md-h6 _salina_text_bold">
-              {{ schedules.resepsi_desc }}
+              {{ getGET_SCHEDULE_DATA.resepsi_desc }}
             </span>
 
             <span class="text-none text-md-h6 _salina_text_bold">
-              {{ schedules.location }}
+              {{ getGET_SCHEDULE_DATA.location }}
             </span>
           </template>
 
@@ -140,7 +140,7 @@
             class="custom-carousel"
           >
             <v-carousel-item
-              v-for="(img, index) in galleries"
+              v-for="(img, index) in getGET_GALLERY_DATA"
               :key="index"
               class="justify-center"
             >
@@ -161,26 +161,30 @@
         <div class="glass-card pa-8 text-center w-100">
           <!-- 👇 Bikin baris sendiri -->
           <div class="mb-4">
-            <span class="text-h4 text-md-h4 _salina_text mb-2 d-block text-white"
+            <span class="text-h4 text-md-h4 _avenir_text_roman mb-2 d-block"
               >Wedding Gift</span
             >
           </div>
 
           <!-- 👇 Teks isi, baris baru -->
-          <div class="text-none text-md-h6 _salina_text text-white">
+          <div class="text-none text-md-h6 _avenir_text_roman">
             Kehadiran dan doa restu dari Bapak/Ibu<br />
             Saudara/i adalah anugerah terindah bagi kami,<br />
             Jika memberi tanda kasih adalah bentuk cinta<br />
             yang ingin disampaikan, dengan segala kerendahan hati,<br />
-            dapat melalui
+            dapat melalui : 
           </div>
 
-          <div v-if="gifts.length > 0" class="mt-5 text-center">
-            <template v-for="(gift, index) in gifts" :key="gift.id">
-              <strong class="text-none text-md-h6 _salina_text d-block text-white">
+          <div v-if="getGET_GIFT_DATA.gifts.length > 0" class="mt-5 text-center">
+            <template v-for="(group, bank) in groupedGifts" :key="bank">
+              <span class="font-weight-bold d-block _avenir_text_roman">Rekening {{ bank }}</span>
+              <div v-for="gift in group" :key="gift.id" class="_avenir_text_roman">
+                - {{ gift.account_number }} a/n {{ gift.account_name }}
+              </div>
+              <!-- <strong class="text-none text-md-h6 _avenir_text_roman d-block">
                 {{ index === 0 ? "" : "atau " }}
                 {{ gift.bank_name }} {{ gift.account_number }} a.n {{ gift.account_name }}
-              </strong>
+              </strong> -->
             </template>
           </div>
         </div>
@@ -257,7 +261,7 @@
 
           <div class="chat-container">
             <div
-              v-for="(wish, index) in wishes"
+              v-for="(wish, index) in getGET_WISHES_DATA"
               :key="index"
               class="chat-bubble"
               :class="index % 2 === 0 ? 'from-left' : 'from-right'"
@@ -354,6 +358,9 @@ import groomFix from "../assets/images/partial/groom_fix.jpg";
 import mempelaiWanita from "../assets/images/partial/m_wanita.png";
 import mempelaiPria from "../assets/images/partial/m-pria.png";
 
+import { GET_GIFT_DATA, GET_SCHEDULE_DATA, GET_COUPLES_DATA, GET_WISHES_DATA, GET_GALLERY_DATA } from "../stores/actions/reqApi.js";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "WeddingContent",
   props: {
@@ -374,11 +381,7 @@ export default {
       mempelaiWanita,
       mempelaiPria,
       showBurung: false,
-      gifts: [],
-      schedules: [],
-      couples: [],
-      wishes: [],
-      galleries: [],
+
       qrCodeUrl: null,
       showThankYou: false,
       currentSlide: 0,
@@ -405,97 +408,13 @@ export default {
     };
   },
   methods: {
-    async fetchGiftData() {
-      // console.log("🔍 Memulai fetchGiftData...");
-
-      try {
-        const url = `${this.baseUrl}/api/gift`;
-        // console.log("➡️ Fetching from:", url);
-
-        const res = await axios.get(url);
-        // console.log("✅ Response diterima:", res.data);
-
-        if (res.data?.gifts) {
-          this.gifts = res.data.gifts.map((g) => ({
-            ...g,
-            bank_logo: g.bank_logo ? `${this.baseUrl}${g.bank_logo}` : null,
-          }));
-          // console.log("🎁 Data gifts berhasil diset:", this.gifts);
-        } else {
-          //   console.warn("⚠️ Tidak ada data gifts di response!");
-        }
-
-        this.address = res.data?.address || "";
-        // console.log("🏠 Address:", this.address);
-      } catch (err) {
-        console.error("❌ Gagal memuat data gift:", err);
-      }
-    },
-
-    async fetchSchedules() {
-      // console.log("🔍 Memulai fetchSchedules...");
-
-      try {
-        const url = `${this.baseUrl}/api/schedule/`;
-        // console.log("➡️ Fetching from:", url);
-
-        const res = await axios.get(url);
-        // console.log("✅ Response diterima:", res.data);
-
-        if (res.data) {
-          this.schedules = {
-            akad_date: res.data.akad_date || "",
-            akad_time_start: res.data.akad_time_start || "",
-            akad_time_end: res.data.akad_time_end || "",
-            akad_desc: res.data.akad_desc || "",
-            resepsi_date: res.data.resepsi_date || "",
-            resepsi_time_start: res.data.resepsi_time_start || "",
-            resepsi_time_end: res.data.resepsi_time_end || "",
-            resepsi_desc: res.data.resepsi_desc || "",
-            location: res.data.location || "",
-            map_link: res.data.map_link || "",
-            countdown_target: res.data.countdown_target || "",
-          };
-
-          // console.log("📅 Data schedule berhasil diset:", this.schedule);
-        } else {
-          console.warn("⚠️ Tidak ada data schedule di response!");
-        }
-      } catch (err) {
-        console.error("❌ Gagal memuat data schedule:", err);
-        this.schedules = {}; // kosongkan data biar gak error
-      }
-    },
-
-    async fetchCouples() {
-      // console.log("Fecthing Couples dimulai gan: ");
-      try {
-        const url = `${this.baseUrl}/api/couple`;
-        // console.log("Fetching from:", url);
-
-        const res = await axios.get(url);
-        // console.log("Response Di terima: ", res.data);
-
-        if (res.data) {
-          this.couples = {
-            groom_name: res.data.groom_name || "",
-            groom_parents: res.data.groom_parents || "",
-            groom_instagram: res.data.groom_instagram || "",
-            bride_name: res.data.bride_name || "",
-            bride_parents: res.data.bride_parents || "",
-            bride_instagram: res.data.bride_instagram || "",
-            groom_photo: res.data.groom_photo || "",
-            bride_photo: res.data.bride_photo || "",
-          };
-        } else {
-          console.warn("Tidak ada Couple Diterima");
-        }
-      } catch (err) {
-        console.error("❌ Gagal memuat data schedule:", err);
-        this.couples = {}; // kosongkan data biar gak error
-      }
-    },
-
+    ...mapActions({
+      actGET_GIFT_DATA: `data/${GET_GIFT_DATA}`,
+      actGET_SCHEDULE_DATA: `data/${GET_SCHEDULE_DATA}`,
+      actGET_COUPLES_DATA: `data/${GET_COUPLES_DATA}`,
+      actGET_WISHES_DATA: `data/${GET_WISHES_DATA}`,
+      actGET_GALLERY_DATA: `data/${GET_GALLERY_DATA}`,
+    }),
     async sendWish() {
       try {
         const res = await axios.post(`${this.baseUrl}/api/wishes`, this.form);
@@ -518,7 +437,7 @@ export default {
           message: "",
         };
 
-        await this.getWishes();
+        await this.actGET_WISHES_DATA();
       } catch (e) {
         console.error("❌ Error Posting Wishes:", e);
         alert("Gagal Mengirim Wishes.");
@@ -531,29 +450,6 @@ export default {
       link.href = this.qrCodeUrl;
       link.download = "qrcode.png";
       link.click();
-    },
-
-    async getWishes() {
-      try {
-        const res = await axios.get(`${this.baseUrl}/api/wishes`);
-        this.wishes = res.data;
-      } catch (e) {
-        console.error("Gagal Mengambil Data", e);
-      }
-    },
-
-    async fetchGallery() {
-      try {
-        await axios.get(`${this.baseUrl}/api/gallery`).then((v) => {
-          this.galleries = v.data;
-          // console.log('galleries' , this.galleries)
-        });
-        // this.galleries = res.data.map(
-        //   (img) => `${this.baseUrl}/api/gallery/uploads/${img.filename}`
-        // );
-      } catch (e) {
-        console.error("Gagal Mengambil Data Gallery", e);
-      }
     },
     formatDate(dateStr) {
       if (!dateStr) return "";
@@ -597,10 +493,25 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      getGET_SCHEDULE_DATA: `data/${GET_SCHEDULE_DATA}`,
+      getGET_COUPLES_DATA: `data/${GET_COUPLES_DATA}`,
+      getGET_WISHES_DATA: `data/${GET_WISHES_DATA}`,
+      getGET_GALLERY_DATA: `data/${GET_GALLERY_DATA}`,
+      getGET_GIFT_DATA: `data/${GET_GIFT_DATA}`,
+    }),
+    groupedGifts() { 
+      if (!this.getGET_GIFT_DATA?.gifts) return {};
+      return this.getGET_GIFT_DATA.gifts.reduce((acc, gift) => {
+        if (!acc[gift.bank_name]) acc[gift.bank_name] = [];
+        acc[gift.bank_name].push(gift);
+        return acc;
+      }, {});
+    },
     brideImageUrl() {
-      if (!this.couples.bride_photo) return null;
+      if (!this.getGET_COUPLES_DATA.bride_photo) return null;
 
-      let path = this.couples.bride_photo.trim();
+      let path = this.getGET_COUPLES_DATA.bride_photo.trim();
 
       // kalau path belum diawali "/uploads/", tambahin prefix
       if (!path.startsWith("/uploads/")) {
@@ -613,8 +524,8 @@ export default {
     },
 
     groomImageUrl() {
-      if (!this.couples.groom_photo) return null;
-      let path = this.couples.groom_photo.trim();
+      if (!this.getGET_COUPLES_DATA.groom_photo) return null;
+      let path = this.getGET_COUPLES_DATA.groom_photo.trim();
 
       if (!path.startsWith("/uploads/")) {
         if (path.includes("couple/")) path = `/uploads/${path}`;
@@ -626,23 +537,18 @@ export default {
   },
 
   async mounted() {
-    try {
-      await this.fetchCouples();
-      await this.fetchGiftData();
-      await this.fetchSchedules();
-      await this.getWishes();
-      await this.fetchGallery();
-      if (this.guest) {
+    if (this.guest) {
         this.form.name = this.guest;
       }
-    } catch (error) {
-      console.error("error", error);
-    } finally {
-      this.showContent();
-      this.setShowBird();
-    }
+    this.showContent();
+    this.setShowBird();
+    console.log('couple ', this.getGET_GIFT_DATA)
   },
-  beforeUnmount() {},
+  beforeUnmount() {
+
+  },
+  watch: {
+  }
 };
 </script>
 

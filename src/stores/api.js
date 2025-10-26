@@ -11,55 +11,55 @@ const $axios = axios.create({
     }
 });
 
-let akses = undefined;
-$axios.interceptors.request.use(async (config) => {
-    // Authorization Header
-    if (akses?.access_token) {
-        config.headers['Authorization'] = `${akses.token_type} ${akses.access_token}`;
-    }
+// let akses = undefined;
+// $axios.interceptors.request.use(async (config) => {
+//     // Authorization Header
+//     if (akses?.access_token) {
+//         config.headers['Authorization'] = `${akses.token_type} ${akses.access_token}`;
+//     }
 
-    // CSRF Header
-    const csrfToken = getCookie("XSRF-TOKEN");
-    if (csrfToken) {
-        config.headers["X-CSRF-TOKEN"] = csrfToken;
-    } else {
-        console.log("XSRF-TOKEN not found in cookies");
-    }
+//     // CSRF Header
+//     const csrfToken = getCookie("XSRF-TOKEN");
+//     if (csrfToken) {
+//         config.headers["X-CSRF-TOKEN"] = csrfToken;
+//     } else {
+//         console.log("XSRF-TOKEN not found in cookies");
+//     }
 
-    return config;
-}, (error) => Promise.reject(error));
+//     return config;
+// }, (error) => Promise.reject(error));
 
-$axios.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const originalRequest = error.config;
+// $axios.interceptors.response.use(
+//     (response) => response,
+//     async (error) => {
+//         const originalRequest = error.config;
 
-        if(
-            originalRequest.url.includes('/auth/refresh') ||
-            originalRequest.url.includes('/auth/signin')
-        ) { return Promise.reject(error) }
+//         if(
+//             originalRequest.url.includes('/auth/refresh') ||
+//             originalRequest.url.includes('/auth/signin')
+//         ) { return Promise.reject(error) }
 
-        if (error.response && error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+//         if (error.response && error.response.status === 401 && !originalRequest._retry) {
+//             originalRequest._retry = true;
 
-            try {
-                await $axios.post(import.meta.env.VITE_APP_API_URL+'/auth/refresh', {}, { withCredentials: true });
-                // const newData = res.data;
-                await store.dispatch('auth/AUTH_GET_USER');
-                return $axios(originalRequest);
-            } catch (err) {
-                if ( err?.response?.data?.detail === "Refresh token not found" ) {
-                    console.error("You have logged in from another device:", err);
-                    await store.dispatch('auth/GOOGLE_LOGOUT')
-                    router.push('/login')
-                }
-                console.log('err', err)
-                return Promise.reject(err)
-            }
-        }
-        return Promise.reject(error);
-    }
-);
+//             try {
+//                 await $axios.post(import.meta.env.VITE_APP_API_URL+'/auth/refresh', {}, { withCredentials: true });
+//                 // const newData = res.data;
+//                 await store.dispatch('auth/AUTH_GET_USER');
+//                 return $axios(originalRequest);
+//             } catch (err) {
+//                 if ( err?.response?.data?.detail === "Refresh token not found" ) {
+//                     console.error("You have logged in from another device:", err);
+//                     await store.dispatch('auth/GOOGLE_LOGOUT')
+//                     router.push('/login')
+//                 }
+//                 console.log('err', err)
+//                 return Promise.reject(err)
+//             }
+//         }
+//         return Promise.reject(error);
+//     }
+// );
 
 export const setCookie = (name, value, days)=>{
     let expires = "";
