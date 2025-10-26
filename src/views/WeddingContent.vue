@@ -542,7 +542,7 @@ export default {
       }
     this.showContent();
     this.setShowBird();
-    console.log('couple ', this.getGET_GIFT_DATA)
+    // console.log('couple ', this.getGET_GIFT_DATA)
   },
   beforeUnmount() {
 
