@@ -123,7 +123,9 @@
     <v-row justify="center">
       <v-col cols="12" md="8">
         <div class="glass-card w-100">
-          <v-card-title class="text-background _salina_text_2 mb-4 text-center">
+          <v-card-title
+            class="text-background _salina_text_2 mb-2 text-center text-h6 text-md-h4"
+          >
             Gallery
           </v-card-title>
 
@@ -131,11 +133,11 @@
             v-model="currentSlide"
             cycle
             touch
-            show-arrows="hover"
+            :show-arrows="false"
             hide-delimiter-background
             height="550"
             interval="4000"
-            class=""
+            class="custom-carousel"
           >
             <v-carousel-item
               v-for="(img, index) in galleries"
@@ -812,15 +814,19 @@ export default {
 }
 
 :deep(.zoom-inside-groom .v-img__img) {
-  transform: scale(1.75) translateY(14%);
+  transform: scale(1.55) translateY(14%) translateX(3%);
   transform-origin: center center;
   transition: transform 0.3s ease-out;
 }
 
 :deep(.zoom-inside-brides .v-img__img) {
-  transform: scale(1.8); /* 🔥 ngezoom isi gambarnya */
+  transform: scale(1.55); /* 🔥 ngezoom isi gambarnya */
   transform-origin: center center; /* titik zoom di tengah */
   transition: transform 0.3s ease-out;
+}
+
+.bold-text {
+  font-weight: 800 !important;
 }
 /* ========================================
    Responsive (Mobile & Tablet)
@@ -930,8 +936,16 @@ export default {
     text-align: center;
   }
 
-  :deep(.zoom-inside .v-img__img) {
+  :deep(.zoom-inside-groom .v-img__img) {
+    transform: scale(1.55) translateY(14%) translateX(3%);
+    transform-origin: center center; /* titik zoom di tengah */
+    transition: transform 0.3s ease-out;
+  }
+
+  :deep(.zoom-inside-brides .v-img__img) {
     transform: scale(1.6);
+    transform-origin: center center; /* titik zoom di tengah */
+    transition: transform 0.3s ease-out;
   }
 }
 
