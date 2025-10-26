@@ -77,35 +77,35 @@
               {{ formatDate(schedules.akad_date) }}
             </span>
 
-            <span class="text-none text-md-h5 _salina_text_2">Akad Nikah</span>
-            <span class="text-none text-md-h6 _salina_text font-weight-bold">
+            <strong class="text-none text-md-h5 _salina_text_bold">Akad Nikah</strong>
+            <span class="text-none text-md-h6 _salina_text_bold font-weight-bold">
               Pukul {{ schedules.akad_time_start }} - {{ schedules.akad_time_end }}
             </span>
 
-            <span class="text-none text-md-h6 _salina_text">
+            <span class="text-none text-md-h6 _salina_text_bold">
               {{ schedules.akad_desc }}
             </span>
 
-            <span class="text-none text-md-h6 _salina_text">
+            <span class="text-none text-md-h6 _salina_text_bold">
               {{ schedules.location }}
             </span>
 
-            <span class="text-none text-md-h6 _salina_text">
+            <span class="text-none text-md-h6 _salina_text_bold">
               -----------------------------------------------
             </span>
 
             <!-- Resepsi -->
-            <span class="text-none text-md-h5 _salina_text_2"> Resepsi Pernikahan </span>
+            <span class="text-none text-md-h5 _salina_text_bold"> Resepsi Pernikahan </span>
 
-            <span class="text-none text-md-h6 _salina_text">
+            <span class="text-none text-md-h6 _salina_text_bold">
               Pukul {{ schedules.resepsi_time_start }} - {{ schedules.resepsi_time_end }}
             </span>
 
-            <span class="text-none text-md-h6 _salina_text">
+            <span class="text-none text-md-h6 _salina_text_bold">
               {{ schedules.resepsi_desc }}
             </span>
 
-            <span class="text-none text-md-h6 _salina_text">
+            <span class="text-none text-md-h6 _salina_text_bold">
               {{ schedules.location }}
             </span>
           </template>

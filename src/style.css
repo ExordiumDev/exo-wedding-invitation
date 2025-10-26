@@ -1,4 +1,11 @@
 @font-face {
+  font-family: 'Salina-trial-book-bold';
+  src: url('./assets/fonts/Salina-Trial-Medium-BF64b607e29dac2.otf') format('opentype');
+  /* font-weight: normal; */
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Salina-trial-book';
   src: url('./assets/fonts/Salina-Trial-Book-BF64b607e29dd58.otf') format('opentype');
   /* font-weight: normal; */
@@ -106,6 +113,10 @@ button:focus-visible {
 
 ._salina_text_2 { 
     font-family: 'Salina-trial-book-italic' !important;
+}
+
+._salina_text_bold { 
+    font-family: 'Salina-trial-book-bold' !important;
 }
 
 ._salina_text { 
