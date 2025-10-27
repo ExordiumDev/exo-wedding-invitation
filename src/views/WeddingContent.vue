@@ -467,7 +467,7 @@ export default {
     showContent() {
       this.$nextTick(() => {
         const textEl = this.$refs.weddingContent;
-        const container_mempelai = this.$refs.container_mempelai;
+        const container_mempelai = this.$refs.container_mempelai.$el;
         if (!textEl || !container_mempelai) return;
 
         const spans = textEl.querySelectorAll("span");
@@ -478,17 +478,7 @@ export default {
           duration: 0.8,
           stagger: 0.2,
           ease: "power3.out",
-        }).from(
-          container_mempelai,
-          {
-            opacity: 0,
-            y: 80,
-            duration: 0.8,
-            ease: "power3.out",
-            immediateRender: false,
-          },
-          "+=0.1"
-        );
+        })
       });
     },
   },
