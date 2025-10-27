@@ -90,8 +90,6 @@ import burungKanan from "../assets/images/partial/burung-kanan.png";
 import logoBrideGroom from "../assets/images/non-partial/Pratiwi-Ahmad-09-November-WEB-logo-PratiwiAhmad.png";
 
 // penganten
-import mempelaiWanita from "../assets/images/partial/m_wanita.png";
-import mempelaiPria from "../assets/images/partial/m-pria.png";
 
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 
@@ -104,8 +102,6 @@ export default {
   },
   data() {
     return {
-      mempelaiWanita,
-      mempelaiPria,
       tiang,
       imaBg,
       bungaGede,

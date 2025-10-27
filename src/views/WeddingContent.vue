@@ -355,8 +355,6 @@ import axios from "axios";
 import ovalFrame from "../assets/images/partial/Pratiwi-Ahmad-09-November-WEB-framephoto.png";
 import brideFix from "../assets/images/partial/bride_fix.jpg";
 import groomFix from "../assets/images/partial/groom_fix.jpg";
-import mempelaiWanita from "../assets/images/partial/m_wanita.png";
-import mempelaiPria from "../assets/images/partial/m-pria.png";
 
 import { GET_GIFT_DATA, GET_SCHEDULE_DATA, GET_COUPLES_DATA, GET_WISHES_DATA, GET_GALLERY_DATA } from "../stores/actions/reqApi.js";
 import { mapActions, mapGetters } from "vuex";
@@ -378,8 +376,6 @@ export default {
       ovalFrame,
       groomFix,
       brideFix,
-      mempelaiWanita,
-      mempelaiPria,
       showBurung: false,
 
       qrCodeUrl: null,

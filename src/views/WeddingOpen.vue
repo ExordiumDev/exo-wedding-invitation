@@ -61,8 +61,6 @@
 <style scoped></style>
 
 <script>
-import mempelaiWanita from "../assets/images/partial/m_wanita.png";
-import mempelaiPria from "../assets/images/partial/m-pria.png";
 import gsap from "gsap";
 
 export default {
@@ -74,8 +72,6 @@ export default {
   },
   data() {
     return {
-      mempelaiWanita,
-      mempelaiPria,
       showWeddingContent: false,
       showBurung: false,
       burungLoaded: {
