@@ -3,36 +3,38 @@
     <v-main>
       <!-- 🌸 Background hanya muncul di non-admin/editor routes -->
       <template v-if="!isAdminRoute">
-        <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
-        <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img>
-
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
-        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_0"></v-img>
-        <v-img :src="bungaClover" class="_bunga_bottom_left_clover_50"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_left_30"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_left_60"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_left_90"></v-img>
-
-        <v-img :src="bungaGede" class="_bunga_bottom_right"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
-        <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
-        <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
-
-        <v-img
-          v-if="$store.state.showBird"
-          :src="burungKiri"
-          class="_burung_left"
-          ref="burungLeft"
-        ></v-img>
-        <v-img
-          v-if="$store.state.showBird"
-          :src="burungKanan"
-          class="_burung_right"
-          ref="burungRight"
-        ></v-img>
+        <div class="assets-wrapper">
+          <v-img :src="tiang" class="_tiang_left" ref="tiangLeft"></v-img>
+          <v-img :src="tiang" class="_tiang_right" ref="tiangRight"></v-img>
+  
+          <v-img :src="bungaWhiteRose" class="_bunga_bottom_left"></v-img>
+          <v-img :src="bungaClover" class="_bunga_bottom_left_clover_0"></v-img>
+          <v-img :src="bungaClover" class="_bunga_bottom_left_clover_50"></v-img>
+          <v-img :src="bungaGede" class="_bunga_bottom_left_30"></v-img>
+          <v-img :src="bungaWhiteRose" class="_bunga_bottom_left_60"></v-img>
+          <v-img :src="bungaGede" class="_bunga_bottom_left_90"></v-img>
+  
+          <v-img :src="bungaGede" class="_bunga_bottom_right"></v-img>
+          <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_30"></v-img>
+          <v-img :src="bungaGede" class="_bunga_bottom_right_60"></v-img>
+          <v-img :src="bungaWhiteRose" class="_bunga_bottom_right_90"></v-img>
+  
+          <v-img
+            v-if="$store.state.showBird"
+            :src="burungKiri"
+            class="_burung_left"
+            ref="burungLeft"
+          ></v-img>
+          <v-img
+            v-if="$store.state.showBird"
+            :src="burungKanan"
+            class="_burung_right"
+            ref="burungRight"
+          ></v-img>
+        </div>
       </template>
 
-      <!-- 🌐 Halaman konten -->
+      <!-- Halaman konten -->
       <router-view v-slot="{ Component }">
         <component :is="Component" />
         <!-- <transition name="fade">
@@ -354,9 +356,23 @@ export default {
   }
 }
 
+.assets-wrapper { 
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+
+}
+
+.assets-wrapper .v-img{
+  position: absolute !important;
+  will-change: transform;
+}
+
 ._burung_left {
   width: 12%;
-  position: fixed;
+  position: absolute;
   top: 8%;
   left: 14%;
   z-index: 0;
@@ -364,7 +380,7 @@ export default {
 
 ._burung_right {
   width: 12%;
-  position: fixed;
+  position: absolute;
   top: 8%;
   right: 14%;
   z-index: 0;
@@ -372,7 +388,7 @@ export default {
 
 ._tiang_left {
   width: 12%;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 17%;
   z-index: 1-1;
@@ -380,7 +396,7 @@ export default {
 
 ._tiang_right {
   width: 12%;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 17%;
   z-index: 1-1;
@@ -388,7 +404,7 @@ export default {
 
 ._bunga_bottom_left_clover_0 {
   width: 3rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0%;
   z-index: 1;
@@ -397,7 +413,7 @@ export default {
 
 ._bunga_bottom_left_clover_50 {
   width: 3rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 16%;
   z-index: 2;
@@ -405,7 +421,7 @@ export default {
 
 ._bunga_bottom_left {
   width: 16rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   z-index: 1;
@@ -414,7 +430,7 @@ export default {
 
 ._bunga_bottom_left_30 {
   width: 16rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 8%;
   z-index: 1;
@@ -423,7 +439,7 @@ export default {
 
 ._bunga_bottom_left_60 {
   width: 12rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 17%;
   z-index: 1;
@@ -431,7 +447,7 @@ export default {
 
 ._bunga_bottom_left_90 {
   width: 12rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 23%;
   z-index: 1;
@@ -439,7 +455,7 @@ export default {
 
 ._bunga_bottom_right {
   width: 24rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: -3%;
   z-index: 1;
@@ -447,7 +463,7 @@ export default {
 
 ._bunga_bottom_right_30 {
   width: 12rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 13%;
   z-index: 1;
@@ -456,7 +472,7 @@ export default {
 
 ._bunga_bottom_right_60 {
   width: 12rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 18%;
   z-index: 1;
@@ -464,7 +480,7 @@ export default {
 
 ._bunga_bottom_right_90 {
   width: 8rem;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 25%;
   z-index: 1;

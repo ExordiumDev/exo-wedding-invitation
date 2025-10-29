@@ -243,7 +243,7 @@
             </v-card-item>
 
             <v-card-actions>
-              <v-btn type="submit" variant="flat" block class="text-none">Send</v-btn>
+              <v-btn type="submit" variant="flat" block class="text-none" :disabled="onSubmitBtn">Send</v-btn>
             </v-card-actions>
           </v-card>
         </v-form>
@@ -266,7 +266,7 @@
               class="chat-bubble"
               :class="index % 2 === 0 ? 'from-left' : 'from-right'"
             >
-              <div class="chat-name">{{ wish.name }}</div>
+              <div class="chat-name _salina_text_bold">{{ wish.name }}</div>
               <div class="chat-message">{{ wish.message }}</div>
             </div>
           </div>
@@ -401,6 +401,7 @@ export default {
         numeric: (v) => !isNaN(parseFloat(v)) || "Must be a number",
         min1: (v) => v > 0 || "Must be greater than 0",
       },
+      onSubmitBtn: false,
     };
   },
   methods: {
@@ -413,12 +414,12 @@ export default {
     }),
     async sendWish() {
       try {
+        this.onSubmitBtn = true;
         const res = await axios.post(`${this.baseUrl}/api/wishes`, this.form);
-        // console.log("✅ Wish Created", res.data);
 
         if (res.data.qr_image) {
           this.qrCodeUrl = res.data.qr_image;
-          this.showThankYou = true; // 🔥 tampilkan modal
+          this.showThankYou = true;
           // console.log("Modal aktif?", this.showThankYou);
         } else {
           alert("Terima kasih sudah mengisi undangan kami!");
@@ -434,12 +435,12 @@ export default {
         };
 
         await this.actGET_WISHES_DATA();
+        this.onSubmitBtn = false;
       } catch (e) {
-        console.error("❌ Error Posting Wishes:", e);
+        console.error("Error Posting Wishes:", e);
         alert("Gagal Mengirim Wishes.");
       }
     },
-
     downloadQr() {
       if (!this.qrCodeUrl) return;
       const link = document.createElement("a");
@@ -496,7 +497,6 @@ export default {
     },
     brideImageUrl() {
       if (!this.getGET_COUPLES_DATA.bride_photo) return null;
-
       let path = this.getGET_COUPLES_DATA.bride_photo.trim();
 
       // kalau path belum diawali "/uploads/", tambahin prefix
@@ -574,10 +574,12 @@ export default {
 }
 
 .chat-container {
+  max-height: 400px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 0 8px;
+  overflow-y: auto;
 }
 
 .chat-bubble {
